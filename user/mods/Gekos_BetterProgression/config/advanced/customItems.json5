@@ -1,0 +1,234 @@
+{
+    //New buffs then referenced by custom items
+    "customBuffs":
+    {
+        "BuffsSuperSoldier": [
+              {
+                "AbsoluteValue": true,
+                "BuffType": "SkillRate",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "Endurance",
+                "Value": 30
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "SkillRate",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "Strength",
+                "Value": 30
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "SkillRate",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "StressResistance",
+                "Value": 20
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": 3
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "QuantumTunnelling",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": 0
+              },
+              {
+                "AbsoluteValue": false,
+                "BuffType": "WeightLimit",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": 1
+              },
+              {
+                "AbsoluteValue": false,
+                "BuffType": "DamageModifier",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": -0.5
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "StaminaRate",
+                "Chance": 1,
+                "Delay": 1,
+                "Duration": 3000,
+                "Value": 3,
+                "SkillName": ""
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "BodyTemperature",
+                "Chance": 1,
+                "Delay": 10,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": 4
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "HydrationRate",
+                "Chance": 0.7,
+                "Delay": 60,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": -0.7
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "EnergyRate",
+                "Chance": 0.7,
+                "Delay": 60,
+                "Duration": 1800,
+                "SkillName": "",
+                "Value": -0.6
+              },
+              {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 0.7,
+                "Delay": 1800,
+                "Duration": 300,
+                "SkillName": "",
+                "Value": -3
+              },
+            ],
+    },
+
+    //New item templates to be added
+    "customItems":
+    {
+        "67c9a2f88fcabd70c9b35c08": {
+            "_id": "67c9a2f88fcabd70c9b35c08",
+            "_name": "SUP_Compound",
+            "_parent": "5448f3a64bdc2d60728b456a",
+            "_props": {
+                "AnimationVariantsNumber": 0,
+                "BackgroundColor": "orange",
+                "CanRequireOnRagfair": false,
+                "CanSellOnRagfair": false,
+                "ConflictingItems": [],
+                "Description": "",
+                "DiscardLimit": 2,
+                "DiscardingBlock": false,
+                "DropSoundType": "None",
+                "ExamineExperience": 100,
+                "ExamineTime": 1,
+                "ExaminedByDefault": false,
+                "ExtraSizeDown": 0,
+                "ExtraSizeForceAdd": false,
+                "ExtraSizeLeft": 0,
+                "ExtraSizeRight": 0,
+                "ExtraSizeUp": 0,
+                "Height": 1,
+                "HideEntrails": false,
+                "InsuranceDisabled": false,
+                "IsAlwaysAvailableForInsurance": false,
+                "IsLockedafterEquip": false,
+                "IsSpecialSlotOnly": false,
+                "IsUnbuyable": false,
+                "IsUndiscardable": false,
+                "IsUngivable": false,
+                "IsUnremovable": false,
+                "IsUnsaleable": false,
+                "ItemSound": "med_stimulator",
+                "LootExperience": 10,
+                "MaxHpResource": 0,
+                "MergesWithChildren": false,
+                "Name": "S.U.P. Compound",
+                "NotShownInSlot": false,
+                "Prefab": {
+                    "path": "assets/content/weapons/usable_items/item_syringe/item_stimulator_sj9_tglabs_loot.bundle",
+                    "rcid": ""
+                },
+                "QuestItem": false,
+                "QuestStashMaxCount": 0,
+                "RagFairCommissionModifier": 1,
+                "RarityPvE": "Superrare",
+                "RepairCost": 0,
+                "RepairSpeed": 0,
+                "ShortName": "S.U.P.",
+                "StackMaxSize": 1,
+                "StackObjectsCount": 1,
+                "StimulatorBuffs": "BuffsSuperSoldier",
+                "Unlootable": false,
+                "UnlootableFromSide": [],
+                "UnlootableFromSlot": "FirstPrimaryWeapon",
+                "UsePrefab": {
+                    "path": "assets/content/weapons/usable_items/item_syringe/item_stimulator_sj9_tglabs_container.bundle",
+                    "rcid": ""
+                },
+                "Weight": 0.05,
+                "Width": 1,
+                "effects_damage": [],
+                "effects_health": [],
+                "hpResourceRate": 0,
+                "medEffectType": "duringUse",
+                "medUseTime": 2
+            },
+            "_proto": "544fb3f34bdc2d03748b456a",
+            "_type": "Item"
+        },
+    },
+
+    "customLocales": {
+        "67c9a2f88fcabd70c9b35c08": {
+            "Name": "S.U.P. Compound Injector",
+            "ShortName": "S.U.P.",
+            "Description": "A cutting-edge military-grade stimulant, the Strategic Ultra-Performance (S.U.P.) Compound is designed for elite operators requiring peak combat efficiency. Injected directly into the bloodstream, this powerful serum enhances speed, strength, reflexes, and pain resistance for a short but critical duration. Originally an untested experimental drug, the compound was intended for special forces but was never officially approved due to unpredictable side effects. While it grants immense battlefield superiority, users risk severe metabolic crashes, uncontrolled aggression, and potential long-term damage. Use wisely; supremacy on the battlefield comes at a price."
+        }
+    },
+
+    //Add custom trades
+    "customTrades": {
+        //Therapist
+        "54cb57776803fa99248b456e": {
+            "items": [
+                {
+                    "_id": "67c99cb6d072a85372ecd09e",
+                    "_tpl": "67c9a2f88fcabd70c9b35c08", //SUP stim
+                    "parentId": "hideout",
+                    "slotId": "hideout",
+                    "upd": {
+                        "UnlimitedCount": true,
+                        "StackObjectsCount": 9999999,
+                        "BuyRestrictionMax": 3,
+                        "BuyRestrictionCurrent": 0
+                    }
+                },
+            ],
+            "barter_scheme": {
+                "67c99cb6d072a85372ecd09e": [ //SUP stim
+                    [
+                        {
+                        "count": 1320000,
+                        "_tpl": "5449016a4bdc2d6f028b456f"
+                        }
+                    ]
+                ],
+            },
+            "loyal_level_items": {
+                "67c99cb6d072a85372ecd09e": 4, //SUP stim
+            }
+        } 
+    }
+}

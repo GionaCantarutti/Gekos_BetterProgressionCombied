@@ -1,0 +1,683 @@
+//// GEKO'S BETTER PROGRESSION CONFIGURATION FILE ////
+//
+// Welcome to the config file. Nearly everything this mod does can be disabled or tweaked to your liking.
+// You can find IDs for items and other things on https://moxopixel.com/tarkynator/. Failing that you can explore the SPT_Data/Server/database folder in your SPT installation to find the ID you need
+// A few times "Deltas" are mentioned in this config file. Delta is a fancy word to mean "change", a negative delta will reduce a value and a positive one will increase it
+// All ranges are considered to be inclusive of the lower bound but exclusive of the upper one. For example a [10, 40] range will be all values from 10 to 40 with 10 included but 40 excluded
+// If you encounter any bugs please do let me know either on the GitHub page or as a comment on the SPT Hub page for the mod
+//
+
+{
+    //Module responsible for algorithmically rebalancing most military items in the game
+    //This module calculates a loyalty score for each item that can also be decimal. The actual in-game loyalty level of the item will be the floor of the loyalty score. So for example a loyalty score of 3.8 will correspond to loyalty level 3
+    //The exact way in which this works will become more apparent by looking at the specific rules for each class of items (for example the ammoRules)
+    "algorithmicalRebalancing": {
+        "enable": true,
+
+        //If false items that end up having a loyalty score greater or equal than 5 will be hidden (level >4 traders do not exist)
+        //If it true items with loyalty over 4 will be brought back to 4
+        "clampToMaxLevel": true,
+        //If true all trades that are locked behind quests will be treated as if "clamtToMaxLevel" is true rgardless of its actual value
+        "forceClampingOfQuestlockedItems": true,
+
+    	//Change the loyalty score of all items this mod affects (for example barter items are unaffected) by this much if the item trade is a barter or if it's quest locked
+        "barterDelta": -0.7,
+        "questLockDelta": -1,
+        "logBartersAndLocks": false, //For debugging
+
+        //Traders that will not be affected by the rebalancing module
+        "excludeTraders": [
+            "579dc571d53a0658a154fbec", //Fence
+        ],
+
+        //Modify the loyalty score of all offers on the given trader. Only affects items that are already being algorithmically rebalanced (ammo, wepaons)
+        "deltaByTrader": {
+            "6617beeaa9cfa777ca915b7c": -0.7, //Ref
+        },
+        
+        //Ammo rebalancing module
+        "ammoRules": {
+            "enable": true,
+            "logChanges": false, //For debugging
+
+            //Settings specific to hideout crafts of ammo
+            "craftSettings": {
+                //If disabled ammo crafts will not be changed by this mod
+                "enable": true,
+
+                //If loyalty score falls between the given ranges then the ammunition craft will end up in the corresponding workbench level
+                "loyaltyToLevelRanges": [
+                    {
+                        "range": [-9999, 2.5],
+                        "level": 1
+                    },
+                    {
+                        "range": [2.5, 3.5],
+                        "level": 2
+                    },
+                    {
+                        "range": [3.5, 9999],
+                        "level": 3
+                    }
+                ]
+            },
+
+            //Change every ammunition loyalty level by this much
+            "globalDelta": 0,
+            
+            //If an ammunition falls between the ammunition ranges specified here then it will get the corresponding base loyalty score
+            //Loyalty score is then further modified by the other rules
+            "defaultBaseLoyaltyByPen": 1,
+            "ammoBaseLoyaltyByPen": [
+                {
+                    "penInterval": [0, 14],
+                    "baseLoyalty": 0.5
+                },
+                {
+                    "penInterval": [14, 17],
+                    "baseLoyalty": 1
+                },
+                {
+                    "penInterval": [17, 21],
+                    "baseLoyalty": 1.5
+                },
+                {
+                    "penInterval": [21, 27],
+                    "baseLoyalty": 2
+                },
+                {
+                    "penInterval": [27, 31],
+                    "baseLoyalty": 2.6
+                },
+                {
+                    "penInterval": [31, 37],
+                    "baseLoyalty": 3
+                },
+                {
+                    "penInterval": [37, 41],
+                    "baseLoyalty": 3.7
+                },
+                {
+                    "penInterval": [41, 47],
+                    "baseLoyalty": 4
+                },
+                {
+                    "penInterval": [47, 99999],
+                    "baseLoyalty": 5
+                }
+            ],
+
+            //Modify the loyalty score of an ammunition depending on its caliber
+            "caliberRules": [
+                {
+                    "caliber": "Caliber12g",
+                    "loyaltyDelta": -2
+                },
+                {
+                    "caliber": "Caliber762x54R",
+                    "loyaltyDelta": -2
+                },
+                {
+                    "caliber": "Caliber762x39",
+                    "loyaltyDelta": 0
+                },
+                {
+                    "caliber": "Caliber762x51",
+                    "loyaltyDelta": -1
+                },
+                {
+                    "caliber": "Caliber20g",
+                    "loyaltyDelta": -3
+                },
+                {
+                    "caliber": "Caliber366TKM",
+                    "loyaltyDelta": -0.6
+                },
+                {
+                    "caliber": "Caliber9x19PARA",
+                    "loyaltyDelta": 1.4
+                },
+                {
+                    "caliber": "Caliber9x18PM",
+                    "loyaltyDelta": 1
+                },
+                {
+                    "caliber": "Caliber127x55",
+                    "loyaltyDelta": -1
+                },
+                {
+                    "caliber": "Caliber9x21",
+                    "loyaltyDelta": 0.5
+                },
+                {
+                    "caliber": "Caliber752x25TT",
+                    "loyaltyDelta": 0.5
+                },
+                {
+                    "caliber": "Caliber86x70",
+                    "loyaltyDelta": -2
+                },
+                {
+                    "caliber": "Caliber556x45NATO",
+                    "loyaltyDelta": 0.4
+                },
+                {
+                    "caliber": "Caliber545x39",
+                    "loyaltyDelta": 0.3
+                },
+                {
+                    "caliber": "Caliber127x33",
+                    "loyaltyDelta": -0.5
+                }
+            ],
+
+            //If the damage of an ammunition falls within one (or more) of the intervals then its loyalty score will be modified by the corresponding delta
+            "damageRules": [
+                {
+                    "damageInterval": [85, 90],
+                    "loyaltyDelta": 0.5
+                },
+                {
+                    "damageInterval": [90, 100],
+                    "loyaltyDelta": 1
+                },
+                {
+                    "damageInterval": [100, 120],
+                    "loyaltyDelta": 1.5
+                },
+                {
+                    "damageInterval": [120, 255],
+                    "loyaltyDelta": 2
+                },
+                {
+                    "damageInterval": [255, 360],
+                    "loyaltyDelta": 3
+                },
+                {
+                    "damageInterval": [360, 9999],
+                    "loyaltyDelta": 4
+                }
+            ],
+
+            //Disable the ammo balancing module on the following calibers
+            "ignoreCalibers": [
+                "Caliber26x75", //Flare gun
+            ]
+        
+        },
+
+        //Weapons rebalancing module
+        "weaponRules": {
+            "enable": true,
+            "logChanges": false, //For debugging
+
+            //Change every weapon loyalty level by this much
+            "globalDelta": 0,
+
+            //All weapons will bring all of their default parts to their same loyalty level. If multiple weapons share the same default parts the lowest level is picked
+            //For example if this is true the default m4 gas block will always be found on the same loyalty level as the m4
+            "attachmentsFollowDefaultBuild": true,
+            //Add this delta if the weapon contains any attachments that cannot be purchased at the trader level the weapon would otherwise be placed at
+            //Won't affect attachments that are part of the default build of the weapon
+            //If attachmentsFollowDefaultBuild is set to false i reccomend setting this to 0
+            //If this is different than 0 the mod will take a few seconds longer to load
+            "advancedAttachmentsDelta": 1,
+
+            //Base loyalty score of each weapon is decided by its caliber. If the caliber of the weapon is not listed below then the default value will be picked
+            //Loyalty score is then further modified by the other rules
+            "defaultBaseLoyalty": 2,
+            "weaponBaseLoyaltyByCaliber": [
+                {
+                    "caliber": "Caliber762x51",
+                    "baseLoyalty": 3.8
+                },
+                {
+                    "caliber": "Caliber556x45NATO",
+                    "baseLoyalty": 3
+                },
+                {
+                    "caliber": "Caliber545x39",
+                    "baseLoyalty": 3
+                },
+                {
+                    "caliber": "Caliber762x39",
+                    "baseLoyalty": 3
+                },
+                {
+                    "caliber": "Caliber57x28",
+                    "baseLoyalty": 2.5
+                },
+                {
+                    "caliber": "Caliber46x30",
+                    "baseLoyalty": 2.5
+                },
+                {
+                    "caliber": "Caliber9x19PARA",
+                    "baseLoyalty": 1
+                },
+                {
+                    "caliber": "Caliber366TKM",
+                    "baseLoyalty": 2
+                },
+                {
+                    "caliber": "Caliber9x39",
+                    "baseLoyalty": 2.5
+                },
+                {
+                    "caliber": "Caliber127x55",
+                    "baseLoyalty": 3.5
+                },
+                {
+                    "caliber": "Caliber23x75",
+                    "baseLoyalty": 5
+                },
+                {
+                    "caliber": "Caliber9x18PM",
+                    "baseLoyalty": 1
+                },
+                {
+                    "caliber": "Caliber9x18PMM",
+                    "baseLoyalty": 1
+                },
+                {
+                    "caliber": "Caliber762x25TT",
+                    "baseLoyalty": 1
+                },
+                {
+                    "caliber": "Caliber86x70",
+                    "baseLoyalty": 6
+                },
+                {
+                    "caliber": "Caliber1143x23ACP",
+                    "baseLoyalty": 2
+                },
+                {
+                    "caliber": "Caliber762x54R",
+                    "baseLoyalty": 3.5
+                },
+                {
+                    "caliber": "Caliber68x51",
+                    "baseLoyalty": 4.9
+                },
+                {
+                    "caliber": "Caliber127x33",
+                    "baseLoyalty": 4
+                },
+                {
+                    "caliber": "Caliber12g",
+                    "baseLoyalty": 3.7
+                },
+                {
+                    "caliber": "Caliber762x39",
+                    "baseLoyalty": 3
+                },
+                
+            ],
+
+            //Modify the loyalty score depending on the BEST fire mode available to the weapon
+            //Manual includes bolt-action, pump-action and single-shot
+            //Semiauto includes semi automatic, double-action and double barrel
+            //Fullauto and burst are self-explanatory
+            "fireModeRules": [
+                {
+                    "mode" : "manual",
+                    "delta" : -2
+                },
+                {
+                    "mode" : "semiauto",
+                    "delta" : -1
+                },
+                {
+                    "mode" : "burst",
+                    "delta" : -0.5
+                },
+                {
+                    "mode" : "fullauto",
+                    "delta" : 0
+                }
+            ],
+
+            //If the fire rate of a weapon falls within one (or more) of the intervals then its loyalty score will be modified by the corresponding delta
+            //THIS ONLY AFFECTS FULL AUTO AND BURST WEAPONS
+            "fireRateRules": [
+                {
+                    "rateInterval": [0, 620],
+                    "delta": -0.7
+                },
+                {
+                    "rateInterval": [620, 760],
+                    "delta": -0.5
+                },
+                {
+                    "rateInterval": [900, 99999],
+                    "delta": 1
+                }
+            ],
+
+            //If multiple weapons share the same niche then the better ones will be upshifted to higher trader levels (how a niche is defined is configurable below)
+            //For example if both the UMP and the Vector.45 happen to both fall into loyalty level 3 then the Vector will be upshifted to level 4 (if the power level rules below define the Vector as a better weapon than the UMP and with default niche definition)
+            //Loyalty level for shifting is checked after all other rules have already been applied.
+            //The shifting applies recursively. This means that if, for example, three weapons of three different power levels all share the same niche and loyalty level then one will stay at that level, one will be shifted once and the other will be shifted twice
+            "upshiftRules": {
+                "enable": true,
+                "shiftAmount": 1,
+
+                //If true the worse weapon will be shifted down instead of the better one being shifted up
+                "shiftDownInstead": false,
+
+                //How is a wapon niche defined for shifting?
+                "devideNicheByFiremode": true,      //If true weapons of different fire modes will be considered as parts of different niches. Only cares about the best available fire mode and only considers "manual", "semi auto", "burst" and "fullauto"
+                "devideNicheByCaliber": true,       //If true weapons of different calibers will be considered as parts of different niches
+                "devideNicheByBarterType": true,    //If true items sold for currency and items recieved from barters will be considered of two different niches
+                "devideNicheByQuestLock": true,     //If true items locked behind quests and items that aren't so will be considered of two different niches
+
+                //Power levels of weapons. This is used to determine which weapons are better than which others. Has only meaning in a relative sense (to define a order between weapons of same niche), the absolute value is meaningless.
+                //For example if we want to define the Vepr Hunter as a weaker weapon compared to the RSASS we only need to set their power levels so that the VPO's is lower, the actual numbers don't matter
+                //Once again, the power level is compared for a possible shift only between weapons that share the same caliber AND fire mode AND loyalty level
+                //For example the power level of the Vepr Hunter will never compared to that of the SCAR-H nor that of the STM-9
+                //If two weapons in the same niche and loyalty level have the same power level then neither will be shifted
+                "powerLevels": {
+                    //// SEMI-AUTO 7.62x51 ////
+                    "5c501a4d2e221602b412b540" : 1, //Vepr Hunter
+                    "5f2a9575926fd9352339381f" : 2, //RFB
+                    "5aafa857e5b5b00018480968" : 2, //M1A
+                    "6176aca650224f204c1da3fb" : 3, //G28
+                    "5a367e5dc4a282000e49738f" : 3, //RSASS
+                    "5df8ce05b11454561e39243b" : 3, //SR-25
+                    //// FULL-AUTO SHOTGUNS ////
+                    "66ffa9b66e19cc902401c5e8": 1, //AA-12 Gen 1
+                    "67124dcfa3541f2a1f0e788b": 1, //AA-12 Gen 2
+                    "674fe9a75e51f1c47c04ec23": 2, //Auto Saiga-12k
+                    //// FULL-AUTO 3x39 ////
+                    "644674a13d52156624001fbc": 1, //9A-91
+                    "645e0c6b3b381ede770e1cc9": 2, //VSK-94
+                    "57838ad32459774a17445cd2": 3, //VSS
+                    "57c44b372459772d2b39b8ce": 4, //AS-VAL
+                    "651450ce0e00edc794068371": 4, //SR-3M
+                    //// BOLT-ACTION 7.62×51 ////
+                    "5bfea6e90db834001b7347f3": 1, //M700
+                    "5df24cf80dee1b22f862e9bc": 2, //T-5000M
+                    "588892092459774ac91d4b11": 3, //DVL
+                    //// FULL-AUTO 9x19 ////
+                    "5926bb2186f7744b1c6c6e60": 1, //MP5
+                    "66992b349950f5f4cd06029f": 1, //Uzi
+                    "58948c8e86f77409493f7266": 2, //MPX
+                    "6680304edadb7aa61d00cef0": 2, //Uzi-pro
+                    "668e71a8dadf42204c032ce1": 2, //Uzi-pro SMG
+                    //// BOLT-ACTION 7.62x54R ////
+                    "5ae08f0a5acfc408fb1398a1": 1, //Mosin
+                    "5bfd297f0db834001a669119": 1, //Mosin infantry
+                    "55801eed4bdc2d89578b4588": 2, //SV-98
+                    //// FULL-AUTO 7.62x51 ////
+                    "5b0bbe4e5acfc40dc528a72d": 1, //SA58
+                    "5dcbd56fdbd3d91b3e5468d5": 2, //Black MDR
+                    "6165ac306ef05c2ce828ef74": 2, //Scar-H (FDE)
+                    "6183afd850224f204c1da514": 2, //Scar-H
+                    "676176d362e0497044079f4c": 3, //Scar-H X-17
+                    //// .45 PISTOLS ////
+                    "5e81c3cbac2bb513793cdc75": 1, //m1911
+                    "6193a720f8ee7e52e42109ed": 2, //USP .45
+                }
+
+            }
+        },
+
+        //Modify loyalty score of the given items by the given amount
+        //This only affects items that are already affected by at least one other algorithmical rebalancing module (so items such as ammo if ammo rebalancing is enabled)
+        "explicitLoyaltyDelta": {
+            //ID of the specific trade, NOT the id of the item being sold
+            "trades": {
+
+            },
+            //ID of the item being sold
+            "items": {
+                "57dc2fa62459775949412633": -0.7, //AKS-74U
+                "583990e32459771419544dd2": -0.7, //AKS-74UN
+                "5839a40f24597726f856b511": -0.7, //AKS-74UB
+                "62e7c4fba689e8c9c50dfc38": -1, //AUG A1
+                "61f7c9e189e6fb1a5e3ea78d": -2, //MP-18
+                "606587252535c57a13424cfd": +1, //Mutant
+                "5bb2475ed4351e00853264e3": +1, //HK 416A5
+                "6513ef33e06849f06c0957ca": +1, //RPD
+                "65268d8ecb944ff1e90ea385": +2, //RPDN
+                "60db29ce99594040e04c4a27": -1, //Revolving shotgun
+                "5580223e4bdc2d1c128b457f": -2, //MP-43
+                "5bfd297f0db834001a669119": -1, //Mosin infantry
+                "6499849fc93611967b034949": +0.7, //Ak-12
+                "628a60ae6b1d481ff772e9c8": +0.7, //RD-704
+                "576165642459773c7a400233": +1, //Saiga-12k
+                "674fe9a75e51f1c47c04ec23": +1, //Saiga-12k automatic
+            }
+        },
+
+        //Ignore all previous calculations and set the given items or trades to the given levels
+        //Items and trades specified here will also be ignored by all other systems (for example they won't count for the shifting system)
+        "explicitLoyaltyOverride": {
+            //ID of the specific trade, NOT the id of the item being sold
+            "trades": {
+
+            },
+            //ID of the item being sold
+            "items": {
+                "627e14b21713922ded6f2c15": 4, //AXMC
+            }
+        }
+    },
+
+    //Apply changes to secure containers and the ways to obtain them
+    //Most safe containers have been made slightly bigger (2 to 4 extra slots on each)
+    //Alpha is obtainable from Delivery from the Past
+    //Beta is obtainable from Setup
+    //Gamma is obtainable from accepting Network Provider - Part 1
+    "secureContainerProgression": {
+        "enable": true,
+
+        //Set the container you start a new profile with. Doesn't work if mod gets added after the profile has already been created, please start fresh
+        "starterContainer": "5732ee6a24597719ae0c0281", //Waist Pouch
+
+        //More options can be found in the advanced config folder in the secureChanges.json5 file
+    },
+
+    //This mod is intended to (and balanced around) playing without the flea market. Change this setting at your own peril!
+    "fleaMarketChanges": {
+        "disableFleaMarket": true,
+
+        //If true keys that are tradable on the flea market by default will still be tradable even if disableFleaMarket is true
+        "stillAllowKeys": true,
+
+        //Even if the flea market is disabled the following items will still be sold (and sellable) on it
+        "fleaWhitelist": [
+
+        ]
+    },
+
+    //Reduce the amounts of items required by each hideout upgrade. All items required beyond a certain threshold will be multiplied by the given factor. Only the amount that goes past the threshold is mutliplied
+    //For example if the threshold is 3 and the factor is 0.5 if a build would require 15 (= 3 + 12) nuts it will instead require 3 + (12 * 0.5) = 9 nuts
+    "hideoutBuildsChanges": {
+        "enable": true,
+
+        "threshold": 3,
+        "factor": 0.5,
+        "roundDown": true,
+    },
+
+    //Stash changes
+    "stashProgression" : {
+        "enable": true,
+
+        //What stash level should a new profile start with?
+        "startingStashLevel": 1,
+
+        //Amount of lines in each stash level
+        "stashSizes": [40, 55, 70, 85, 100],
+
+        //Multiply ruble cost of each stage of stash upgrade by this much
+        "stashUpgradeCostFactor": 0.4,
+
+        //Change loyalty requirements for stash upgrades by this much
+        "stashUpgradeLoyaltyDelta": -1,
+    },
+
+    //Make skill xp gain faster and buff some skill bonuses
+    "skillChanges": {
+        "enable": true,
+
+        //With these default settings Metabolism levels super fast but fixing that is harder than it might seem. Planned for a future version
+
+        //Multiply earned skill XP by this much if it's fresh XP (XP for a skill you haven't level recently this raid)
+        "SkillFreshEffectiveness": 2,
+        //How many full skill points are considered to be fresh
+        "SkillFreshPoints": 2,
+        //Minimum multiplier from having skill fatigue
+        "SkillMinEffectiveness": 0.4,
+        //How many points after fresh points before fatigue kicks in
+        "SkillPointsBeforeFatigue": 1,
+
+        //Configs to be sent to the client-side mod
+        "ClientConfigs": {
+            //Flat out multiply the amount of xp earned for skills
+            "GlobalXPMultiplier": 1,
+            //Specific multipliers per-skill. If unspecified it's taken to be 1
+            //Both global and specific multipliers apply, this does NOT override the global
+            "SkillXPMultipliers": {
+                "Metabolism" : 0.125,
+            }
+        }
+    },
+
+    //Gain standing/rep for Ref every time you get a PMC kill
+    "refStandingOnKill": {
+        "enable": true,
+
+        //Amount of standing/rep to be gained depending on the level of the player killed
+        "repByKillLevel": [
+            {
+                "levelRange": [0, 10],
+                "rep": 0.003
+            },
+            {
+                "levelRange": [10, 30],
+                "rep": 0.004
+            },
+            {
+                "levelRange": [30, 50],
+                "rep": 0.006
+            },
+            {
+                "levelRange": [50, 9999],
+                "rep": 0.01
+            }
+        ]
+    },
+
+    //A series of buffs to the SICC container
+    "SICCBuffs": {
+        "enable": true,
+        
+        //SICC will be able to hold everything that the Docs case can (on top of what the SICC already can carry)
+        "canHoldWhatDocsCan": true,
+        
+        //Additional items that can be put in a SICC case
+        "additionalWhitelistedItems": [
+            "59fafd4b86f7745ca07e1232", //Key tool
+        ]
+    },
+
+    //A variety of changes to bitcoin farming. The defualt configuration is aimed at making bitcoin farming less powerful to start with but more powerful at high gpu counts
+    "bitcoinChanges": {
+        "enable": true,
+
+        //Remove all non-barter trades for GPUs
+        "cannotBuyGPU": true,
+
+        //Should the value of a BitCoin be overridden to be a set value?
+        "overrideValue": true,
+        "value": 648000,
+
+        //Desmos graph to visualize the following two values: https://www.desmos.com/calculator/osralvxw4g
+        //Flatly multiply the rate of btc produced by this much (variable m in Desmos)
+        "btcFarmSpeedMult": 0.68,
+        //How effective is each GPU in boosting the production rate (variable E in Desmos)
+        "gpuBoostRate": 0.164,
+
+        //How many bitcoins fit in the bitcoin farm
+        "btcCapacity": 5,
+    },
+
+    //Change initial trader reputation
+    "overrideInitialStanding": {
+        "enable": true,
+        
+        //Default starting reputation
+        "defaultOverride": 0.05,
+
+        //Change the default stating on a per-trader basis
+        "indivudalOverrides": {
+            "579dc571d53a0658a154fbec": 1, //Fence
+        }
+    },
+
+    //Miscellaneous changes
+    "misc": {
+
+        "removeFirFromQuests": true,
+        "removeFirFromHideout": true,
+        "removeFirFromFlea": true,
+
+        //If true Ref will only buy dogtags but it will buy them for GP coins
+        "refBuysDogtagsForGP": true,
+
+        //Multiply amounts of crafted products and crafting times in hideout
+        "craftProductMultiplier": 2,
+        "craftTimeMultiplier": 0.5,
+
+        //Enable or disable the custom trades defined in the advanced config customTrades.json5
+        "addCustomTrades": true,
+
+        //Change maximum stack size for the given items
+        "stackSizeOverride": {
+            //Special items used in quests
+            "5991b51486f77447b112d44f": 3, //MS2000 Marker
+            "5ac78a9b86f7741cca0bbd8d": 3, //Signal Jammer
+            "5b4391a586f7745321235ab2": 3, //Wi-fi Camera
+            //Others
+            //"6656560053eaaa7a23349c86": 5, //Lega Medals
+        },
+
+        //Change sizes of containers
+        "ContanerSizeChanges": {
+            //Vanilla items
+            "5aafbde786f774389d0cbc0f": [8, 8], //Ammunition case buff from 7x7 to 8x8
+            "5c127c4486f7745625356c13": [8, 8], //Magazine case buff from 7x7 to 8x8
+
+            //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
+            "12403f74773f49be6a2d84b7": [2, 3], //Small Medical Pouch nerf down to 2x3
+            "ae9e418fd5d4c4eec4a0e6ea": [2, 2], //Small Ammunition Pouch nerf down to 2x2
+
+            //Tactical Gear Component items (does nothing if mod is not installed)
+            "672e2e7526ba61dbb88be7ff": [4, 2], //TGC First Aid container nerf down to 4x2
+            "672e2e758808bacbb9d5abc4": [2, 3], //TGC Ammo Pouch nerf down to 2x3
+        },
+
+        //Change the price of items that are sold for rubles
+        "priceChanges": {
+            //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
+            "12403f74773f49be6a2d84b7": 1442000,    //Small Medical Pouch
+            "ae9e418fd5d4c4eec4a0e6ea": 620920,     //Small Ammunition Pouch
+
+            //Tactical Gear Component items (does nothing if mod is not installed)
+            "672e2e7526ba61dbb88be7ff": 6080000,    //TGC First Aid container
+            "672e2e758808bacbb9d5abc4": 3880000,    //TGC Ammo Pouch
+        },
+        
+    },
+
+    //Development options
+    "dev": {
+        //Hide info logging of each change being applied when mod is loading
+        "muteProgressOnServerLoad": false,
+
+        //When an error occurs show the whole error message
+        "showFullError": true,
+    }
+}

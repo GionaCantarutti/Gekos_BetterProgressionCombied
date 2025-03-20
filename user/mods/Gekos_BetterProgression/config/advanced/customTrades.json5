@@ -1,0 +1,39 @@
+{
+    //Prapor
+    "54cb50c76803fa8b248b4571": {
+        "items": {
+            "67d43f2a227bcdfcdd58ecf3": {
+                "_id": "67d43f2a227bcdfcdd58ecf3",
+                "_tpl": "617fd91e5539a84ec44ce155", //RGN impact nade
+                "parentId": "hideout",
+                "slotId": "hideout",
+                "upd": {
+                    "UnlimitedCount": true,
+                    "StackObjectsCount": 9999999,
+                    "BuyRestrictionMax": 3,
+                    "BuyRestrictionCurrent": 0
+                }
+            },
+        },
+        "barter_scheme": {
+            "67d43f2a227bcdfcdd58ecf3": [ //RGN impact nade
+                [
+                    {
+                    "count": 25000,
+                    "_tpl": "5449016a4bdc2d6f028b456f"
+                    }
+                ]
+            ],
+        },
+        "loyal_level_items": {
+            "67d43f2a227bcdfcdd58ecf3": 4, //RGN impact nade
+        },
+        "questlocks": {
+            "67d43f2a227bcdfcdd58ecf3": { //RGN impact nade
+                "quest": "639670029113f06a7c3b2377", //Following the Bread Crumbs (Lightkeeper)
+                "rewardId": "67d44502588ce6c75823d67c",
+                "targetId": "67d4451e5d4569a3b28ae368",
+            },  
+        }
+    } 
+}
