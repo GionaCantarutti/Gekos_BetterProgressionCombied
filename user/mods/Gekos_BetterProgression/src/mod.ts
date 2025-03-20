@@ -16,7 +16,7 @@ import { changeHidehoutBuildCosts } from "./miscChanges/buildChanges";
 import { changeSkills } from "./miscChanges/skills";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { changeCrafts } from "./miscChanges/craftChanges";
-import { addSupportForGPTraders, gainRefRepOnKill, makeRefBuyForGP } from "./miscChanges/refRepRework";
+import { addSupportForGPTraders, gainRefRepOnKill, makeRefBuyDogtagsForGP } from "./miscChanges/refRepRework";
 import { buffSICCCase } from "./miscChanges/buffSICCCase";
 import { removeFirFromFlea, removeFirFromHideout, removeFirFromQuests, removeFirFromRepeatables } from "./miscChanges/firChanges";
 import { addCustomTrades } from "./miscChanges/customTrades";
@@ -221,7 +221,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         log?.info("Done!");
 
         log?.info("Changing Ref to purchasing dogtags for GP...");
-        this.safelyRunIf(cfg.misc.refBuysDogtagsForGP, () => makeRefBuyForGP(this.context), "Failed changing Ref to purchasing dogtags for GP!");
+        this.safelyRunIf(cfg.misc.refBuysDogtagsForGP, () => makeRefBuyDogtagsForGP(this.context), "Failed changing Ref to purchasing dogtags for GP!");
         log?.info("Done!");
     }
 

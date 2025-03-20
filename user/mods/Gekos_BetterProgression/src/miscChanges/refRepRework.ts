@@ -6,6 +6,8 @@ import { IEndLocalRaidRequestData } from "@spt/models/eft/match/IEndLocalRaidReq
 import { IVictim } from "@spt/models/eft/common/tables/IBotBase";
 import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { TraderController } from "@spt/controllers/TraderController";
+import { ItemTpl } from "@spt/models/enums/ItemTpl";
+import { getDogtagsList } from "../utils";
 
 export function addSupportForGPTraders(context: Context, container: DependencyContainer): void
 {
@@ -24,9 +26,14 @@ export function addSupportForGPTraders(context: Context, container: DependencyCo
     }, {frequency: "Always"});
 }
 
-export function makeRefBuyForGP(context: Context): void
+export function makeRefBuyDogtagsForGP(context: Context): void
 {
-    context.tables.traders["6617beeaa9cfa777ca915b7c"].base.currency = "GP";
+    const ref = context.tables.traders["6617beeaa9cfa777ca915b7c"];
+
+    ref.base.currency = "GP";
+
+    ref.base.items_buy.category = [];
+    ref.base.items_buy.id_list = getDogtagsList(context);
 }
 
 export function gainRefRepOnKill(context: Context, container: DependencyContainer): void

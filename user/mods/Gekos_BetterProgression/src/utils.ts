@@ -17,6 +17,18 @@ export const currencies: string[] = [
 
 const purchasability: Record<string, number> = {};
 
+export function getDogtagsList(context: Context)
+{
+    const list = [];
+
+    for (const [id, item] of Object.entries(context.tables.templates.items))
+    {
+        if (item._props.DogTagQualities) list.push(id);
+    }
+
+    return list;
+}
+
 //Find and return the trader-trade pair that sell the given item
 export function findTrades(itemId: string, context: Context): {trader: ITrader, trade: IItem}[]
 {

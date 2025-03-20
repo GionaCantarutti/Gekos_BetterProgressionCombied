@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using gekos_api.Patches;
 using EFT.InventoryLogic;
 using gekos_api.Utils;
+using TMPro;
+using UnityEngine;
 
 namespace gekos_api
 {
-    [BepInPlugin("gekos_api_uniqueGUID", "gekos_api", "0.1.0")]
+    [BepInPlugin("gekos_api_uniqueGUID", "gekos_api", "0.2.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static ManualLogSource LogSource;
@@ -22,8 +24,7 @@ namespace gekos_api
             LogSource = Logger;
 
             //Fix GP icon
-            //new GPFix().Enable();
-            //GClass2934.CurrencyIndex[ECurrencyType.GP].GetType().GetField("Char").SetValue(GClass2934.CurrencyIndex[ECurrencyType.GP], "GP");
+            new GPFix().Enable();
 
             //Apply skill changes
             new SkillsMultipliers().Enable();
