@@ -17,7 +17,7 @@ export const currencies: string[] = [
 
 const purchasability: Record<string, number> = {};
 
-export function getDogtagsList(context: Context)
+export function getDogtagsList(context: Context): string[]
 {
     const list = [];
 

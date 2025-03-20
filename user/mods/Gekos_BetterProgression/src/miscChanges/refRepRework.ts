@@ -6,7 +6,6 @@ import { IEndLocalRaidRequestData } from "@spt/models/eft/match/IEndLocalRaidReq
 import { IVictim } from "@spt/models/eft/common/tables/IBotBase";
 import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { TraderController } from "@spt/controllers/TraderController";
-import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { getDogtagsList } from "../utils";
 
 export function addSupportForGPTraders(context: Context, container: DependencyContainer): void
