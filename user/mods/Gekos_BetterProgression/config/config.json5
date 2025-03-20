@@ -545,29 +545,45 @@
         }
     },
 
-    //Gain standing/rep for Ref every time you get a PMC kill
-    "refStandingOnKill": {
+    //A series of changes that make Ref work much better in SPT by trying him to PMC kills
+    //The mods "Bosses Have Lega Medals" and "Ref - SPT Friendly Quests" are STRONGLY reccomended, this section is ment to complement those two
+    //Bosses Have Lega Medals: https://hub.sp-tarkov.com/files/file/2109-bosses-have-lega-medals/
+    //Ref - SPT Friendly Quests: https://hub.sp-tarkov.com/files/file/2108-ref-spt-friendly-quests/
+    "refChanges": {
         "enable": true,
 
-        //Amount of standing/rep to be gained depending on the level of the player killed
-        "repByKillLevel": [
-            {
-                "levelRange": [0, 10],
-                "rep": 0.003
-            },
-            {
-                "levelRange": [10, 30],
-                "rep": 0.004
-            },
-            {
-                "levelRange": [30, 50],
-                "rep": 0.006
-            },
-            {
-                "levelRange": [50, 9999],
-                "rep": 0.01
-            }
-        ]
+        //If true Ref will buy items for GP coins instead of RUB
+        //I strongly reccomend keeping refOnlyBuysDogtags to true if you intend on keeping this option enabled
+        "refBuysInGPCoins": true,
+
+        //Ref won't buy anything except dogtags (and Lega Medals if enabled)
+        "refOnlyBuysDogtags": true,
+        "refAlsoBuysLegaMedals": true, //Works regardless of the value of the previous option
+
+        //Gain standing/rep for Ref every time you get a PMC kill
+        "refStandingOnKill": {
+            "enable": true,
+
+            //Amount of standing/rep to be gained depending on the level of the player killed
+            "repByKillLevel": [
+                {
+                    "levelRange": [0, 10],
+                    "rep": 0.003
+                },
+                {
+                    "levelRange": [10, 30],
+                    "rep": 0.004
+                },
+                {
+                    "levelRange": [30, 50],
+                    "rep": 0.006
+                },
+                {
+                    "levelRange": [50, 9999],
+                    "rep": 0.01
+                }
+            ]
+        },
     },
 
     //A series of buffs to the SICC container
@@ -623,9 +639,6 @@
         "removeFirFromQuests": true,
         "removeFirFromHideout": true,
         "removeFirFromFlea": true,
-
-        //If true Ref will only buy dogtags but it will buy them for GP coins
-        "refBuysDogtagsForGP": true,
 
         //Multiply amounts of crafted products and crafting times in hideout
         "craftProductMultiplier": 2,

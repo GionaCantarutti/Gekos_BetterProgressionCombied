@@ -16,7 +16,7 @@ import { changeHidehoutBuildCosts } from "./miscChanges/buildChanges";
 import { changeSkills } from "./miscChanges/skills";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { changeCrafts } from "./miscChanges/craftChanges";
-import { addSupportForGPTraders, gainRefRepOnKill, makeRefBuyDogtagsForGP } from "./miscChanges/refRepRework";
+import { addSupportForGPTraders, gainRefRepOnKill, changeRefPurchasingOptions } from "./miscChanges/refRepRework";
 import { buffSICCCase } from "./miscChanges/buffSICCCase";
 import { removeFirFromFlea, removeFirFromHideout, removeFirFromQuests, removeFirFromRepeatables } from "./miscChanges/firChanges";
 import { addCustomTrades } from "./miscChanges/customTrades";
@@ -99,7 +99,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
     {
         try
         {
-            if (this.context.config.refStandingOnKill.enable) gainRefRepOnKill(this.context, container);
+            if (this.context.config.refChanges.enabled && this.context.config.refChanges.refStandingOnKill.enable) gainRefRepOnKill(this.context, container);
         }
         catch (error)
         {
@@ -128,7 +128,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         //For ref buying items for GP coins. Requires client patching for fixing wrong GP icon
         try
         {
-            if (this.context.config.misc.refBuysDogtagsForGP) addSupportForGPTraders(this.context, container);
+            addSupportForGPTraders(this.context, container);
         }
         catch (error)
         {
@@ -220,8 +220,8 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         this.safelyRunIf(cfg.bitcoinChanges.enable, () => setStartingReputation(this.context), "Failed to set initial trader standing!");
         log?.info("Done!");
 
-        log?.info("Changing Ref to purchasing dogtags for GP...");
-        this.safelyRunIf(cfg.misc.refBuysDogtagsForGP, () => makeRefBuyDogtagsForGP(this.context), "Failed changing Ref to purchasing dogtags for GP!");
+        log?.info("Applying changes to Ref item purchasing...");
+        this.safelyRunIf(cfg.refChanges.enable, () => changeRefPurchasingOptions(this.context), "Failed to apply changes to Ref item purchasing!");
         log?.info("Done!");
     }
 

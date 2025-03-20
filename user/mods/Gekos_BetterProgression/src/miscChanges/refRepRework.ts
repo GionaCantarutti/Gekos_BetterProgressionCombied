@@ -7,6 +7,7 @@ import { IVictim } from "@spt/models/eft/common/tables/IBotBase";
 import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { TraderController } from "@spt/controllers/TraderController";
 import { getDogtagsList } from "../utils";
+import { ItemTpl } from "@spt/models/enums/ItemTpl";
 
 export function addSupportForGPTraders(context: Context, container: DependencyContainer): void
 {
@@ -25,14 +26,20 @@ export function addSupportForGPTraders(context: Context, container: DependencyCo
     }, {frequency: "Always"});
 }
 
-export function makeRefBuyDogtagsForGP(context: Context): void
+export function changeRefPurchasingOptions(context: Context): void
 {
     const ref = context.tables.traders["6617beeaa9cfa777ca915b7c"];
+    const config = context.config.refChanges;
 
-    ref.base.currency = "GP";
+    if (config.refBuysInGPCoins) ref.base.currency = "GP";
 
-    ref.base.items_buy.category = [];
-    ref.base.items_buy.id_list = getDogtagsList(context);
+    if (config.refOnlyBuysDogtags)
+    {
+        ref.base.items_buy.category = [];
+        ref.base.items_buy.id_list = getDogtagsList(context);
+    }
+
+    if (config.refAlsoBuysLegaMedals) ref.base.items_buy.id_list.push(ItemTpl.BARTER_LEGA_MEDAL);
 }
 
 export function gainRefRepOnKill(context: Context, container: DependencyContainer): void
@@ -80,7 +87,7 @@ function repByKills(pmcKills: IVictim[], context: Context): number
 {
     let totalRep: number = 0;
 
-    for (const kill of pmcKills) for (const repRange of context.config.refStandingOnKill.repByKillLevel)
+    for (const kill of pmcKills) for (const repRange of context.config.refChanges.refStandingOnKill.repByKillLevel)
     {
         if (kill.Level >= repRange.levelRange[0] && kill.Level < repRange.levelRange[1]) totalRep += repRange.rep;
     }

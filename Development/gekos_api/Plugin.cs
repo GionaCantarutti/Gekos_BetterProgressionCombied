@@ -26,7 +26,10 @@ namespace gekos_api
             //Fix GP icon
             new GPFix().Enable();
 
-            //Apply skill changes
+            //Make it so that items whose sale price is close to 0 are sold for 1 instead of being unsellable
+            new MinPriceFix().Enable();
+
+            //Apply skill multipliers
             new SkillsMultipliers().Enable();
 
             LogSource.LogInfo("Geko's API loaded!");
