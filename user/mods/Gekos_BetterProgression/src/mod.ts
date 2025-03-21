@@ -70,18 +70,18 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         try
         {
             staticRouter.registerStaticRouter(
-                "statsconfigrouter",
+                "skillsconfigrouter",
                 [
                     {
-                        url: "/server-config-router/statsconfig",
+                        url: "/server-config-router/skillsconfig",
                         // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         action: (_url: string, _info: any, _sessionID: string, _output: string): Promise<string> =>
                         {
-                            return Promise.resolve(JSON.stringify({response: this.context.config.skillChanges.ClientConfigs}));
+                            return Promise.resolve(JSON.stringify({response: this.context.config.skillChanges.CustomMultipliers}));
                         }
                     }
                 ],
-                "statsconfig"
+                "skillsconfig"
             )
         }
         catch (error)

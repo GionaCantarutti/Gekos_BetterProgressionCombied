@@ -13,12 +13,10 @@ using UnityEngine;
 
 namespace gekos_api
 {
-    [BepInPlugin("gekos_api_uniqueGUID", "gekos_api", "0.2.0")]
+    [BepInPlugin("gekos_api_uniqueGUID", "gekos_api", "0.3.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static ManualLogSource LogSource;
-
-        //public static SkillsConfig SkillsConfig;
 
         private void Awake() {
             LogSource = Logger;
@@ -31,6 +29,12 @@ namespace gekos_api
 
             //Apply skill multipliers
             new SkillsMultipliers().Enable();
+
+            //Apply skill buff multipliers
+            new SkillBuffMulti1303().Enable();
+            new SkillBuffMulti1304().Enable();
+            new SkillBuffMulti1305().Enable();
+            new SkillBuffMulti1306().Enable();
 
             LogSource.LogInfo("Geko's API loaded!");
         }

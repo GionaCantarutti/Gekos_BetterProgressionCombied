@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Patches\MinPriceFix.cs" />
+    <Compile Include="Patches\SkillBuffModifiers.cs" />
     <Compile Include="Patches\SkillsMultipliers.cs" />
     <Compile Include="Patches\GPFix.cs" />
     <Compile Include="Plugin.cs" />

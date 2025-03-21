@@ -9,11 +9,10 @@ namespace gekos_api.Utils
 {
     class ConfigHandler
     {
-        public static SkillsConfig GetStatsConfig()
+        public static SkillsConfig GetSkillsConfig()
         {
-            var req = SPT.Common.Http.RequestHandler.GetJson("/server-config-router/statsconfig");
+            var req = SPT.Common.Http.RequestHandler.GetJson("/server-config-router/skillsconfig");
             ConfigResponse<SkillsConfig> config = JsonConvert.DeserializeObject<ConfigResponse<SkillsConfig>>(req);
-            Plugin.LogSource.LogMessage($"got the config!\n{config.Response.GlobalMultiplier}\n{config.Response.SkillMultipliers}");
             return config.Response;
         }
     }
@@ -22,10 +21,14 @@ namespace gekos_api.Utils
 
     class SkillsConfig
     {
+
         [JsonProperty("GlobalXPMultiplier")]
         public float GlobalMultiplier { get; set; }
 
         [JsonProperty("SkillXPMultipliers")]
         public Dictionary<string, float> SkillMultipliers { get; set; }
+
+        [JsonProperty("SkillBuffMultipliers")]
+        public Dictionary<string, float> BuffMultis { get; set; }
     }
 }

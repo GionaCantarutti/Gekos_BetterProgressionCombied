@@ -533,15 +533,147 @@
         //How many points after fresh points before fatigue kicks in
         "SkillPointsBeforeFatigue": 1,
 
-        //Configs to be sent to the client-side mod
-        "ClientConfigs": {
+        //Multiply the amount of XP gained for each skill and/or the effectiveness of the various skill buffs
+        "CustomMultipliers": {
             //Flat out multiply the amount of xp earned for skills
             "GlobalXPMultiplier": 1,
-            //Specific multipliers per-skill. If unspecified it's taken to be 1
+            //Specific multipliers per-skill. If unspecified it's considered to be 1
             //Both global and specific multipliers apply, this does NOT override the global
             "SkillXPMultipliers": {
                 "Metabolism" : 0.125,
-            }
+                "Charisma": 0.7,
+            },
+
+            //Multiply the buff effect of specific skill buffs
+            "SkillBuffMultipliers": {
+                "StrengthBuffLiftWeightInc": 2.5,
+                "MagDrillsLoadSpeed": 3,
+                "MagDrillsUnloadSpeed": 3,
+                "MagDrillsInventoryCheckSpeed": 2,
+                "CharismaDailyQuestsRerollDiscount": 10,
+                "CharismaHealingDiscount": 10,
+                "CharismaInsuranceDiscount": 10,
+                "CharismaExfiltrationDiscount": 10,
+                "SurgeryReducePenalty": 2,
+                "SurgerySpeed": 2,
+                "SearchSpeed": 1.5,
+
+                //Complete list of all buffs that can be modified:
+
+                //EnduranceBuffEnduranceInc
+                //EnduranceBuffJumpCostRed
+                //EnduranceBuffBreathTimeInc
+                //EnduranceBuffRestorationTimeRed
+                //EnduranceBreathElite
+                //EnduranceHands
+                //StrengthBuffLiftWeightInc
+                //StrengthBuffSprintSpeedInc
+                //StrengthBuffJumpHeightInc
+                //StrengthBuffThrowDistanceInc
+                //StrengthBuffMeleePowerInc
+                //StrengthBuffElite
+                //StrengthBuffMeleeCrits
+                //StrengthBuffAim
+                //VitalityBuffBleedChanceRed
+                //VitalityBuffSurviobilityInc
+                //VitalityBuffRegeneration
+                //VitalityBuffBleedStop
+                //HealthBreakChanceRed
+                //HealthOfflineRegenerationInc
+                //HealthEnergy
+                //HealthHydration
+                //HealthEliteAbsorbDamage
+                //HealthElitePosion
+                //StressPainChance
+                //StressTremor
+                //StressBerserk
+                //MetabolismRatioPlus
+                //MetabolismEnergyExpenses
+                //MetabolismPhysicsForget
+                //MetabolismPhysicsForget2
+                //MetabolismEliteBuffNoDyhydration
+                //MetabolismEliteNoForget
+                //PerceptionHearing
+                //PerceptionFov
+                //PerceptionLootDot
+                //PerceptionmEliteNoIdea
+                //IntellectLearningSpeed
+                //IntellectWeaponMaintance
+                //IntellectEliteNaturalLearner
+                //IntellectEliteAmmoCounter
+                //IntellectEliteContainerScope
+                //IntellectRepairPointsCostReduction
+                //AttentionLootSpeed
+                //AttentionRareLoot
+                //AttentionEliteLuckySearch
+                //AttentionEliteExtraLootExp
+                //MagDrillsLoadSpeed
+                //MagDrillsUnloadSpeed
+                //MagDrillsInventoryCheckSpeed
+                //MagDrillsInventoryCheckAccuracy
+                //MagDrillsInstantCheck
+                //MagDrillsLoadProgression
+                //CharismaBuff1
+                //CharismaBuff2
+                //CharismaEliteBuff1
+                //CharismaEliteBuff2
+                //CharismaDailyQuestsRerollDiscount
+                //CharismaHealingDiscount
+                //CharismaInsuranceDiscount
+                //CharismaExfiltrationDiscount
+                //CharismaScavCaseDiscount
+                //CharismaFenceRepPenaltyReduction
+                //CharismaAdditionalDailyQuests
+                //WeaponReloadBuff
+                //WeaponRecoilBuff
+                //WeaponSwapBuff
+                //DrawSpeed
+                //DrawElite
+                //DrawTremor
+                //DrawSound
+                //AimMasterElite
+                //AimMasterWiggle
+                //AimMasterSpeed
+                //RecoilControlImprove
+                //RecoilControlElite
+                //CovertMovementSoundVolume
+                //ProneMovementSpeed
+                //ProneMovementVolume
+                //ProneMovementElite
+                //TroubleFixing
+                //TroubleFixingAmmoElite
+                //TroubleFixingExamineMalfElite
+                //WeaponErgonomicsBuff
+                //WeaponDoubleMastering
+                //WeaponDoubleActionRecoilReduceBuff
+                //WeaponStiffHands
+                //ThrowingStrengthBuff
+                //ThrowingEnergyExpenses
+                //ThrowingWeaponsBuffElite
+                //CovertMovementSpeed
+                //CovertMovementElite
+                //CovertMovementLoud
+                //CovertMovementEquipment
+                //SearchSpeed
+                //SearchDouble
+                //SurgeryReducePenalty
+                //SurgerySpeed
+                //HideoutResourceConsumption
+                //HideoutZoneBonusBoost
+                //HideoutExtraSlots
+                //CraftingElite
+                //CraftingSingleTimeReduce
+                //CraftingContinueTimeReduce
+                //MetabolismPoisonTime
+                //MetabolismMiscDebuffTime
+                //ImmunityMiscEffects
+                //ImmunityPoisonBuff
+                //ImmunityPainKiller
+                //ImmunityPoisonChance
+                //ImmunityMiscEffectsChance
+                //WeaponDurabilityLossOnShotReduce
+                //WearAmountRepairGunsReducePerLevel
+            },
         }
     },
 

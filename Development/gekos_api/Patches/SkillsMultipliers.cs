@@ -17,7 +17,7 @@ namespace gekos_api.Patches
 
         static SkillsMultipliers()
         {
-            skillsConfig = ConfigHandler.GetStatsConfig();
+            skillsConfig = ConfigHandler.GetSkillsConfig();
         }
 
         protected override MethodBase GetTargetMethod()
