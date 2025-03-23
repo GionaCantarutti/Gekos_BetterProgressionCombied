@@ -786,9 +786,10 @@
         //Change maximum stack size for the given items
         "stackSizeOverride": {
             //Special items used in quests
-            "5991b51486f77447b112d44f": 3, //MS2000 Marker
-            "5ac78a9b86f7741cca0bbd8d": 3, //Signal Jammer
-            "5b4391a586f7745321235ab2": 3, //Wi-fi Camera
+            //Unfortunately BSG's spaghetti code makes it so that placing one of these consumes the entire stack instead of just one unit
+            //"5991b51486f77447b112d44f": 3, //MS2000 Marker
+            //"5ac78a9b86f7741cca0bbd8d": 3, //Signal Jammer
+            //"5b4391a586f7745321235ab2": 3, //Wi-fi Camera
             //Others
             //"6656560053eaaa7a23349c86": 5, //Lega Medals
         },
