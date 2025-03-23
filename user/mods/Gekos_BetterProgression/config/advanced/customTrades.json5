@@ -45,7 +45,8 @@
 
     //Ref
     "6617beeaa9cfa777ca915b7c": {
-        "Items": {
+        
+        "items": {
             "67dfe267d9d392d28b7e63d4": {
                 "_id": "67dfe267d9d392d28b7e63d4",
                 "_tpl": "66bc98a01a47be227a5e956e", //Streamer Item Case
@@ -58,7 +59,7 @@
                     "BuyRestrictionCurrent": 0
                 }
             },
-        }
+        },
 
         "barter_scheme": {
             "67dfe267d9d392d28b7e63d4": [ //Streamer Item Case
@@ -69,11 +70,11 @@
                     }
                 ]
             ],
-        }
+        },
 
         "loyal_level_items": {
             "67dfe267d9d392d28b7e63d4": 1, //Streamer Item Case
-        }
+        },
 
         "questlocks": {
 

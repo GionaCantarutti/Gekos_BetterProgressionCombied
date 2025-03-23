@@ -7,16 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using gekos_api.Patches;
 using EFT.InventoryLogic;
-using gekos_api.Utils;
+using gekos_api.Helpers;
 using TMPro;
 using UnityEngine;
+using System.Reflection;
+using System.IO;
 
 namespace gekos_api
 {
-    [BepInPlugin("gekos_api_uniqueGUID", "gekos_api", "0.3.0")]
+    [BepInPlugin("gekos_api_uniqueGUID", "gekos_api", "0.4.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static ManualLogSource LogSource;
+        public static string PluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static string AssetsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Assets");
 
         private void Awake() {
             LogSource = Logger;

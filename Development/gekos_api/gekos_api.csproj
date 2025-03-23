@@ -50,7 +50,8 @@
     <Compile Include="Patches\GPFix.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\ConfigHandler.cs" />
+    <Compile Include="Helpers\ConfigHandler.cs" />
+    <Compile Include="Helpers\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PhysicsModule">
@@ -124,9 +125,15 @@
       <HintPath>..\..\EscapeFromTarkov_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\dummy.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)"
+copy "$(TargetPath)" "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)\$(TargetFileName)"
+xcopy /E /I "$(ProjectDir)Assets" "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)\Assets"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gekos_api.Utils
+namespace gekos_api.Helpers
 {
     class ConfigHandler
     {
