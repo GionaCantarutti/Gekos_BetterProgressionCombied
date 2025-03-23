@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EFT;
+using SPT.Reflection.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +28,11 @@ namespace gekos_api.Helpers
         public static GameObject LoadGameObject(string bundleName, string assetName)
         {
             return LoadBundle(bundleName).LoadAsset<GameObject>(assetName);
+        }
+
+        public static Profile GetPlayerProfile()
+        {
+            return ClientAppUtils.GetClientApp().GetClientBackEndSession().Profile;
         }
 
     }

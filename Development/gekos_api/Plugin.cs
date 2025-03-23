@@ -12,6 +12,8 @@ using TMPro;
 using UnityEngine;
 using System.Reflection;
 using System.IO;
+using SPT.Reflection.Utils;
+using EFT;
 
 namespace gekos_api
 {
@@ -31,7 +33,7 @@ namespace gekos_api
             //Make it so that items whose sale price is close to 0 are sold for 1 instead of being unsellable
             new MinPriceFix().Enable();
 
-            //Apply skill multipliers
+            //Apply skill XP multipliers
             new SkillsMultipliers().Enable();
 
             //Apply skill buff multipliers
@@ -39,6 +41,9 @@ namespace gekos_api
             new SkillBuffMulti1304().Enable();
             new SkillBuffMulti1305().Enable();
             new SkillBuffMulti1306().Enable();
+
+            //Apply patch to add the additional skill levels
+            new AdditionalSkillLevels().Enable();
 
             LogSource.LogInfo("Geko's API loaded!");
         }

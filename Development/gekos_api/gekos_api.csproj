@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patches\AdditionalSkillLevels.cs" />
     <Compile Include="Patches\MinPriceFix.cs" />
     <Compile Include="Patches\SkillBuffModifiers.cs" />
     <Compile Include="Patches\SkillsMultipliers.cs" />
@@ -132,7 +133,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)"
+    <PostBuildEvent>rmdir /S /Q "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)"
+mkdir "$(ProjectDir)..\..\BepInEx\plugins\$(ProjectName)"
 copy "$(TargetPath)" "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)\$(TargetFileName)"
 xcopy /E /I "$(ProjectDir)Assets" "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName)\Assets"</PostBuildEvent>
   </PropertyGroup>
