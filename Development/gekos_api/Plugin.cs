@@ -14,6 +14,7 @@ using System.Reflection;
 using System.IO;
 using SPT.Reflection.Utils;
 using EFT;
+using System.Collections;
 
 namespace gekos_api
 {
@@ -44,8 +45,27 @@ namespace gekos_api
 
             //Apply patch to add the additional skill levels
             new AdditionalSkillLevels().Enable();
+            StartCoroutine(LoadSkillLevels());
 
             LogSource.LogInfo("Geko's API loaded!");
+        }
+
+        private IEnumerator LoadSkillLevels()
+        {
+            bool loaded = false;
+            while (!loaded)
+            {
+                try
+                {
+                    Dictionary<ESkillId, float> loadedData;
+                    if (SaveDataHandler.LoadProfileData<Dictionary<ESkillId, float>>("skill_levels_savedata", out loadedData))
+                    {
+                        Logger.LogMessage("Skills save data successfully loaded!");
+                        AdditionalSkillLevels.AdditionalLevels.SetWithoutSaving(loadedData);
+                    }
+                } catch { }
+                yield return new WaitForSeconds(.5f);
+            }
         }
 
     }

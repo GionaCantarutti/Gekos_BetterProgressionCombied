@@ -1,4 +1,5 @@
 ﻿using EFT;
+using gekos_api.Helpers;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using System;
@@ -14,13 +15,53 @@ namespace gekos_api.Patches
     class AdditionalSkillLevels : ModulePatch
     {
 
-        private static Dictionary<ESkillId, float> additionalLevels;
+        public class SaveData
+        {
+            private Dictionary<ESkillId, float> dict = new Dictionary<ESkillId, float>();
+
+            public float this[ESkillId key]
+            {
+                get {
+                    if (dict.TryGetValue(key, out float res)) return res;
+                    return 0;
+                }
+                set {
+                    dict[key] = value;
+                    Save();
+                }
+            }
+
+            public void Save()
+            {
+                SaveDataHandler.SaveProfileData("skill_levels_savedata", dict);
+            }
+
+            public bool TryGetValue(ESkillId key, out float value)
+            {
+                return dict.TryGetValue(key, out value);
+            }
+
+            public void SetWithoutSaving(Dictionary<ESkillId, float> newData)
+            {
+                dict = newData;
+            }
+        }
+
+        private static SaveData _additionalLevels;
+
+        public static SaveData AdditionalLevels
+        {
+            get { return _additionalLevels; }
+            set
+            {
+                _additionalLevels = value;
+                _additionalLevels.Save();
+            }
+        }
 
         static AdditionalSkillLevels()
         {
-            additionalLevels = new Dictionary<ESkillId, float>();
-            additionalLevels.Add(ESkillId.Endurance, 5);
-            additionalLevels.Add(ESkillId.Strength, 1000);
+            _additionalLevels = new SaveData();
         }
 
         protected override MethodBase GetTargetMethod()
@@ -33,10 +74,16 @@ namespace gekos_api.Patches
         {
             ESkillId skillId = __instance.Id;
 
-            if (additionalLevels.TryGetValue(skillId, out float delta))
+            if (AdditionalLevels.TryGetValue(skillId, out float delta))
             {
                 __result += delta * 100f;
             }
         }
+
+        public void DeltaLevels(ESkillId skill, float delta)
+        {
+            _additionalLevels[skill] += delta;
+        }
+
     }
 }
