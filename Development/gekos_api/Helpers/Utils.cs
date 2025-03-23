@@ -15,7 +15,7 @@ namespace gekos_api.Helpers
 
         public static AssetBundle LoadBundle(string name)
         {
-            var bundlePath = Path.Combine(Plugin.PluginFolder, name);
+            var bundlePath = Path.Combine(Plugin.AssetsFolder, name);
             AssetBundle bundle = AssetBundle.LoadFromFile(bundlePath);
             if (bundle == null)
             {

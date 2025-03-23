@@ -48,6 +48,7 @@
     <Compile Include="Patches\AdditionalSkillLevels.cs" />
     <Compile Include="Patches\MinPriceFix.cs" />
     <Compile Include="Patches\SkillBuffModifiers.cs" />
+    <Compile Include="Patches\SkillButtons.cs" />
     <Compile Include="Patches\SkillsMultipliers.cs" />
     <Compile Include="Patches\GPFix.cs" />
     <Compile Include="Plugin.cs" />
@@ -131,6 +132,9 @@
     <Content Include="Assets\dummy.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\skillsbutton.bundle" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
