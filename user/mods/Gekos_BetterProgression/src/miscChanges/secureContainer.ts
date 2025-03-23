@@ -20,7 +20,7 @@ export function applySecureContainerChanges(context: Context): void
         containerItem._props.Grids = secureConfig.GridChanges[container].Grids;
     }
 
-    //Add containers as quest rewards
+    //Add quest rewards
     for (const [condition, questsWithRewards] of Object.entries(secureConfig.AdditionalQuestRewards))
     {
         for (const [quest, extraReward] of Object.entries(questsWithRewards))

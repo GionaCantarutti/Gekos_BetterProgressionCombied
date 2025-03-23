@@ -1,6 +1,7 @@
 {
     //Prapor
     "54cb50c76803fa8b248b4571": {
+        
         "items": {
             "67d43f2a227bcdfcdd58ecf3": {
                 "_id": "67d43f2a227bcdfcdd58ecf3",
@@ -14,7 +15,20 @@
                     "BuyRestrictionCurrent": 0
                 }
             },
+            "67dfe267d9d392d28b7e63d4": {
+                "_id": "67dfe267d9d392d28b7e63d4",
+                "_tpl": "66bc98a01a47be227a5e956e", //Streamer Item Case
+                "parentId": "hideout",
+                "slotId": "hideout",
+                "upd": {
+                    "UnlimitedCount": true,
+                    "StackObjectsCount": 9999999,
+                    "BuyRestrictionMax": 3,
+                    "BuyRestrictionCurrent": 0
+                }
+            }
         },
+
         "barter_scheme": {
             "67d43f2a227bcdfcdd58ecf3": [ //RGN impact nade
                 [
@@ -24,10 +38,21 @@
                     }
                 ]
             ],
+            "67dfe267d9d392d28b7e63d4": [ //Streamer Item Case
+                [
+                    {
+                    "count": 50,
+                    "_tpl": "5d235b4d86f7742e017bc88a"
+                    }
+                ]
+            ],
         },
+
         "loyal_level_items": {
             "67d43f2a227bcdfcdd58ecf3": 4, //RGN impact nade
+            "67dfe267d9d392d28b7e63d4": 1, //Streamer Item Case
         },
+
         "questlocks": {
             "67d43f2a227bcdfcdd58ecf3": { //RGN impact nade
                 "quest": "639670029113f06a7c3b2377", //Following the Bread Crumbs (Lightkeeper)

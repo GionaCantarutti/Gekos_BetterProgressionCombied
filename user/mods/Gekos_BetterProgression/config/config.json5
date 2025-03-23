@@ -776,6 +776,10 @@
         "craftProductMultiplier": 2,
         "craftTimeMultiplier": 0.5,
 
+        //Enable the additional quest rewards (separate from secure containers quest rewards)
+        //More settings can be found in the advanced/additionalQuestRewards.json5 config file
+        "enableExtraQuestRewards": true,
+
         //Enable or disable the custom trades defined in the advanced config customTrades.json5
         "addCustomTrades": true,
 
@@ -794,6 +798,7 @@
             //Vanilla items
             "5aafbde786f774389d0cbc0f": [8, 8], //Ammunition case buff from 7x7 to 8x8
             "5c127c4486f7745625356c13": [8, 8], //Magazine case buff from 7x7 to 8x8
+            "5aafbcd986f7745e590fff23": [8, 8], //Medicine case buff from 7x7 to 8x8
 
             //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
             "12403f74773f49be6a2d84b7": [2, 3], //Small Medical Pouch nerf down to 2x3

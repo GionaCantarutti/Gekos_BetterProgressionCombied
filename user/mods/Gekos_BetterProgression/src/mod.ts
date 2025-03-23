@@ -30,6 +30,7 @@ import { setStartingReputation } from "./miscChanges/startingRep";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { join } from "path";
 import { StaticRouterModService } from "@spt/services/mod/staticRouter/StaticRouterModService";
+import { addAdditionalQuestRewards } from "./miscChanges/questRewards.";
 
 class Mod implements IPostDBLoadMod, IPreSptLoadMod
 {
@@ -223,6 +224,11 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         log?.info("Applying changes to Ref item purchasing...");
         this.safelyRunIf(cfg.refChanges.enable, () => changeRefPurchasingOptions(this.context), "Failed to apply changes to Ref item purchasing!");
         log?.info("Done!");
+
+        log?.info("Adding additional quest rewards...");
+        this.safelyRunIf(cfg.misc.enableExtraQuestRewards, () => addAdditionalQuestRewards(this.context), "Failed to add additional quest rewards!");
+        log?.info("Done!");
+
     }
 
     safelyRunIf(condition: boolean, func: () => void, message: string): void

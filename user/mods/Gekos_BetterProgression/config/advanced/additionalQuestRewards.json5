@@ -1,0 +1,27 @@
+{
+    "Started": {
+        
+    },
+    "Success": {
+        //Stirrup rewards an Ammunition Case
+        "596b455186f77457cb50eccb": {
+            "availableInGameEditions": [],
+            "findInRaid": false,
+            "id": "67dfe1d6c86d01e21c962c36",
+            "index": 0,
+            "items": [
+            {
+                "_id": "67dfe1d2e5b3ffda5e44b529",
+                "_tpl": "5aafbde786f774389d0cbc0f", //Ammo case
+                "upd": {
+                "StackObjectsCount": 1
+                }
+            }
+            ],
+            "target": "67dfe1d2e5b3ffda5e44b529",
+            "type": "Item",
+            "unknown": false,
+            "value": 1
+        }
+    },
+}
