@@ -100,19 +100,19 @@ namespace gekos_api.Patches
             if (skills.TryGetValue(skill, out actualSkill) && actualSkill is SkillClass)
             {
                 ((SkillClass)actualSkill).method_3(); //Update buffs
+                AvailableSkillPointsUI.UpdatePoints();
             }
         }
 
         public static int GetAvailableSkillPoints()
         {
             int level = Utils.GetPlayerProfile().Info.Level;
-            Plugin.LogSource.LogWarning($"Player is level {level}");
             float spent = 0;
             foreach (float s in AdditionalLevels.GetSpentValues())
             {
                 spent += s;
             }
-            return Mathf.FloorToInt((level * pointsPerLevel) - spent);
+            return Mathf.FloorToInt(Mathf.Max(0, (level * pointsPerLevel) - spent));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace gekos_api.Patches
         /// <returns></returns>
         public static bool TryDeltaLevels(ESkillId skill, float delta)
         {
-            if (GetAvailableSkillPoints() - delta > 0)
+            if (GetAvailableSkillPoints() - delta >= 0)
             {
                 DeltaLevels(skill, delta);
                 return true;

@@ -48,6 +48,8 @@ namespace gekos_api
             //Apply patch to add the additional skill levels
             new AdditionalSkillLevels().Enable();
             StartCoroutine(LoadSkillLevels());
+            //Patch that creates the skills points UI element
+            new AvailableSkillPointsUI().Enable();
 
 
             LogSource.LogInfo("Geko's API loaded!");
