@@ -65,6 +65,7 @@ namespace gekos_api
                     {
                         Logger.LogMessage("Skills save data successfully loaded!");
                         AdditionalSkillLevels.AdditionalLevels.SetWithoutSaving(loadedData);
+                        loaded = true;
                     }
                 } catch { }
                 yield return new WaitForSeconds(.5f);
