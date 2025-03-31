@@ -58,6 +58,8 @@ namespace gekos_api.Patches
 
         private static float pointsPerLevel = 1;
 
+        private static Dictionary<ESkillId, AbstractSkillClass> skills;
+
         public static SaveData AdditionalLevels
         {
             get { return _additionalLevels; }
@@ -71,6 +73,7 @@ namespace gekos_api.Patches
         static AdditionalSkillLevels()
         {
             _additionalLevels = new SaveData();
+            skills = new Dictionary<ESkillId, AbstractSkillClass>();
         }
 
         protected override MethodBase GetTargetMethod()
@@ -82,6 +85,7 @@ namespace gekos_api.Patches
         static void Postfix(ref AbstractSkillClass __instance, ref float __result)
         {
             ESkillId skillId = __instance.Id;
+            skills[skillId] = __instance;
 
             if (AdditionalLevels.TryGetValue(skillId, out float delta))
             {
@@ -92,6 +96,11 @@ namespace gekos_api.Patches
         public static void DeltaLevels(ESkillId skill, float delta)
         {
             _additionalLevels[skill] += delta;
+            AbstractSkillClass actualSkill;
+            if (skills.TryGetValue(skill, out actualSkill) && actualSkill is SkillClass)
+            {
+                ((SkillClass)actualSkill).method_3(); //Update buffs
+            }
         }
 
         public static int GetAvailableSkillPoints()
