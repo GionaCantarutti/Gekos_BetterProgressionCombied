@@ -52,6 +52,11 @@ namespace gekos_api.Patches
                 return dict.Values;
             }
 
+            public Dictionary<ESkillId, float> GetDict()
+            {
+                return dict;
+            }
+
         }
 
         private static SaveData _additionalLevels;
@@ -59,6 +64,8 @@ namespace gekos_api.Patches
         private static float pointsPerLevel = 1;
 
         private static Dictionary<ESkillId, AbstractSkillClass> skills;
+
+        private static PointsConfig config;
 
         public static SaveData AdditionalLevels
         {
@@ -74,6 +81,7 @@ namespace gekos_api.Patches
         {
             _additionalLevels = new SaveData();
             skills = new Dictionary<ESkillId, AbstractSkillClass>();
+            config = ConfigHandler.GetPointsConfig();
         }
 
         protected override MethodBase GetTargetMethod()
@@ -84,6 +92,7 @@ namespace gekos_api.Patches
         [PatchPostfix]
         static void Postfix(ref AbstractSkillClass __instance, ref float __result)
         {
+            if (!config.enable) return;
             ESkillId skillId = __instance.Id;
             skills[skillId] = __instance;
 
@@ -106,13 +115,22 @@ namespace gekos_api.Patches
 
         public static int GetAvailableSkillPoints()
         {
-            int level = Utils.GetPlayerProfile().Info.Level;
+            Profile player = Utils.GetPlayerProfile();
+            int level = player.Info.Level;
             float spent = 0;
-            foreach (float s in AdditionalLevels.GetSpentValues())
+            foreach (KeyValuePair<ESkillId, float> s in AdditionalLevels.GetDict())
             {
-                spent += s;
+                spent += s.Value;
+                if (config.automaticallyRefundOverflows)
+                {
+                    if (player.Skills.TryGetSkill(s.Key, out SkillClass skill))
+                    {
+                        int skillLevel = skill.GetLevelForValue(skill.Current); //Get skill level before clamping
+                        spent -= Mathf.Max(0, skillLevel - 51);
+                    }
+                }
             }
-            return Mathf.FloorToInt(Mathf.Max(0, (level * pointsPerLevel) - spent));
+            return Mathf.FloorToInt(Mathf.Max(0, (level * config.skillPointsPerLevel) - spent));
         }
 
         /// <summary>

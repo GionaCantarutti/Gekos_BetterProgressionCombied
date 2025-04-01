@@ -1,4 +1,5 @@
 ﻿using EFT.UI;
+using gekos_api.Helpers;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using System;
@@ -18,6 +19,13 @@ namespace gekos_api.Patches
         private const string NOTIFICATION_OBJ_NAME = "Points Notification";
         private static TextMeshProUGUI tmp;
 
+        private static PointsConfig config;
+
+        static AvailableSkillPointsUI()
+        {
+            config = ConfigHandler.GetPointsConfig();
+        }
+
         protected override MethodBase GetTargetMethod()
         {
             return AccessTools.Method(typeof(SkillsAndMasteringScreen), nameof(SkillsAndMasteringScreen.Show));
@@ -26,6 +34,8 @@ namespace gekos_api.Patches
         [PatchPostfix]
         static void Postfix(ref SkillsAndMasteringScreen __instance)
         {
+            if (!config.enable) return;
+
             HandlePointsText(__instance);
 
             //ToDo: notification thingy

@@ -8,6 +8,380 @@
 //
 
 {
+    //Apply changes to secure containers and the ways to obtain them
+    //Most safe containers have been made slightly bigger (2 to 4 extra slots on each)
+    //Alpha is obtainable from Delivery from the Past
+    //Beta is obtainable from Setup
+    //Gamma is obtainable from accepting Network Provider - Part 1
+    "secureContainerProgression": {
+        "enable": true,
+
+        //Set the container you start a new profile with. Doesn't work if mod gets added after the profile has already been created, please start fresh
+        "starterContainer": "5732ee6a24597719ae0c0281", //Waist Pouch
+
+        //More options can be found in the advanced config folder in the secureChanges.json5 file
+    },
+
+    //This mod is intended to (and balanced around) playing without the flea market. Change this setting at your own peril!
+    "fleaMarketChanges": {
+        "disableFleaMarket": true,
+
+        //If true keys that are tradable on the flea market by default will still be tradable even if disableFleaMarket is true
+        "stillAllowKeys": true,
+
+        //Even if the flea market is disabled the following items will still be sold (and sellable) on it
+        "fleaWhitelist": [
+
+        ]
+    },
+
+    //Reduce the amounts of items required by each hideout upgrade. All items required beyond a certain threshold will be multiplied by the given factor. Only the amount that goes past the threshold is mutliplied
+    //For example if the threshold is 3 and the factor is 0.5 if a build would require 15 (= 3 + 12) nuts it will instead require 3 + (12 * 0.5) = 9 nuts
+    "hideoutBuildsChanges": {
+        "enable": true,
+
+        "threshold": 3,
+        "factor": 0.5,
+        "roundDown": true,
+    },
+
+    //Stash changes
+    "stashProgression" : {
+        "enable": true,
+
+        //What stash level should a new profile start with?
+        "startingStashLevel": 1,
+
+        //Amount of lines in each stash level
+        "stashSizes": [40, 55, 70, 85, 100],
+
+        //Multiply ruble cost of each stage of stash upgrade by this much
+        "stashUpgradeCostFactor": 0.4,
+
+        //Change loyalty requirements for stash upgrades by this much
+        "stashUpgradeLoyaltyDelta": -1,
+    },
+
+    //Make skill xp gain faster and buff some skill bonuses
+    "skillChanges": {
+        "enable": true,
+
+        //With these default settings Metabolism levels super fast but fixing that is harder than it might seem. Planned for a future version
+
+        //Multiply earned skill XP by this much if it's fresh XP (XP for a skill you haven't level recently this raid)
+        "SkillFreshEffectiveness": 2,
+        //How many full skill points are considered to be fresh
+        "SkillFreshPoints": 2,
+        //Minimum multiplier from having skill fatigue
+        "SkillMinEffectiveness": 0.4,
+        //How many points after fresh points before fatigue kicks in
+        "SkillPointsBeforeFatigue": 1,
+
+        //Multiply the amount of XP gained for each skill and/or the effectiveness of the various skill buffs
+        "CustomMultipliers": {
+            //Flat out multiply the amount of xp earned for skills
+            "GlobalXPMultiplier": 1,
+            //Specific multipliers per-skill. If unspecified it's considered to be 1
+            //Both global and specific multipliers apply, this does NOT override the global
+            "SkillXPMultipliers": {
+                "Metabolism" : 0.125,
+                "Charisma": 0.7,
+            },
+
+            //Multiply the buff effect of specific skill buffs
+            "SkillBuffMultipliers": {
+                "StrengthBuffLiftWeightInc": 2.5,
+                "MagDrillsLoadSpeed": 3,
+                "MagDrillsUnloadSpeed": 3,
+                "MagDrillsInventoryCheckSpeed": 2,
+                "CharismaDailyQuestsRerollDiscount": 10,
+                "CharismaHealingDiscount": 10,
+                "CharismaInsuranceDiscount": 10,
+                "CharismaExfiltrationDiscount": 10,
+                "SurgeryReducePenalty": 2,
+                "SurgerySpeed": 2,
+                "SearchSpeed": 1.5,
+
+                //Complete list of all buffs that can be modified:
+
+                //EnduranceBuffEnduranceInc
+                //EnduranceBuffJumpCostRed
+                //EnduranceBuffBreathTimeInc
+                //EnduranceBuffRestorationTimeRed
+                //EnduranceBreathElite
+                //EnduranceHands
+                //StrengthBuffLiftWeightInc
+                //StrengthBuffSprintSpeedInc
+                //StrengthBuffJumpHeightInc
+                //StrengthBuffThrowDistanceInc
+                //StrengthBuffMeleePowerInc
+                //StrengthBuffElite
+                //StrengthBuffMeleeCrits
+                //StrengthBuffAim
+                //VitalityBuffBleedChanceRed
+                //VitalityBuffSurviobilityInc
+                //VitalityBuffRegeneration
+                //VitalityBuffBleedStop
+                //HealthBreakChanceRed
+                //HealthOfflineRegenerationInc
+                //HealthEnergy
+                //HealthHydration
+                //HealthEliteAbsorbDamage
+                //HealthElitePosion
+                //StressPainChance
+                //StressTremor
+                //StressBerserk
+                //MetabolismRatioPlus
+                //MetabolismEnergyExpenses
+                //MetabolismPhysicsForget
+                //MetabolismPhysicsForget2
+                //MetabolismEliteBuffNoDyhydration
+                //MetabolismEliteNoForget
+                //PerceptionHearing
+                //PerceptionFov
+                //PerceptionLootDot
+                //PerceptionmEliteNoIdea
+                //IntellectLearningSpeed
+                //IntellectWeaponMaintance
+                //IntellectEliteNaturalLearner
+                //IntellectEliteAmmoCounter
+                //IntellectEliteContainerScope
+                //IntellectRepairPointsCostReduction
+                //AttentionLootSpeed
+                //AttentionRareLoot
+                //AttentionEliteLuckySearch
+                //AttentionEliteExtraLootExp
+                //MagDrillsLoadSpeed
+                //MagDrillsUnloadSpeed
+                //MagDrillsInventoryCheckSpeed
+                //MagDrillsInventoryCheckAccuracy
+                //MagDrillsInstantCheck
+                //MagDrillsLoadProgression
+                //CharismaBuff1
+                //CharismaBuff2
+                //CharismaEliteBuff1
+                //CharismaEliteBuff2
+                //CharismaDailyQuestsRerollDiscount
+                //CharismaHealingDiscount
+                //CharismaInsuranceDiscount
+                //CharismaExfiltrationDiscount
+                //CharismaScavCaseDiscount
+                //CharismaFenceRepPenaltyReduction
+                //CharismaAdditionalDailyQuests
+                //WeaponReloadBuff
+                //WeaponRecoilBuff
+                //WeaponSwapBuff
+                //DrawSpeed
+                //DrawElite
+                //DrawTremor
+                //DrawSound
+                //AimMasterElite
+                //AimMasterWiggle
+                //AimMasterSpeed
+                //RecoilControlImprove
+                //RecoilControlElite
+                //CovertMovementSoundVolume
+                //ProneMovementSpeed
+                //ProneMovementVolume
+                //ProneMovementElite
+                //TroubleFixing
+                //TroubleFixingAmmoElite
+                //TroubleFixingExamineMalfElite
+                //WeaponErgonomicsBuff
+                //WeaponDoubleMastering
+                //WeaponDoubleActionRecoilReduceBuff
+                //WeaponStiffHands
+                //ThrowingStrengthBuff
+                //ThrowingEnergyExpenses
+                //ThrowingWeaponsBuffElite
+                //CovertMovementSpeed
+                //CovertMovementElite
+                //CovertMovementLoud
+                //CovertMovementEquipment
+                //SearchSpeed
+                //SearchDouble
+                //SurgeryReducePenalty
+                //SurgerySpeed
+                //HideoutResourceConsumption
+                //HideoutZoneBonusBoost
+                //HideoutExtraSlots
+                //CraftingElite
+                //CraftingSingleTimeReduce
+                //CraftingContinueTimeReduce
+                //MetabolismPoisonTime
+                //MetabolismMiscDebuffTime
+                //ImmunityMiscEffects
+                //ImmunityPoisonBuff
+                //ImmunityPainKiller
+                //ImmunityPoisonChance
+                //ImmunityMiscEffectsChance
+                //WeaponDurabilityLossOnShotReduce
+                //WearAmountRepairGunsReducePerLevel
+            },
+        },
+
+        //Each PMC level earn a customizable amount of freely allocatable skill points
+        "SkillPointsSystem": {
+            "enable": true,
+            
+            //Decimal values are fine. An extra point will be awarded when the decimal part ticks over 1. For example 1.5 points per level means that every other level you'll get 2 points instead of 1
+            "skillPointsPerLevel": 1,
+
+            //The game keeps track of skill levels behind the scenes even when you got past level 51. If this is true any point allocated into a skill that is level 51 will be refunded as the skill naturally keeps leveling up.
+            //This keeps going until the skill reaches level 51 "naturally" without the help of the skill points
+            "automaticallyRefundOverflows": true,
+
+            //If true players can freely unallocate invested points. I suggest keeping this off as it otherwise encourages moving skill points around constantly
+            "enableUnallocation": false,
+        }
+    },
+
+    //A series of changes that make Ref work much better in SPT by trying him to PMC kills
+    //The mods "Bosses Have Lega Medals" and "Ref - SPT Friendly Quests" are STRONGLY reccomended, this section is ment to complement those two
+    //Bosses Have Lega Medals: https://hub.sp-tarkov.com/files/file/2109-bosses-have-lega-medals/
+    //Ref - SPT Friendly Quests: https://hub.sp-tarkov.com/files/file/2108-ref-spt-friendly-quests/
+    "refChanges": {
+        "enable": true,
+
+        //If true Ref will buy items for GP coins instead of RUB
+        //I strongly reccomend keeping refOnlyBuysDogtags to true if you intend on keeping this option enabled
+        "refBuysInGPCoins": true,
+
+        //Ref won't buy anything except dogtags (and Lega Medals if enabled)
+        "refOnlyBuysDogtags": true,
+        "refAlsoBuysLegaMedals": true, //Works regardless of the value of the previous option
+
+        //Gain standing/rep for Ref every time you get a PMC kill
+        "refStandingOnKill": {
+            "enable": true,
+
+            //Amount of standing/rep to be gained depending on the level of the player killed
+            "repByKillLevel": [
+                {
+                    "levelRange": [0, 10],
+                    "rep": 0.003
+                },
+                {
+                    "levelRange": [10, 30],
+                    "rep": 0.004
+                },
+                {
+                    "levelRange": [30, 50],
+                    "rep": 0.006
+                },
+                {
+                    "levelRange": [50, 9999],
+                    "rep": 0.01
+                }
+            ]
+        },
+    },
+
+    //A series of buffs to the SICC container
+    "SICCBuffs": {
+        "enable": true,
+        
+        //SICC will be able to hold everything that the Docs case can (on top of what the SICC already can carry)
+        "canHoldWhatDocsCan": true,
+        
+        //Additional items that can be put in a SICC case
+        "additionalWhitelistedItems": [
+            "59fafd4b86f7745ca07e1232", //Key tool
+        ]
+    },
+
+    //A variety of changes to bitcoin farming. The defualt configuration is aimed at making bitcoin farming less powerful to start with but more powerful at high gpu counts
+    "bitcoinChanges": {
+        "enable": true,
+
+        //Remove all non-barter trades for GPUs
+        "cannotBuyGPU": true,
+
+        //Should the value of a BitCoin be overridden to be a set value?
+        "overrideValue": true,
+        "value": 648000,
+
+        //Desmos graph to visualize the following two values: https://www.desmos.com/calculator/osralvxw4g
+        //Flatly multiply the rate of btc produced by this much (variable m in Desmos)
+        "btcFarmSpeedMult": 0.68,
+        //How effective is each GPU in boosting the production rate (variable E in Desmos)
+        "gpuBoostRate": 0.164,
+
+        //How many bitcoins fit in the bitcoin farm
+        "btcCapacity": 5,
+    },
+
+    //Change initial trader reputation
+    "overrideInitialStanding": {
+        "enable": true,
+        
+        //Default starting reputation
+        "defaultOverride": 0.05,
+
+        //Change the default stating on a per-trader basis
+        "indivudalOverrides": {
+            "579dc571d53a0658a154fbec": 1, //Fence
+        }
+    },
+
+    //Miscellaneous changes
+    "misc": {
+
+        "removeFirFromQuests": true,
+        "removeFirFromHideout": true,
+        "removeFirFromFlea": true,
+
+        //Multiply amounts of crafted products and crafting times in hideout
+        "craftProductMultiplier": 2,
+        "craftTimeMultiplier": 0.5,
+
+        //Enable the additional quest rewards (separate from secure containers quest rewards)
+        //More settings can be found in the advanced/additionalQuestRewards.json5 config file
+        "enableExtraQuestRewards": true,
+
+        //Enable or disable the custom trades defined in the advanced config customTrades.json5
+        "addCustomTrades": true,
+
+        //Change maximum stack size for the given items
+        "stackSizeOverride": {
+            //Special items used in quests
+            //Unfortunately BSG's spaghetti code makes it so that placing one of these consumes the entire stack instead of just one unit
+            //"5991b51486f77447b112d44f": 3, //MS2000 Marker
+            //"5ac78a9b86f7741cca0bbd8d": 3, //Signal Jammer
+            //"5b4391a586f7745321235ab2": 3, //Wi-fi Camera
+            //Others
+            //"6656560053eaaa7a23349c86": 5, //Lega Medals
+        },
+
+        //Change sizes of containers
+        "ContanerSizeChanges": {
+            //Vanilla items
+            "5aafbde786f774389d0cbc0f": [8, 8], //Ammunition case buff from 7x7 to 8x8
+            "5c127c4486f7745625356c13": [8, 8], //Magazine case buff from 7x7 to 8x8
+            "5aafbcd986f7745e590fff23": [8, 8], //Medicine case buff from 7x7 to 8x8
+
+            //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
+            "12403f74773f49be6a2d84b7": [2, 3], //Small Medical Pouch nerf down to 2x3
+            "ae9e418fd5d4c4eec4a0e6ea": [2, 2], //Small Ammunition Pouch nerf down to 2x2
+
+            //Tactical Gear Component items (does nothing if mod is not installed)
+            "672e2e7526ba61dbb88be7ff": [4, 2], //TGC First Aid container nerf down to 4x2
+            "672e2e758808bacbb9d5abc4": [2, 3], //TGC Ammo Pouch nerf down to 2x3
+        },
+
+        //Change the price of items that are sold for rubles
+        "priceChanges": {
+            //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
+            "12403f74773f49be6a2d84b7": 1442000,    //Small Medical Pouch
+            "ae9e418fd5d4c4eec4a0e6ea": 620920,     //Small Ammunition Pouch
+
+            //Tactical Gear Component items (does nothing if mod is not installed)
+            "672e2e7526ba61dbb88be7ff": 6080000,    //TGC First Aid container
+            "672e2e758808bacbb9d5abc4": 3880000,    //TGC Ammo Pouch
+        },
+        
+    },
+
     //Module responsible for algorithmically rebalancing most military items in the game
     //This module calculates a loyalty score for each item that can also be decimal. The actual in-game loyalty level of the item will be the floor of the loyalty score. So for example a loyalty score of 3.8 will correspond to loyalty level 3
     //The exact way in which this works will become more apparent by looking at the specific rules for each class of items (for example the ammoRules)
@@ -462,365 +836,6 @@
                 "627e14b21713922ded6f2c15": 4, //AXMC
             }
         }
-    },
-
-    //Apply changes to secure containers and the ways to obtain them
-    //Most safe containers have been made slightly bigger (2 to 4 extra slots on each)
-    //Alpha is obtainable from Delivery from the Past
-    //Beta is obtainable from Setup
-    //Gamma is obtainable from accepting Network Provider - Part 1
-    "secureContainerProgression": {
-        "enable": true,
-
-        //Set the container you start a new profile with. Doesn't work if mod gets added after the profile has already been created, please start fresh
-        "starterContainer": "5732ee6a24597719ae0c0281", //Waist Pouch
-
-        //More options can be found in the advanced config folder in the secureChanges.json5 file
-    },
-
-    //This mod is intended to (and balanced around) playing without the flea market. Change this setting at your own peril!
-    "fleaMarketChanges": {
-        "disableFleaMarket": true,
-
-        //If true keys that are tradable on the flea market by default will still be tradable even if disableFleaMarket is true
-        "stillAllowKeys": true,
-
-        //Even if the flea market is disabled the following items will still be sold (and sellable) on it
-        "fleaWhitelist": [
-
-        ]
-    },
-
-    //Reduce the amounts of items required by each hideout upgrade. All items required beyond a certain threshold will be multiplied by the given factor. Only the amount that goes past the threshold is mutliplied
-    //For example if the threshold is 3 and the factor is 0.5 if a build would require 15 (= 3 + 12) nuts it will instead require 3 + (12 * 0.5) = 9 nuts
-    "hideoutBuildsChanges": {
-        "enable": true,
-
-        "threshold": 3,
-        "factor": 0.5,
-        "roundDown": true,
-    },
-
-    //Stash changes
-    "stashProgression" : {
-        "enable": true,
-
-        //What stash level should a new profile start with?
-        "startingStashLevel": 1,
-
-        //Amount of lines in each stash level
-        "stashSizes": [40, 55, 70, 85, 100],
-
-        //Multiply ruble cost of each stage of stash upgrade by this much
-        "stashUpgradeCostFactor": 0.4,
-
-        //Change loyalty requirements for stash upgrades by this much
-        "stashUpgradeLoyaltyDelta": -1,
-    },
-
-    //Make skill xp gain faster and buff some skill bonuses
-    "skillChanges": {
-        "enable": true,
-
-        //With these default settings Metabolism levels super fast but fixing that is harder than it might seem. Planned for a future version
-
-        //Multiply earned skill XP by this much if it's fresh XP (XP for a skill you haven't level recently this raid)
-        "SkillFreshEffectiveness": 2,
-        //How many full skill points are considered to be fresh
-        "SkillFreshPoints": 2,
-        //Minimum multiplier from having skill fatigue
-        "SkillMinEffectiveness": 0.4,
-        //How many points after fresh points before fatigue kicks in
-        "SkillPointsBeforeFatigue": 1,
-
-        //Multiply the amount of XP gained for each skill and/or the effectiveness of the various skill buffs
-        "CustomMultipliers": {
-            //Flat out multiply the amount of xp earned for skills
-            "GlobalXPMultiplier": 1,
-            //Specific multipliers per-skill. If unspecified it's considered to be 1
-            //Both global and specific multipliers apply, this does NOT override the global
-            "SkillXPMultipliers": {
-                "Metabolism" : 0.125,
-                "Charisma": 0.7,
-            },
-
-            //Multiply the buff effect of specific skill buffs
-            "SkillBuffMultipliers": {
-                "StrengthBuffLiftWeightInc": 2.5,
-                "MagDrillsLoadSpeed": 3,
-                "MagDrillsUnloadSpeed": 3,
-                "MagDrillsInventoryCheckSpeed": 2,
-                "CharismaDailyQuestsRerollDiscount": 10,
-                "CharismaHealingDiscount": 10,
-                "CharismaInsuranceDiscount": 10,
-                "CharismaExfiltrationDiscount": 10,
-                "SurgeryReducePenalty": 2,
-                "SurgerySpeed": 2,
-                "SearchSpeed": 1.5,
-
-                //Complete list of all buffs that can be modified:
-
-                //EnduranceBuffEnduranceInc
-                //EnduranceBuffJumpCostRed
-                //EnduranceBuffBreathTimeInc
-                //EnduranceBuffRestorationTimeRed
-                //EnduranceBreathElite
-                //EnduranceHands
-                //StrengthBuffLiftWeightInc
-                //StrengthBuffSprintSpeedInc
-                //StrengthBuffJumpHeightInc
-                //StrengthBuffThrowDistanceInc
-                //StrengthBuffMeleePowerInc
-                //StrengthBuffElite
-                //StrengthBuffMeleeCrits
-                //StrengthBuffAim
-                //VitalityBuffBleedChanceRed
-                //VitalityBuffSurviobilityInc
-                //VitalityBuffRegeneration
-                //VitalityBuffBleedStop
-                //HealthBreakChanceRed
-                //HealthOfflineRegenerationInc
-                //HealthEnergy
-                //HealthHydration
-                //HealthEliteAbsorbDamage
-                //HealthElitePosion
-                //StressPainChance
-                //StressTremor
-                //StressBerserk
-                //MetabolismRatioPlus
-                //MetabolismEnergyExpenses
-                //MetabolismPhysicsForget
-                //MetabolismPhysicsForget2
-                //MetabolismEliteBuffNoDyhydration
-                //MetabolismEliteNoForget
-                //PerceptionHearing
-                //PerceptionFov
-                //PerceptionLootDot
-                //PerceptionmEliteNoIdea
-                //IntellectLearningSpeed
-                //IntellectWeaponMaintance
-                //IntellectEliteNaturalLearner
-                //IntellectEliteAmmoCounter
-                //IntellectEliteContainerScope
-                //IntellectRepairPointsCostReduction
-                //AttentionLootSpeed
-                //AttentionRareLoot
-                //AttentionEliteLuckySearch
-                //AttentionEliteExtraLootExp
-                //MagDrillsLoadSpeed
-                //MagDrillsUnloadSpeed
-                //MagDrillsInventoryCheckSpeed
-                //MagDrillsInventoryCheckAccuracy
-                //MagDrillsInstantCheck
-                //MagDrillsLoadProgression
-                //CharismaBuff1
-                //CharismaBuff2
-                //CharismaEliteBuff1
-                //CharismaEliteBuff2
-                //CharismaDailyQuestsRerollDiscount
-                //CharismaHealingDiscount
-                //CharismaInsuranceDiscount
-                //CharismaExfiltrationDiscount
-                //CharismaScavCaseDiscount
-                //CharismaFenceRepPenaltyReduction
-                //CharismaAdditionalDailyQuests
-                //WeaponReloadBuff
-                //WeaponRecoilBuff
-                //WeaponSwapBuff
-                //DrawSpeed
-                //DrawElite
-                //DrawTremor
-                //DrawSound
-                //AimMasterElite
-                //AimMasterWiggle
-                //AimMasterSpeed
-                //RecoilControlImprove
-                //RecoilControlElite
-                //CovertMovementSoundVolume
-                //ProneMovementSpeed
-                //ProneMovementVolume
-                //ProneMovementElite
-                //TroubleFixing
-                //TroubleFixingAmmoElite
-                //TroubleFixingExamineMalfElite
-                //WeaponErgonomicsBuff
-                //WeaponDoubleMastering
-                //WeaponDoubleActionRecoilReduceBuff
-                //WeaponStiffHands
-                //ThrowingStrengthBuff
-                //ThrowingEnergyExpenses
-                //ThrowingWeaponsBuffElite
-                //CovertMovementSpeed
-                //CovertMovementElite
-                //CovertMovementLoud
-                //CovertMovementEquipment
-                //SearchSpeed
-                //SearchDouble
-                //SurgeryReducePenalty
-                //SurgerySpeed
-                //HideoutResourceConsumption
-                //HideoutZoneBonusBoost
-                //HideoutExtraSlots
-                //CraftingElite
-                //CraftingSingleTimeReduce
-                //CraftingContinueTimeReduce
-                //MetabolismPoisonTime
-                //MetabolismMiscDebuffTime
-                //ImmunityMiscEffects
-                //ImmunityPoisonBuff
-                //ImmunityPainKiller
-                //ImmunityPoisonChance
-                //ImmunityMiscEffectsChance
-                //WeaponDurabilityLossOnShotReduce
-                //WearAmountRepairGunsReducePerLevel
-            },
-        }
-    },
-
-    //A series of changes that make Ref work much better in SPT by trying him to PMC kills
-    //The mods "Bosses Have Lega Medals" and "Ref - SPT Friendly Quests" are STRONGLY reccomended, this section is ment to complement those two
-    //Bosses Have Lega Medals: https://hub.sp-tarkov.com/files/file/2109-bosses-have-lega-medals/
-    //Ref - SPT Friendly Quests: https://hub.sp-tarkov.com/files/file/2108-ref-spt-friendly-quests/
-    "refChanges": {
-        "enable": true,
-
-        //If true Ref will buy items for GP coins instead of RUB
-        //I strongly reccomend keeping refOnlyBuysDogtags to true if you intend on keeping this option enabled
-        "refBuysInGPCoins": true,
-
-        //Ref won't buy anything except dogtags (and Lega Medals if enabled)
-        "refOnlyBuysDogtags": true,
-        "refAlsoBuysLegaMedals": true, //Works regardless of the value of the previous option
-
-        //Gain standing/rep for Ref every time you get a PMC kill
-        "refStandingOnKill": {
-            "enable": true,
-
-            //Amount of standing/rep to be gained depending on the level of the player killed
-            "repByKillLevel": [
-                {
-                    "levelRange": [0, 10],
-                    "rep": 0.003
-                },
-                {
-                    "levelRange": [10, 30],
-                    "rep": 0.004
-                },
-                {
-                    "levelRange": [30, 50],
-                    "rep": 0.006
-                },
-                {
-                    "levelRange": [50, 9999],
-                    "rep": 0.01
-                }
-            ]
-        },
-    },
-
-    //A series of buffs to the SICC container
-    "SICCBuffs": {
-        "enable": true,
-        
-        //SICC will be able to hold everything that the Docs case can (on top of what the SICC already can carry)
-        "canHoldWhatDocsCan": true,
-        
-        //Additional items that can be put in a SICC case
-        "additionalWhitelistedItems": [
-            "59fafd4b86f7745ca07e1232", //Key tool
-        ]
-    },
-
-    //A variety of changes to bitcoin farming. The defualt configuration is aimed at making bitcoin farming less powerful to start with but more powerful at high gpu counts
-    "bitcoinChanges": {
-        "enable": true,
-
-        //Remove all non-barter trades for GPUs
-        "cannotBuyGPU": true,
-
-        //Should the value of a BitCoin be overridden to be a set value?
-        "overrideValue": true,
-        "value": 648000,
-
-        //Desmos graph to visualize the following two values: https://www.desmos.com/calculator/osralvxw4g
-        //Flatly multiply the rate of btc produced by this much (variable m in Desmos)
-        "btcFarmSpeedMult": 0.68,
-        //How effective is each GPU in boosting the production rate (variable E in Desmos)
-        "gpuBoostRate": 0.164,
-
-        //How many bitcoins fit in the bitcoin farm
-        "btcCapacity": 5,
-    },
-
-    //Change initial trader reputation
-    "overrideInitialStanding": {
-        "enable": true,
-        
-        //Default starting reputation
-        "defaultOverride": 0.05,
-
-        //Change the default stating on a per-trader basis
-        "indivudalOverrides": {
-            "579dc571d53a0658a154fbec": 1, //Fence
-        }
-    },
-
-    //Miscellaneous changes
-    "misc": {
-
-        "removeFirFromQuests": true,
-        "removeFirFromHideout": true,
-        "removeFirFromFlea": true,
-
-        //Multiply amounts of crafted products and crafting times in hideout
-        "craftProductMultiplier": 2,
-        "craftTimeMultiplier": 0.5,
-
-        //Enable the additional quest rewards (separate from secure containers quest rewards)
-        //More settings can be found in the advanced/additionalQuestRewards.json5 config file
-        "enableExtraQuestRewards": true,
-
-        //Enable or disable the custom trades defined in the advanced config customTrades.json5
-        "addCustomTrades": true,
-
-        //Change maximum stack size for the given items
-        "stackSizeOverride": {
-            //Special items used in quests
-            //Unfortunately BSG's spaghetti code makes it so that placing one of these consumes the entire stack instead of just one unit
-            //"5991b51486f77447b112d44f": 3, //MS2000 Marker
-            //"5ac78a9b86f7741cca0bbd8d": 3, //Signal Jammer
-            //"5b4391a586f7745321235ab2": 3, //Wi-fi Camera
-            //Others
-            //"6656560053eaaa7a23349c86": 5, //Lega Medals
-        },
-
-        //Change sizes of containers
-        "ContanerSizeChanges": {
-            //Vanilla items
-            "5aafbde786f774389d0cbc0f": [8, 8], //Ammunition case buff from 7x7 to 8x8
-            "5c127c4486f7745625356c13": [8, 8], //Magazine case buff from 7x7 to 8x8
-            "5aafbcd986f7745e590fff23": [8, 8], //Medicine case buff from 7x7 to 8x8
-
-            //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
-            "12403f74773f49be6a2d84b7": [2, 3], //Small Medical Pouch nerf down to 2x3
-            "ae9e418fd5d4c4eec4a0e6ea": [2, 2], //Small Ammunition Pouch nerf down to 2x2
-
-            //Tactical Gear Component items (does nothing if mod is not installed)
-            "672e2e7526ba61dbb88be7ff": [4, 2], //TGC First Aid container nerf down to 4x2
-            "672e2e758808bacbb9d5abc4": [2, 3], //TGC Ammo Pouch nerf down to 2x3
-        },
-
-        //Change the price of items that are sold for rubles
-        "priceChanges": {
-            //WTT-Pack 'n' Strap items (does nothing if mod is not installed)
-            "12403f74773f49be6a2d84b7": 1442000,    //Small Medical Pouch
-            "ae9e418fd5d4c4eec4a0e6ea": 620920,     //Small Ammunition Pouch
-
-            //Tactical Gear Component items (does nothing if mod is not installed)
-            "672e2e7526ba61dbb88be7ff": 6080000,    //TGC First Aid container
-            "672e2e758808bacbb9d5abc4": 3880000,    //TGC Ammo Pouch
-        },
-        
     },
 
     //Development options

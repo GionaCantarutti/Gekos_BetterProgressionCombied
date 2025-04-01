@@ -71,6 +71,33 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         try
         {
             staticRouter.registerStaticRouter(
+                "skillpointsconfigrouter",
+                [
+                    {
+                        url: "/server-config-router/skillpoints",
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                        action: (_url: string, _info: any, _sessionID: string, _output: string): Promise<string> =>
+                        {
+                            return Promise.resolve(JSON.stringify({response: this.context.config.skillChanges.SkillPointsSystem}));
+                        }
+                    }
+                ],
+                "skillpointsconfig"
+            )
+        }
+        catch (error)
+        {
+            this.context.logger.error("Failed to send skill points config data over to the client!");
+            if (this.context.config.dev.showFullError)
+            {
+                this.context.logger.error("Error Details:" + error);
+                this.context.logger.error("Stack Trace:\n" + (error instanceof Error ? error.stack : "No stack available"));
+            }
+        }
+
+        try
+        {
+            staticRouter.registerStaticRouter(
                 "skillsconfigrouter",
                 [
                     {

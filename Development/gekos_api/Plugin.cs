@@ -43,16 +43,18 @@ namespace gekos_api
             new SkillBuffMulti1305().Enable();
             new SkillBuffMulti1306().Enable();
 
-            //Patch that creates the + and - buttons in the skills tab
-            new SkillButtons().Enable();
-            //Apply patch to add the additional skill levels
-            new AdditionalSkillLevels().Enable();
-            StartCoroutine(LoadSkillLevels());
-            //Patch that creates the skills points UI element
-            new AvailableSkillPointsUI().Enable();
+            if (ConfigHandler.GetPointsConfig().enable) //Do not enable patches if module is disabled
+            {
+                //Patch that creates the + and - buttons in the skills tab
+                new SkillButtons().Enable();
+                //Apply patch to add the additional skill levels
+                new AdditionalSkillLevels().Enable();
+                StartCoroutine(LoadSkillLevels());
+                //Patch that creates the skills points UI element
+                new AvailableSkillPointsUI().Enable();
+            }
 
-
-            LogSource.LogInfo("Geko's API loaded!");
+            LogSource.LogInfo("Geko's API fully loaded!");
         }
 
         private IEnumerator LoadSkillLevels()

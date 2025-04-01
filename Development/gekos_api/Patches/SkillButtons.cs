@@ -24,9 +24,12 @@ namespace gekos_api.Patches
         private static TMP_FontAsset font;
         private static Material fontMaterial;
 
+        private static PointsConfig config;
+
         static SkillButtons()
         {
             buttonsPrefab = Utils.LoadGameObject("skillsbutton.bundle", "Buttons Panel");
+            config = ConfigHandler.GetPointsConfig();
         }
 
         protected override MethodBase GetTargetMethod()
@@ -37,6 +40,8 @@ namespace gekos_api.Patches
         [PatchPostfix]
         static void Postfix(ref SkillIcon __instance, SkillClass skill)
         {
+            if (!config.enable) return;
+
             Transform icon = __instance.transform.Find("Skill Icon");
             //No need to do anything if the buttons have already been created
             if (icon.Find(OBJECT_NAME) != null) return;

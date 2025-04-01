@@ -15,6 +15,13 @@ namespace gekos_api.Helpers
             ConfigResponse<SkillsConfig> config = JsonConvert.DeserializeObject<ConfigResponse<SkillsConfig>>(req);
             return config.Response;
         }
+
+        public static PointsConfig GetPointsConfig()
+        {
+            var req = SPT.Common.Http.RequestHandler.GetJson("/server-config-router/skillpoints");
+            ConfigResponse<PointsConfig> config = JsonConvert.DeserializeObject<ConfigResponse<PointsConfig>>(req);
+            return config.Response;
+        }
     }
 
     class ConfigResponse<T> { public T Response { get; set; } }
@@ -30,5 +37,21 @@ namespace gekos_api.Helpers
 
         [JsonProperty("SkillBuffMultipliers")]
         public Dictionary<string, float> BuffMultis { get; set; }
+
+    }
+
+    class PointsConfig
+    {
+        [JsonProperty("enable")]
+        public bool enable { get; set; }
+
+        [JsonProperty("skillPointsPerLevel")]
+        public float skillPointsPerLevel { get; set; }
+
+        [JsonProperty("automaticallyRefundOverflows")]
+        public bool automaticallyRefundOverflows { get; set; }
+
+        [JsonProperty("enableUnallocation")]
+        public bool enableUnallocation { get; set; }
     }
 }
