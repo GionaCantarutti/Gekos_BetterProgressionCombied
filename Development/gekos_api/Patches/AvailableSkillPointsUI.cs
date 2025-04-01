@@ -89,7 +89,7 @@ namespace gekos_api.Patches
         public static void UpdatePoints()
         {
             int pointsVal = AdditionalSkillLevels.GetAvailableSkillPoints();
-            string points = pointsVal > 0 ? $"<color=#85FF9E>{pointsVal}</color>" : $"pointsVal";
+            string points = pointsVal > 0 ? $"<color=#85FF9E>{pointsVal}</color>" : $"{pointsVal}";
             tmp.text = $"<color=#949286>available points: </color> {points}";
         }
     }

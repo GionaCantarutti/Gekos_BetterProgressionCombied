@@ -231,8 +231,8 @@
             //This keeps going until the skill reaches level 51 "naturally" without the help of the skill points
             "automaticallyRefundOverflows": true,
 
-            //If true players can freely unallocate invested points. I suggest keeping this off as it otherwise encourages moving skill points around constantly
-            "enableUnallocation": false,
+            //If true players can freely deallocate invested points. I suggest keeping this off as it otherwise encourages moving skill points around constantly
+            "enableDeallocation": false,
         }
     },
 

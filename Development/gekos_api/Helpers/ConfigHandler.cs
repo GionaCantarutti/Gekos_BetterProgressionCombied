@@ -51,7 +51,7 @@ namespace gekos_api.Helpers
         [JsonProperty("automaticallyRefundOverflows")]
         public bool automaticallyRefundOverflows { get; set; }
 
-        [JsonProperty("enableUnallocation")]
-        public bool enableUnallocation { get; set; }
+        [JsonProperty("enableDeallocation")]
+        public bool enableDeallocation { get; set; }
     }
 }

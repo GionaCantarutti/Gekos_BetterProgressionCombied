@@ -26,15 +26,20 @@ namespace gekos_api.Patches
 
         private static PointsConfig config;
 
+        private static Dictionary<ESkillId, GameObject> upButtons;
+        private static Dictionary<ESkillId, GameObject> downButtons;
+
         static SkillButtons()
         {
             buttonsPrefab = Utils.LoadGameObject("skillsbutton.bundle", "Buttons Panel");
             config = ConfigHandler.GetPointsConfig();
+            upButtons = new Dictionary<ESkillId, GameObject>();
+            downButtons = new Dictionary<ESkillId, GameObject>();
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(SkillIcon), nameof(SkillPanel.Show));
+            return AccessTools.Method(typeof(SkillIcon), nameof(SkillIcon.Show));
         }
 
         [PatchPostfix]
@@ -89,6 +94,42 @@ namespace gekos_api.Patches
             buttons[1].GetComponent<Button>().onClick.AddListener(delegate () {
                 ChangeSkillLevel(skill.Id, -1, skillPanel, sIcon);
             });
+
+            upButtons[skill.Id] = buttons[0].gameObject;
+            downButtons[skill.Id] = buttons[1].gameObject;
+
+            UpdateButtonsVisibility();
+        }
+
+        private static void UpdateButtonsVisibility()
+        {
+            foreach (KeyValuePair<ESkillId, GameObject> up in upButtons)
+            {
+                if (up.Value == null) continue;
+
+                bool enableButton = AdditionalSkillLevels.GetAvailableSkillPoints() > 0;
+
+                if (Utils.GetPlayerProfile().Skills.TryGetSkill(up.Key, out SkillClass skill))
+                {
+                    if (skill.Level >= 51) enableButton = false;
+                }
+
+                up.Value.SetActive(enableButton);
+            }
+
+            foreach (KeyValuePair<ESkillId, GameObject> down in downButtons)
+            {
+                if (down.Value == null) continue;
+
+                bool enableButton = config.enableDeallocation;
+
+                if (Utils.GetPlayerProfile().Skills.TryGetSkill(down.Key, out SkillClass skill))
+                {
+                    if (skill.Level <= 0) enableButton = false;
+                }
+
+                down.Value.SetActive(enableButton);
+            }
         }
 
         private static void ChangeSkillLevel(ESkillId skillId, float delta, SkillPanel panel, SkillIcon icon)
@@ -97,6 +138,7 @@ namespace gekos_api.Patches
             if (res) {
                 panel.method_1(); //Update visuals of the panel
                 UpdateSkillLevel(icon);
+                UpdateButtonsVisibility();
             }
         }
 
@@ -118,7 +160,7 @@ namespace gekos_api.Patches
             }
             else
             {
-                UnityEngine.Debug.LogError("Reflection failed: Could not find _levelPanel or skillClass");
+                Debug.LogError("Reflection failed: Could not find _levelPanel or skillClass");
             }
         }
 
