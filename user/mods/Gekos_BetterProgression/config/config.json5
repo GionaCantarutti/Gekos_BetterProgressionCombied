@@ -1,6 +1,7 @@
 //// GEKO'S BETTER PROGRESSION CONFIGURATION FILE ////
 //
 // Welcome to the config file. Nearly everything this mod does can be disabled or tweaked to your liking.
+// All text after "//" in a given line is a "comment" and the mod won't read it at all, such as these lines over here
 // You can find IDs for items and other things on https://moxopixel.com/tarkynator/. Failing that you can explore the SPT_Data/Server/database folder in your SPT installation to find the ID you need
 // A few times "Deltas" are mentioned in this config file. Delta is a fancy word to mean "change", a negative delta will reduce a value and a positive one will increase it
 // All ranges are considered to be inclusive of the lower bound but exclusive of the upper one. For example a [10, 40] range will be all values from 10 to 40 with 10 included but 40 excluded
@@ -63,19 +64,18 @@
     },
 
     //Make skill xp gain faster and buff some skill bonuses
+    //Also optionally adds a system that provides skill points that can be freely allocated as you level up your PMC
     "skillChanges": {
         "enable": true,
 
-        //With these default settings Metabolism levels super fast but fixing that is harder than it might seem. Planned for a future version
-
-        //Multiply earned skill XP by this much if it's fresh XP (XP for a skill you haven't level recently this raid)
+        //Multiply earned skill XP by this much if it's fresh XP (XP for a skill you haven't leveled recently this raid)
         "SkillFreshEffectiveness": 2,
-        //How many full skill points are considered to be fresh
+        //How many full skill points are considered to be fresh before going back to normal XP earn rates
         "SkillFreshPoints": 2,
-        //Minimum multiplier from having skill fatigue
-        "SkillMinEffectiveness": 0.4,
-        //How many points after fresh points before fatigue kicks in
+        //After this many points have been earned at a normal XP rate (so after the fresh points) skill fatigue kicks in
         "SkillPointsBeforeFatigue": 1,
+        //Skill fatigue gradually reduces XP earned down to a minimum multiplier that is specified here
+        "SkillMinEffectiveness": 0.4,
 
         //Multiply the amount of XP gained for each skill and/or the effectiveness of the various skill buffs
         "CustomMultipliers": {
@@ -220,7 +220,7 @@
             },
         },
 
-        //Each PMC level earn a customizable amount of freely allocatable skill points
+        //Earn a customizable amount of freely allocatable skill points with each PMC level
         "SkillPointsSystem": {
             "enable": true,
             
@@ -229,6 +229,8 @@
 
             //The game keeps track of skill levels behind the scenes even when you got past level 51. If this is true any point allocated into a skill that is level 51 will be refunded as the skill naturally keeps leveling up.
             //This keeps going until the skill reaches level 51 "naturally" without the help of the skill points
+            //For example say that you have a skill at level 51 out of which 40 are naturally earned levels and 11 have been allocated with this system.
+            //Then as the skill continues to overlevel past 51 (which is the cap) you will gradually get your 11 points back if this option is set to true
             "automaticallyRefundOverflows": true,
 
             //If true players can freely deallocate invested points. I suggest keeping this off as it otherwise encourages moving skill points around constantly
@@ -236,7 +238,7 @@
         }
     },
 
-    //A series of changes that make Ref work much better in SPT by trying him to PMC kills
+    //A series of changes that make Ref work much better in SPT by tying him to PMC kills
     //The mods "Bosses Have Lega Medals" and "Ref - SPT Friendly Quests" are STRONGLY reccomended, this section is ment to complement those two
     //Bosses Have Lega Medals: https://hub.sp-tarkov.com/files/file/2109-bosses-have-lega-medals/
     //Ref - SPT Friendly Quests: https://hub.sp-tarkov.com/files/file/2108-ref-spt-friendly-quests/
@@ -290,7 +292,8 @@
         ]
     },
 
-    //A variety of changes to bitcoin farming. The defualt configuration is aimed at making bitcoin farming less powerful to start with but more powerful at high gpu counts
+    //A variety of changes to bitcoin farming. The defualt configuration is aimed at making bitcoin farming less powerful to start with but more powerful at high GPU counts
+    //Keep in mind that with the rest of the mod with default settings GPUs will be much harder to obtain than normal, which is intended and accounted for in the balancing of this part
     "bitcoinChanges": {
         "enable": true,
 
@@ -299,7 +302,7 @@
 
         //Should the value of a BitCoin be overridden to be a set value?
         "overrideValue": true,
-        "value": 648000,
+        "value": 648000,  //This is the actual item value. Traders will buy them at a lower amount since they never pay full price for items
 
         //Desmos graph to visualize the following two values: https://www.desmos.com/calculator/osralvxw4g
         //Flatly multiply the rate of btc produced by this much (variable m in Desmos)
@@ -327,6 +330,7 @@
     //Miscellaneous changes
     "misc": {
 
+        //Remove Found in Raid requirements from various places
         "removeFirFromQuests": true,
         "removeFirFromHideout": true,
         "removeFirFromFlea": true,
@@ -345,7 +349,8 @@
         //Change maximum stack size for the given items
         "stackSizeOverride": {
             //Special items used in quests
-            //Unfortunately BSG's spaghetti code makes it so that placing one of these consumes the entire stack instead of just one unit
+            //Unfortunately BSG's spaghetti code makes it so that placing one of these consumes the entire stack instead of just one unit so i disabled the changes. Feel free to re-enable them if you still want them
+            //To do so remove the "//" at the start of the desired lines
             //"5991b51486f77447b112d44f": 3, //MS2000 Marker
             //"5ac78a9b86f7741cca0bbd8d": 3, //Signal Jammer
             //"5b4391a586f7745321235ab2": 3, //Wi-fi Camera
@@ -389,9 +394,10 @@
         "enable": true,
 
         //If false items that end up having a loyalty score greater or equal than 5 will be hidden (level >4 traders do not exist)
-        //If it true items with loyalty over 4 will be brought back to 4
+        //If it's true items with loyalty over 4 will be brought back to 4
         "clampToMaxLevel": true,
-        //If true all trades that are locked behind quests will be treated as if "clamtToMaxLevel" is true rgardless of its actual value
+        //If true all trades that are locked behind quests will be treated as if "clampToMaxLevel" is true rgardless of its actual value
+        //If this is false then some quest-locked items could potentially be unobtainable even when unlocked since they would end up at loyalty level 5+
         "forceClampingOfQuestlockedItems": true,
 
     	//Change the loyalty score of all items this mod affects (for example barter items are unaffected) by this much if the item trade is a barter or if it's quest locked
@@ -413,28 +419,6 @@
         "ammoRules": {
             "enable": true,
             "logChanges": false, //For debugging
-
-            //Settings specific to hideout crafts of ammo
-            "craftSettings": {
-                //If disabled ammo crafts will not be changed by this mod
-                "enable": true,
-
-                //If loyalty score falls between the given ranges then the ammunition craft will end up in the corresponding workbench level
-                "loyaltyToLevelRanges": [
-                    {
-                        "range": [-9999, 2.5],
-                        "level": 1
-                    },
-                    {
-                        "range": [2.5, 3.5],
-                        "level": 2
-                    },
-                    {
-                        "range": [3.5, 9999],
-                        "level": 3
-                    }
-                ]
-            },
 
             //Change every ammunition loyalty level by this much
             "globalDelta": 0,
@@ -576,7 +560,29 @@
             //Disable the ammo balancing module on the following calibers
             "ignoreCalibers": [
                 "Caliber26x75", //Flare gun
-            ]
+            ],
+
+            //Settings specific to hideout crafts of ammo
+            "craftSettings": {
+                //If disabled ammo crafts will not be changed by this mod
+                "enable": true,
+
+                //If loyalty score falls between the given ranges then the ammunition craft will end up in the corresponding workbench level
+                "loyaltyToLevelRanges": [
+                    {
+                        "range": [-9999, 2.5],
+                        "level": 1
+                    },
+                    {
+                        "range": [2.5, 3.5],
+                        "level": 2
+                    },
+                    {
+                        "range": [3.5, 9999],
+                        "level": 3
+                    }
+                ]
+            },
         
         },
 
@@ -594,7 +600,7 @@
             //Add this delta if the weapon contains any attachments that cannot be purchased at the trader level the weapon would otherwise be placed at
             //Won't affect attachments that are part of the default build of the weapon
             //If attachmentsFollowDefaultBuild is set to false i reccomend setting this to 0
-            //If this is different than 0 the mod will take a few seconds longer to load
+            //If this is different than 0 the mod will take a few seconds longer to load when starting the server (still no performance impact when playing, no worries)
             "advancedAttachmentsDelta": 1,
 
             //Base loyalty score of each weapon is decided by its caliber. If the caliber of the weapon is not listed below then the default value will be picked
@@ -745,9 +751,9 @@
                 "devideNicheByBarterType": true,    //If true items sold for currency and items recieved from barters will be considered of two different niches
                 "devideNicheByQuestLock": true,     //If true items locked behind quests and items that aren't so will be considered of two different niches
 
-                //Power levels of weapons. This is used to determine which weapons are better than which others. Has only meaning in a relative sense (to define a order between weapons of same niche), the absolute value is meaningless.
+                //Power levels of weapons. This is used to determine which weapons are better than which others. Has only meaning in a relative sense (to define an order between weapons of same niche), the absolute value is meaningless.
                 //For example if we want to define the Vepr Hunter as a weaker weapon compared to the RSASS we only need to set their power levels so that the VPO's is lower, the actual numbers don't matter
-                //Once again, the power level is compared for a possible shift only between weapons that share the same caliber AND fire mode AND loyalty level
+                //Once again, the power level is compared for a possible shift only between weapons that share the same caliber AND fire mode AND loyalty level (with default niche settings)
                 //For example the power level of the Vepr Hunter will never compared to that of the SCAR-H nor that of the STM-9
                 //If two weapons in the same niche and loyalty level have the same power level then neither will be shifted
                 "powerLevels": {
