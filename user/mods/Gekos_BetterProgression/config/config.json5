@@ -27,7 +27,7 @@
     "fleaMarketChanges": {
         "disableFleaMarket": true,
 
-        //If true keys that are tradable on the flea market by default will still be tradable even if disableFleaMarket is true
+        //If true, keys that are tradable on the flea market by default will still be tradable even if disableFleaMarket is true
         "stillAllowKeys": true,
 
         //Even if the flea market is disabled the following items will still be sold (and sellable) on it
@@ -233,7 +233,7 @@
             //Then as the skill continues to overlevel past 51 (which is the cap) you will gradually get your 11 points back if this option is set to true
             "automaticallyRefundOverflows": true,
 
-            //If true players can freely deallocate invested points. I suggest keeping this off as it otherwise encourages moving skill points around constantly
+            //If true, players can freely deallocate invested points. I suggest keeping this off as it otherwise encourages moving skill points around constantly
             "enableDeallocation": false,
         }
     },
@@ -245,7 +245,7 @@
     "refChanges": {
         "enable": true,
 
-        //If true Ref will buy items for GP coins instead of RUB
+        //If true, Ref will buy items for GP coins instead of RUB
         //I strongly reccomend keeping refOnlyBuysDogtags to true if you intend on keeping this option enabled
         "refBuysInGPCoins": true,
 
@@ -393,10 +393,10 @@
     "algorithmicalRebalancing": {
         "enable": true,
 
-        //If false items that end up having a loyalty score greater or equal than 5 will be hidden (level >4 traders do not exist)
+        //If false, items that end up having a loyalty score greater or equal than 5 will be hidden (level >4 traders do not exist)
         //If it's true items with loyalty over 4 will be brought back to 4
         "clampToMaxLevel": true,
-        //If true all trades that are locked behind quests will be treated as if "clampToMaxLevel" is true rgardless of its actual value
+        //If true, all trades that are locked behind quests will be treated as if "clampToMaxLevel" is true rgardless of its actual value
         //If this is false then some quest-locked items could potentially be unobtainable even when unlocked since they would end up at loyalty level 5+
         "forceClampingOfQuestlockedItems": true,
 
@@ -742,14 +742,14 @@
                 "enable": true,
                 "shiftAmount": 1,
 
-                //If true the worse weapon will be shifted down instead of the better one being shifted up
+                //If true, the worse weapon will be shifted down instead of the better one being shifted up
                 "shiftDownInstead": false,
 
                 //How is a wapon niche defined for shifting?
-                "devideNicheByFiremode": true,      //If true weapons of different fire modes will be considered as parts of different niches. Only cares about the best available fire mode and only considers "manual", "semi auto", "burst" and "fullauto"
-                "devideNicheByCaliber": true,       //If true weapons of different calibers will be considered as parts of different niches
-                "devideNicheByBarterType": true,    //If true items sold for currency and items recieved from barters will be considered of two different niches
-                "devideNicheByQuestLock": true,     //If true items locked behind quests and items that aren't so will be considered of two different niches
+                "devideNicheByFiremode": true,      //If true, weapons of different fire modes will be considered as parts of different niches. Only cares about the best available fire mode and only considers "manual", "semi auto", "burst" and "fullauto"
+                "devideNicheByCaliber": true,       //If true, weapons of different calibers will be considered as parts of different niches
+                "devideNicheByBarterType": true,    //If true, items sold for currency and items recieved from barters will be considered of two different niches
+                "devideNicheByQuestLock": true,     //If true, items locked behind quests and items that aren't so will be considered of two different niches
 
                 //Power levels of weapons. This is used to determine which weapons are better than which others. Has only meaning in a relative sense (to define an order between weapons of same niche), the absolute value is meaningless.
                 //For example if we want to define the Vepr Hunter as a weaker weapon compared to the RSASS we only need to set their power levels so that the VPO's is lower, the actual numbers don't matter
