@@ -52,6 +52,14 @@ namespace gekos_api
                 StartCoroutine(LoadSkillLevels());
                 //Patch that creates the skills points UI element
                 new AvailableSkillPointsUI().Enable();
+                //Make it so that certain method use the native level of the skill instaed of the modified one
+                new LevelExpFix().Enable();
+                new CalculateExpOnFirstLevelsFix().Enable();
+                new BaseProgressFix().Enable();
+                new ProgressValueFix().Enable();
+                new OnTriggerFix().Enable();
+                new Method4Fix().Enable();
+                new LevelProgressFix().Enable();
             }
 
             LogSource.LogInfo("Geko's API fully loaded!");

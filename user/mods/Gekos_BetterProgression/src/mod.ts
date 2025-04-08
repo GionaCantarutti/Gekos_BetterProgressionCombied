@@ -31,6 +31,7 @@ import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { join } from "path";
 import { StaticRouterModService } from "@spt/services/mod/staticRouter/StaticRouterModService";
 import { addAdditionalQuestRewards } from "./miscChanges/questRewards.";
+import { ConfigServer } from "@spt/servers/ConfigServer";
 
 class Mod implements IPostDBLoadMod, IPreSptLoadMod
 {
@@ -52,6 +53,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
     postDBLoad(container: DependencyContainer): void
     {
         this.context.database = container.resolve<DatabaseServer>("DatabaseServer");
+        this.context.sptConfig = container.resolve<ConfigServer>("ConfigServer");
         this.context.tables = this.context.database.getTables();
         this.context.itemHelper = container.resolve<ItemHelper>("ItemHelper");
         container.resolve<PresetController>("PresetController").initialize();
@@ -139,20 +141,6 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             }
         }
 
-        try
-        {
-            if (this.context.config.misc.removeFirFromQuests) removeFirFromRepeatables(this.context, container);
-        }
-        catch (error)
-        {
-            this.context.logger.error("Failed to patch daily/weekly quest generator to remove FiR requirement!");
-            if (this.context.config.dev.showFullError)
-            {
-                this.context.logger.error("Error Details:" + error);
-                this.context.logger.error("Stack Trace:\n" + (error instanceof Error ? error.stack : "No stack available"));
-            }
-        }
-
         //For ref buying items for GP coins. Requires client patching for fixing wrong GP icon
         try
         {
@@ -232,6 +220,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
 
         log?.info("Removing FiR requirements...");
         this.safelyRunIf(cfg.misc.removeFirFromQuests, () => removeFirFromQuests(this.context), "Failed to remove FiR requirements form quests!");
+        this.safelyRunIf(cfg.misc.removeFirFromQuests, () => removeFirFromRepeatables(this.context), "Failed to remove FiR requirements from repeatable quests!")
         this.safelyRunIf(cfg.misc.removeFirFromHideout, () => removeFirFromHideout(this.context), "Failed to remove FiR requirements from hideout builds!");
         this.safelyRunIf(cfg.misc.removeFirFromFlea, () => removeFirFromFlea(this.context), "Failed to remove FiR requirements from flea market listings!");
         log?.info("Done!");

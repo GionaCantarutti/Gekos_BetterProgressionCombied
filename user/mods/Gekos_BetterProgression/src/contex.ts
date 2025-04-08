@@ -3,6 +3,7 @@ import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LoggerWrapper } from "./loggerWrapper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { ConfigServer } from "@spt/servers/ConfigServer";
 
 export class Context
 {
@@ -12,11 +13,12 @@ export class Context
     public logger: LoggerWrapper;
     public itemHelper: ItemHelper;
     public presetHelper: PresetHelper;
+    public sptConfig: ConfigServer;
     public config;
 
     constructor(
         _config?: any, /*Not sure how to type this, dynamically type checked languages are weird*/
-        _database?: DatabaseServer, _tables?: IDatabaseTables, _logger?: LoggerWrapper, _itemHelper?: ItemHelper, _preetHelper?: PresetHelper
+        _database?: DatabaseServer, _tables?: IDatabaseTables, _logger?: LoggerWrapper, _itemHelper?: ItemHelper, _preetHelper?: PresetHelper, _sptConfig?: ConfigServer
     )
     {
         this.database = _database;
@@ -25,6 +27,7 @@ export class Context
         this.config = _config;
         this.itemHelper = _itemHelper;
         this.presetHelper = _preetHelper;
+        this.sptConfig = _sptConfig;
     }
 
     public logObject(object: any): void

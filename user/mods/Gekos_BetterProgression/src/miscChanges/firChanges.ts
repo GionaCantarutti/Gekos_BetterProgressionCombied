@@ -3,6 +3,8 @@ import { Context } from "../contex";
 import { DependencyContainer } from "tsyringe";
 import { RepeatableQuestGenerator } from "@spt/generators/RepeatableQuestGenerator";
 import { IQuestCondition } from "@spt/models/eft/common/tables/IQuest";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
 
 export function removeFirFromQuests(context: Context): void
 {
@@ -62,29 +64,10 @@ export function removeFirFromHideout(context: Context): void
 
 }
 
-export function removeFirFromRepeatables(context: Context, container: DependencyContainer): void
+export function removeFirFromRepeatables(context: Context): void
 {
-    container.afterResolution("RepeatableQuestGenerator", (_t, result: RepeatableQuestGenerator) =>
+    for (const repType of context.sptConfig.getConfig<IQuestConfig>(ConfigTypes.QUEST).repeatableQuests)
     {
-        // We want to replace the original method logic with something different
-        const old = (result as any).generateCompletionAvailableForFinish.bind(result);
-        (result as any).generateCompletionAvailableForFinish = (itemTpl: string, value: number) =>
-        {
-            const condition: IQuestCondition = old(itemTpl, value); //Add old logic back in
-
-            try
-            {
-                condition.onlyFoundInRaid = false;
-            
-                return condition;
-            }
-            catch (error)
-            {
-                this.context.logger.error("Error Details:" + "Something went wrong when trying set FiR requirement to false for repeatable quests!");
-                this.context.logger.error("Stack Trace:\n" + (error instanceof Error ? error.stack : "No stack available"));
-                return condition;
-            }
-        };
-        // The modifier Always makes sure this replacement method is ALWAYS replaced
-    }, {frequency: "Always"});
+        repType.questConfig.Completion.requiredItemsAreFiR = false;
+    }
 }

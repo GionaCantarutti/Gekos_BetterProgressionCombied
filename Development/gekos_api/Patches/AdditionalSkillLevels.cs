@@ -67,6 +67,9 @@ namespace gekos_api.Patches
 
         private static PointsConfig config;
 
+        //If true the additional levels will not get added to the Level getter
+        public static bool ExposeNativeLevel = false;
+
         public static SaveData AdditionalLevels
         {
             get { return _additionalLevels; }
@@ -86,19 +89,20 @@ namespace gekos_api.Patches
 
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.PropertyGetter(typeof(AbstractSkillClass), nameof(AbstractSkillClass.Current));
+            return AccessTools.PropertyGetter(typeof(SkillClass), nameof(SkillClass.Level));
         }
 
         [PatchPostfix]
-        static void Postfix(ref AbstractSkillClass __instance, ref float __result)
+        static void Postfix(ref AbstractSkillClass __instance, ref int __result)
         {
             if (!config.enable) return;
+            if (ExposeNativeLevel) return;
             ESkillId skillId = __instance.Id;
             skills[skillId] = __instance;
 
             if (AdditionalLevels.TryGetValue(skillId, out float delta))
             {
-                __result += delta * 100f;
+                __result += Mathf.FloorToInt(delta);
             }
         }
 
@@ -131,6 +135,23 @@ namespace gekos_api.Patches
                 }
             }
             return Mathf.FloorToInt(Mathf.Max(0, (level * config.skillPointsPerLevel) - spent));
+        }
+
+        /// <summary>
+        /// Returns the actual behind-the-scenes level of the skill before the increases given by skill points
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <returns></returns>
+        public static int NativeLevel(SkillClass skill)
+        {
+            ESkillId skillId = skill.Id;
+
+            if (AdditionalLevels.TryGetValue(skillId, out float delta))
+            {
+                return Mathf.CeilToInt(skill.Level - delta);
+            }
+
+            return skill.Level;
         }
 
         /// <summary>

@@ -47,6 +47,7 @@
     <Compile Include="Helpers\SaveDataHandler.cs" />
     <Compile Include="Patches\AdditionalSkillLevels.cs" />
     <Compile Include="Patches\AvailableSkillPointsUI.cs" />
+    <Compile Include="Patches\NativeLevelFixes.cs" />
     <Compile Include="Patches\MinPriceFix.cs" />
     <Compile Include="Patches\SkillBuffModifiers.cs" />
     <Compile Include="Patches\SkillButtons.cs" />
