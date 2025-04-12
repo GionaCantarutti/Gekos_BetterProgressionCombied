@@ -131,7 +131,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
     {
         try
         {
-            if (this.context.config.refChanges.enabled && this.context.config.refChanges.refStandingOnKill.enable) gainRefRepOnKill(this.context, container);
+            if (this.context.config.refChanges.enable && this.context.config.refChanges.refStandingOnKill.enable) gainRefRepOnKill(this.context, container);
         }
         catch (error)
         {
