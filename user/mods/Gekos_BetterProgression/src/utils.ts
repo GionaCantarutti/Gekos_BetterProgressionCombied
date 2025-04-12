@@ -50,10 +50,10 @@ export function findTrades(itemId: string, context: Context): {trader: ITrader, 
     return found;
 }
 
-//Returns an array of item IDs correponding 
+
 export function getDefaultAttachments(weaponID: string, context: Context): string[]
 {
-    const preset = context.presetHelper.getDefaultPreset(weaponID);
+    const preset = context.presetHelper.getDefaultWeaponPresets[weaponID];
     if (preset == null || preset == undefined) return [];
     return preset._items.map((item) => item._tpl);
 }

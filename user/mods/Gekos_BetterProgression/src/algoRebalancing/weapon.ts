@@ -35,41 +35,42 @@ export function calculateWeaponLoyalty(item: IItem, assort: IItem[], context: Co
     return loyalty + config.globalDelta;
 }
 
+//Move attachments that are part of some default build to the same tier of the weapon their are part of the build for
 export function followDefaultBuild(changedItems: Record<number, ChangedItem[]>, context: Context): void
 {
 
     const changesById = indexById(changedItems);
 
-    for (const changes of Object.values(changedItems)) for (const change of Object.values(changes))
+    for (const weaponChange of Object.values(changesById))
     {
-        if (!change.isWeapon) continue;
+        if (!weaponChange.isWeapon) continue;
 
-        const parts = getDefaultAttachments(change.trade._tpl, context);
+        const parts = getDefaultAttachments(weaponChange.trade._tpl, context);
 
         for (const part of parts)
         {
-            const level = loyaltyFromScore(change.score, context.config.algorithmicalRebalancing.clampToMaxLevel);
+            const level = loyaltyFromScore(weaponChange.score, context.config.algorithmicalRebalancing.clampToMaxLevel);
             const partTrades = findTrades(part, context);
 
-            for (const trade of partTrades)
+            for (const partTrade of partTrades)
             {
-                const oldChange = changesById[trade.trade._id];
-                if (oldChange != null)
+                const oldPartChange = changesById[partTrade.trade._id];
+                if (oldPartChange != null)
                 {
-                    const oldLevel = loyaltyFromScore(oldChange.score, context.config.algorithmicalRebalancing.clampToMaxLevel);
+                    const oldLevel = loyaltyFromScore(oldPartChange.score, context.config.algorithmicalRebalancing.clampToMaxLevel);
                     if (oldLevel <= level)
                     {
                         continue;
                     }
                     else
                     {
-                        changedItems[oldLevel].filter((item) => item.trade._id != trade.trade._id)
+                        changedItems[oldLevel] = changedItems[oldLevel].filter((item) => item.trade._id != partTrade.trade._id);
                     }
                 }
                 changedItems[level].push({
-                    trade: trade.trade,
-                    score: change.score,
-                    trader: trade.trader,
+                    trade: partTrade.trade,
+                    score: weaponChange.score,
+                    trader: partTrade.trader,
                     logChange: false,
                     isWeapon: false
                 })
