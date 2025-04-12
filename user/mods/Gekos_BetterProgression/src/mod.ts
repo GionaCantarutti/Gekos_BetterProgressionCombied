@@ -32,6 +32,7 @@ import { join } from "path";
 import { StaticRouterModService } from "@spt/services/mod/staticRouter/StaticRouterModService";
 import { addAdditionalQuestRewards } from "./miscChanges/questRewards.";
 import { ConfigServer } from "@spt/servers/ConfigServer";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 class Mod implements IPostDBLoadMod, IPreSptLoadMod
 {
@@ -58,6 +59,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         this.context.itemHelper = container.resolve<ItemHelper>("ItemHelper");
         container.resolve<PresetController>("PresetController").initialize();
         this.context.presetHelper = container.resolve<PresetHelper>("PresetHelper");
+        this.context.hashUtil = container.resolve<HashUtil>("HashUtil");
 
         this.safelyApplyChanges();
 

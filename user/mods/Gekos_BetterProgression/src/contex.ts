@@ -4,6 +4,7 @@ import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LoggerWrapper } from "./loggerWrapper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
 import { ConfigServer } from "@spt/servers/ConfigServer";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 export class Context
 {
@@ -14,11 +15,12 @@ export class Context
     public itemHelper: ItemHelper;
     public presetHelper: PresetHelper;
     public sptConfig: ConfigServer;
+    public hashUtil: HashUtil;
     public config;
 
     constructor(
         _config?: any, /*Not sure how to type this, dynamically type checked languages are weird*/
-        _database?: DatabaseServer, _tables?: IDatabaseTables, _logger?: LoggerWrapper, _itemHelper?: ItemHelper, _preetHelper?: PresetHelper, _sptConfig?: ConfigServer
+        _database?: DatabaseServer, _tables?: IDatabaseTables, _logger?: LoggerWrapper, _itemHelper?: ItemHelper, _preetHelper?: PresetHelper, _sptConfig?: ConfigServer, _hashUtil?: HashUtil
     )
     {
         this.database = _database;
@@ -28,6 +30,7 @@ export class Context
         this.itemHelper = _itemHelper;
         this.presetHelper = _preetHelper;
         this.sptConfig = _sptConfig;
+        this.hashUtil = _hashUtil;
     }
 
     public logObject(object: any): void
