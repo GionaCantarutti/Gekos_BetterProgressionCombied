@@ -112,8 +112,24 @@ namespace gekos_api.Patches
             AbstractSkillClass actualSkill;
             if (skills.TryGetValue(skill, out actualSkill) && actualSkill is SkillClass)
             {
-                ((SkillClass)actualSkill).method_3(); //Update buffs
+                UpdateBuffs((SkillClass)actualSkill);
                 AvailableSkillPointsUI.UpdatePoints();
+            }
+        }
+
+        /// <summary>
+        /// Update all skill buffs that got changed
+        /// </summary>
+        public static void UpdateAllBuffs()
+        {
+            Profile player = Utils.GetPlayerProfile();
+
+            foreach (KeyValuePair<ESkillId, float> s in AdditionalLevels.GetDict())
+            {
+                if (player.Skills.TryGetSkill(s.Key, out SkillClass skill))
+                {
+                    UpdateBuffs(skill);
+                }
             }
         }
 
@@ -135,6 +151,15 @@ namespace gekos_api.Patches
                 }
             }
             return Mathf.FloorToInt(Mathf.Max(0, (level * config.skillPointsPerLevel) - spent));
+        }
+
+        /// <summary>
+        /// Recalculate the buffs for the given skill
+        /// </summary>
+        /// <param name="skill"></param>
+        public static void UpdateBuffs(SkillClass skill)
+        {
+            skill.method_3();
         }
 
         /// <summary>
