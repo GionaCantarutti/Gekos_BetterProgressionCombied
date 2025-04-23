@@ -78,14 +78,16 @@ export function containsAttachment(item: IItem, assort: IItem[], attachmentID: s
 {
     //Shortcut items without slots
     const template = context.tables.templates.items[item._tpl];
-
     if (template == null)
     {
-        context.logger.error(`Trader item ${item} with table ID ${item._tpl} couldn't be found in the tables!`);
-        return false;
+        context.logger.warning(`Trader item ${item} with table ID ${item._tpl} couldn't be found in the tables!\nMaybe some mod is adding a trade that sells a non-existing item?`);
+        //Skip the shortcut if the template cannot be found
     }
-    if (template._props.Slots == null) return false
-    if (template._props.Slots.length == 0) return false;
+    else
+    {
+        if (template._props.Slots == null) return false
+        if (template._props.Slots.length == 0) return false;
+    }
     
     return unrollAttachments(item, assort).map( (item) => item._tpl ).includes(attachmentID);
 }
