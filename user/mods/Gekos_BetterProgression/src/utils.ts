@@ -287,11 +287,26 @@ export function isBarterTrade(trade: IItem, trader: ITrader): boolean
 //Checks if the given trade item is quest locked on the given trader
 export function isQuestLocked(trade: IItem, trader: ITrader): boolean
 {
+    let questLocks;
 
-    const questLocks = [
-        ...Object.keys(trader.questassort["success"]),
-        ...Object.keys(trader.questassort["started"]),
-        ...Object.keys(trader.questassort["fail"]) ];
+    try
+    {
+        questLocks = [
+            ...Object.keys(trader.questassort["success"]),
+            ...Object.keys(trader.questassort["started"]),
+            ...Object.keys(trader.questassort["fail"]) ];
+    }
+    catch (error)
+    {
+        this.context.logger.warning(`Failed to fetch quest locks for ${trader.base.name} (${trader.base._id}). It will be assumed that no items are quest locked on the trader`);
+        this.contex.logger.warning("This error is probably caused by some other mod, check the mod page for extra information on known incompatabilities")
+        if (this.context.config.dev.showFullError)
+        {
+            this.context.logger.error("Error Details:" + error);
+            this.context.logger.error("Stack Trace:\n" + (error instanceof Error ? error.stack : "No stack available"));
+        }
+        return false;
+    }
 
     for (const questLockedTrade of questLocks)
     {
