@@ -42,12 +42,12 @@ export function changeStashProgression(context: Context): void
                 context.logger.warning(`HideoutOptionsChanger: doProgressiveStash: hideoutArea for profile ${_} not found`)
                 continue
             }
-            hideoutArea.level = 1
+            hideoutArea.level = config.startingStashLevel
 
             const startingStashItems = side.character.Inventory.items.filter((item) => startingStashes.includes(item._tpl))
             for (const item of startingStashItems)
             {
-                item._tpl = ItemTpl.STASH_STANDARD_STASH_10X30
+                item._tpl = startingStashes[config.startingStashLevel-1]
             }
 
             // Fix for Unheard profiles

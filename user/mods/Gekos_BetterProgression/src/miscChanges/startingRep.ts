@@ -6,6 +6,10 @@ export function setStartingReputation(context: Context): void
     const config = context.config.overrideInitialStanding;
     const profileTemplates = context.tables.templates.profiles;
 
+    if ( !config.enabled ){
+        return
+    }
+
     for (const profile of Object.values(profileTemplates)) for (const template of [(profile as IProfileSides).bear, (profile as IProfileSides).usec])
     {
         template.trader.initialStanding["default"] = config.defaultOverride;
