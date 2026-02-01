@@ -4,7 +4,7 @@ using SPTarkov.Server.Core.Models.Logging;
 using SPTarkov.Server.Core.Models.Spt.Mod;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace main;
+namespace gekosbetterprogression;
 
 /// <summary>
 /// This is the replacement for the former package.json data. This is required for all mods.
@@ -83,8 +83,6 @@ public class PreSPTLoader(
 {
     public Task OnLoad()
     {
-        
-        
 
     }
 }
@@ -96,15 +94,9 @@ public class PostDBLoader(
     DatabaseService databaseService)
     : IOnLoad // Implement the `IOnLoad` interface so that this mod can do something
 {
-    // Our constructor
-
-    /// <summary>
-    /// This is called when this class is loaded, the order in which its loaded is set according to the type priority
-    /// on the [Injectable] attribute on this class. Each class can then be used as an entry point to do
-    /// things at varying times according to type priority
-    /// </summary>
     public Task OnLoad()
     {
+
     }
 
 }
