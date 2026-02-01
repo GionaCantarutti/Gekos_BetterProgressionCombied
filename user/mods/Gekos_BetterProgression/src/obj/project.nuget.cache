@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "WSjv02By93I=",
+  "success": true,
+  "projectFilePath": "/media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/GekosBetterProgression.csproj",
+  "expectedPackageFiles": [
+    "/home/giona/.nuget/packages/fastcloner/3.3.16/fastcloner.3.3.16.nupkg.sha512",
+    "/home/giona/.nuget/packages/jetbrains.annotations/2025.2.2/jetbrains.annotations.2025.2.2.nupkg.sha512",
+    "/home/giona/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.9/microsoft.extensions.dependencyinjection.abstractions.9.0.9.nupkg.sha512",
+    "/home/giona/.nuget/packages/semanticversioning/3.0.0/semanticversioning.3.0.0.nupkg.sha512",
+    "/home/giona/.nuget/packages/sptarkov.common/4.0.5/sptarkov.common.4.0.5.nupkg.sha512",
+    "/home/giona/.nuget/packages/sptarkov.di/4.0.5/sptarkov.di.4.0.5.nupkg.sha512",
+    "/home/giona/.nuget/packages/sptarkov.server.core/4.0.5/sptarkov.server.core.4.0.5.nupkg.sha512",
+    "/home/giona/.nuget/packages/system.io.hashing/9.0.9/system.io.hashing.9.0.9.nupkg.sha512",
+    "/home/giona/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.11/microsoft.aspnetcore.app.ref.9.0.11.nupkg.sha512"
+  ],
+  "logs": []
+}
