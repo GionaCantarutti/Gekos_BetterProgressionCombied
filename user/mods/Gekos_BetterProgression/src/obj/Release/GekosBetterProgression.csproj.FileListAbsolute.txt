@@ -1,5 +1,4 @@
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/bin/Release/GekosBetterProgression/GekosBetterProgression.staticwebassets.endpoints.json
-/media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/bin/Release/GekosBetterProgression/config.jsonc
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/bin/Release/GekosBetterProgression/GekosBetterProgression.deps.json
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/bin/Release/GekosBetterProgression/GekosBetterProgression.dll
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/bin/Release/GekosBetterProgression/GekosBetterProgression.pdb
@@ -23,3 +22,4 @@
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/obj/Release/refint/GekosBetterProgression.dll
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/obj/Release/GekosBetterProgression.pdb
 /media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/obj/Release/ref/GekosBetterProgression.dll
+/media/StorageSSD/Persistent/Coding/Gekos_BetterProgressionCombied/user/mods/Gekos_BetterProgression/src/bin/Release/GekosBetterProgression/config.json5

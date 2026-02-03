@@ -3,6 +3,9 @@ using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Logging;
 using SPTarkov.Server.Core.Models.Spt.Mod;
 using SPTarkov.Server.Core.Models.Utils;
+using SPTarkov.Server.Core.Helpers;
+using System.Reflection;
+using SPTarkov.Server.Core.Services;
 
 namespace gekosbetterprogression;
 
@@ -84,6 +87,8 @@ public class PreSPTLoader(
     public Task OnLoad()
     {
 
+
+        return Task.CompletedTask;
     }
 }
 
@@ -91,11 +96,18 @@ public class PreSPTLoader(
 [Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 1)]
 public class PostDBLoader(
     ISptLogger<PostDBLoader> logger, // We are injecting a logger similar to example 1, but notice the class inside <> is different
-    DatabaseService databaseService)
+    DatabaseService databaseService,
+    ModHelper modHelper)
     : IOnLoad // Implement the `IOnLoad` interface so that this mod can do something
 {
     public Task OnLoad()
     {
+
+        var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
+
+        var config = modHelper.GetJsonDataFromFile<Config>(pathToMod, "config.json5");
+
+        return Task.CompletedTask;
 
     }
 

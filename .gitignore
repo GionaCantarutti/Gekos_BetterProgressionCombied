@@ -1,9 +1,8 @@
-.qodo
 # ================================
 # Build output
 # ================================
-bin/
-obj/
+user/mods/Gekos_BetterProgression/src/bin/
+user/mods/Gekos_BetterProgression/src/obj/
 
 # ================================
 # User-specific / IDE

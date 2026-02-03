@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GekosBetterProgression")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.1+4d67ba4a015ad5a4084b7ed4975c2a6751ba9251")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.1+a260318cc0ca210bae56d4e713c159734a651730")]
 [assembly: System.Reflection.AssemblyProductAttribute("GekosBetterProgression")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GekosBetterProgression")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.1.0")]

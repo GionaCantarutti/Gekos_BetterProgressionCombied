@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="config.jsonc">
+        <None Update="config.json5">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>

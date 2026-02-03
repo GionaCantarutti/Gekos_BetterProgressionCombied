@@ -1,338 +1,295 @@
 namespace gekosbetterprogression;
 
- public class Config
+public record Config
 {
 
-    public static Config ParseConfig(string path) {
-        var json = File.ReadAllText(path);
+    public required SecureContainerProgression secureContainerProgression { get; set; }
+    public required FleaMarketChanges fleaMarketChanges { get; set; }
+    public required HideoutBuildsChanges hideoutBuildsChanges { get; set; }
+    public required StashProgression stashProgression { get; set; }
+    public required SkillChanges skillChanges { get; set; }
+    public required RefChanges refChanges { get; set; }
+    public required SICCBuffs siccBuffs { get; set; }
+    public required BitcoinChanges bitcoinChanges { get; set; }
+    public required OverrideInitialStanding overrideInitialStanding { get; set; }
+    public required Misc misc { get; set; }
+    public required AlgorithmicalRebalancing algorithmicalRebalancing { get; set; }
+    public required Dev dev { get; set; }
 
-        var settings = new JsonSerializerSettings
+    // ===================== SECURE CONTAINER =====================
+
+    public record SecureContainerProgression
+    {
+        public bool enable { get; set; }
+        public required string starterContainer { get; set; }
+        public required Dictionary<string, int[][]> sizeChanges { get; set; }
+    }
+
+    // ===================== FLEA =====================
+
+    public record FleaMarketChanges
+    {
+        public bool disableFleaMarket { get; set; }
+        public bool stillAllowKeys { get; set; }
+        public required List<string> fleaWhitelist { get; set; }
+    }
+
+    // ===================== HIDEOUT =====================
+
+    public record HideoutBuildsChanges
+    {
+        public bool enable { get; set; }
+        public int threshold { get; set; }
+        public double factor { get; set; }
+        public bool roundDown { get; set; }
+    }
+
+    // ===================== STASH =====================
+
+    public record StashProgression
+    {
+        public bool enable { get; set; }
+        public int startingStashLevel { get; set; }
+        public required List<int> stashSizes { get; set; }
+        public double stashUpgradeCostFactor { get; set; }
+        public int stashUpgradeLoyaltyDelta { get; set; }
+    }
+
+    // ===================== SKILLS =====================
+
+    public record SkillChanges
+    {
+        public bool enable { get; set; }
+
+        public double skillFreshEffectiveness { get; set; }
+        public int skillFreshPoints { get; set; }
+        public int skillPointsBeforeFatigue { get; set; }
+        public double skillMinEffectiveness { get; set; }
+
+        public required CustomMultipliers customMultipliers { get; set; }
+        public required SkillPointsSystem skillPointsSystem { get; set; }
+
+        public record CustomMultipliers
         {
-            CommentHandling = CommentHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            FloatParseHandling = FloatParseHandling.Double
-        };
-
-        return JsonConvert.DeserializeObject<Config>(json, settings);
-    }
-
-    public SecureContainerProgression SecureContainerProgression { get; set; }
-    public FleaMarketChanges FleaMarketChanges { get; set; }
-    public HideoutBuildsChanges HideoutBuildsChanges { get; set; }
-    public StashProgression StashProgression { get; set; }
-    public SkillChanges SkillChanges { get; set; }
-    public RefChanges RefChanges { get; set; }
-    public SICCBuffs SICCBuffs { get; set; }
-    public BitcoinChanges BitcoinChanges { get; set; }
-    public OverrideInitialStanding OverrideInitialStanding { get; set; }
-    public Misc Misc { get; set; }
-    public AlgorithmicalRebalancing AlgorithmicalRebalancing { get; set; }
-    public Dev Dev { get; set; }
-
-    // =====================================
-    // SECURE CONTAINER
-    // =====================================
-
-    public class SecureContainerProgression
-    {
-        public bool Enable { get; set; }
-        public string StarterContainer { get; set; }
-        public Dictionary<string, int[][]> SizeChanges { get; set; }
-    }
-
-    // =====================================
-    // FLEA
-    // =====================================
-
-    public class FleaMarketChanges
-    {
-        public bool DisableFleaMarket { get; set; }
-        public bool StillAllowKeys { get; set; }
-        public List<string> FleaWhitelist { get; set; }
-    }
-
-    // =====================================
-    // HIDEOUT BUILDS
-    // =====================================
-
-    public class HideoutBuildsChanges
-    {
-        public bool Enable { get; set; }
-        public int Threshold { get; set; }
-        public double Factor { get; set; }
-        public bool RoundDown { get; set; }
-    }
-
-    // =====================================
-    // STASH
-    // =====================================
-
-    public class StashProgression
-    {
-        public bool Enable { get; set; }
-        public int StartingStashLevel { get; set; }
-        public List<int> StashSizes { get; set; }
-        public double StashUpgradeCostFactor { get; set; }
-        public int StashUpgradeLoyaltyDelta { get; set; }
-    }
-
-    // =====================================
-    // SKILLS
-    // =====================================
-
-    public class SkillChanges
-    {
-        public bool Enable { get; set; }
-
-        public double SkillFreshEffectiveness { get; set; }
-        public int SkillFreshPoints { get; set; }
-        public int SkillPointsBeforeFatigue { get; set; }
-        public double SkillMinEffectiveness { get; set; }
-
-        public CustomMultipliers CustomMultipliers { get; set; }
-        public SkillPointsSystem SkillPointsSystem { get; set; }
-
-        public class CustomMultipliers
-        {
-            public double GlobalXPMultiplier { get; set; }
-            public Dictionary<string, double> SkillXPMultipliers { get; set; }
-            public Dictionary<string, double> SkillBuffMultipliers { get; set; }
+            public double globalXPMultiplier { get; set; }
+            public required Dictionary<string, double> skillXPMultipliers { get; set; }
+            public required Dictionary<string, double> skillBuffMultipliers { get; set; }
         }
 
-        public class SkillPointsSystem
+        public record SkillPointsSystem
         {
-            public bool Enable { get; set; }
-            public double SkillPointsPerLevel { get; set; }
-            public bool AutomaticallyRefundOverflows { get; set; }
-            public bool EnableDeallocation { get; set; }
+            public bool enable { get; set; }
+            public double skillPointsPerLevel { get; set; }
+            public bool automaticallyRefundOverflows { get; set; }
+            public bool enableDeallocation { get; set; }
         }
     }
 
-    // =====================================
-    // REF
-    // =====================================
+    // ===================== REF =====================
 
-    public class RefChanges
+    public record RefChanges
     {
-        public bool Enable { get; set; }
-        public bool RefBuysInGPCoins { get; set; }
-        public bool RefOnlyBuysDogtags { get; set; }
-        public bool RefAlsoBuysLegaMedals { get; set; }
-        public RefStandingOnKill RefStandingOnKill { get; set; }
+        public bool enable { get; set; }
+        public bool refBuysInGPCoins { get; set; }
+        public bool refOnlyBuysDogtags { get; set; }
+        public bool refAlsoBuysLegaMedals { get; set; }
+        public required RefStandingOnKill refStandingOnKill { get; set; }
 
-        public class RefStandingOnKill
+        public record RefStandingOnKill
         {
-            public bool Enable { get; set; }
-            public List<KillRange> RepByKillLevel { get; set; }
+            public bool enable { get; set; }
+            public required List<KillRange> repByKillLevel { get; set; }
 
-            public class KillRange
+            public record KillRange
             {
-                public int[] LevelRange { get; set; }
-                public double Rep { get; set; }
+                public required int[] levelRange { get; set; }
+                public double rep { get; set; }
             }
         }
     }
 
-    // =====================================
-    // SICC
-    // =====================================
+    // ===================== SICC =====================
 
-    public class SICCBuffs
+    public record SICCBuffs
     {
-        public bool Enable { get; set; }
-        public bool CanHoldWhatDocsCan { get; set; }
-        public List<string> AdditionalWhitelistedItems { get; set; }
+        public bool enable { get; set; }
+        public bool canHoldWhatDocsCan { get; set; }
+        public required List<string> additionalWhitelistedItems { get; set; }
     }
 
-    // =====================================
-    // BITCOIN
-    // =====================================
+    // ===================== BITCOIN =====================
 
-    public class BitcoinChanges
+    public record BitcoinChanges
     {
-        public bool Enable { get; set; }
-        public bool CannotBuyGPU { get; set; }
-        public bool OverrideValue { get; set; }
-        public int Value { get; set; }
-        public double BtcFarmSpeedMult { get; set; }
-        public double GpuBoostRate { get; set; }
-        public int BtcCapacity { get; set; }
+        public bool enable { get; set; }
+        public bool cannotBuyGPU { get; set; }
+        public bool overrideValue { get; set; }
+        public int value { get; set; }
+        public double btcFarmSpeedMult { get; set; }
+        public double gpuBoostRate { get; set; }
+        public int btcCapacity { get; set; }
     }
 
-    // =====================================
-    // INITIAL STANDING
-    // =====================================
+    // ===================== INITIAL STANDING =====================
 
-    public class OverrideInitialStanding
+    public record OverrideInitialStanding
     {
-        public bool Enable { get; set; }
-        public double DefaultOverride { get; set; }
-        public Dictionary<string, double> IndividualOverrides { get; set; }
+        public bool enable { get; set; }
+        public double defaultOverride { get; set; }
+        public required Dictionary<string, double> individualOverrides { get; set; }
     }
 
-    // =====================================
-    // MISC
-    // =====================================
+    // ===================== MISC =====================
 
-    public class Misc
+    public record Misc
     {
-        public bool RemoveFirFromQuests { get; set; }
-        public bool RemoveFirFromHideout { get; set; }
-        public bool RemoveFirFromFlea { get; set; }
+        public bool removeFirFromQuests { get; set; }
+        public bool removeFirFromHideout { get; set; }
+        public bool removeFirFromFlea { get; set; }
 
-        public double CraftProductMultiplier { get; set; }
-        public double CraftTimeMultiplier { get; set; }
+        public double craftProductMultiplier { get; set; }
+        public double craftTimeMultiplier { get; set; }
 
-        public bool EnableExtraQuestRewards { get; set; }
-        public bool AddCustomTrades { get; set; }
+        public bool enableExtraQuestRewards { get; set; }
+        public bool addCustomTrades { get; set; }
 
-        public Dictionary<string, int> StackSizeOverride { get; set; }
-        public Dictionary<string, int[]> ContainerSizeChanges { get; set; }
-        public Dictionary<string, int> PriceChanges { get; set; }
+        public required Dictionary<string, int> stackSizeOverride { get; set; }
+        public required Dictionary<string, int[]> containerSizeChanges { get; set; }
+        public required Dictionary<string, int> priceChanges { get; set; }
     }
 
-    // =====================================
-    // ALGORITHMIC REBALANCING
-    // =====================================
+    // ===================== ALGORITHMIC REBALANCING =====================
 
-    public class AlgorithmicalRebalancing
+    public record AlgorithmicalRebalancing
     {
-        public bool Enable { get; set; }
-        public bool ClampToMaxLevel { get; set; }
-        public bool ForceClampingOfQuestlockedItems { get; set; }
+        public bool enable { get; set; }
+        public bool clampToMaxLevel { get; set; }
+        public bool forceClampingOfQuestlockedItems { get; set; }
 
-        public double BarterDelta { get; set; }
-        public double QuestLockDelta { get; set; }
-        public bool LogBartersAndLocks { get; set; }
+        public double barterDelta { get; set; }
+        public double questLockDelta { get; set; }
+        public bool logBartersAndLocks { get; set; }
 
-        public List<string> ExcludeTraders { get; set; }
-        public Dictionary<string, double> DeltaByTrader { get; set; }
+        public required List<string> excludeTraders { get; set; }
+        public required Dictionary<string, double> deltaByTrader { get; set; }
 
-        public AmmoRules AmmoRules { get; set; }
-        public WeaponRules WeaponRules { get; set; }
-        public ExplicitLoyaltyDelta ExplicitLoyaltyDelta { get; set; }
-        public ExplicitLoyaltyOverride ExplicitLoyaltyOverride { get; set; }
+        public required AmmoRules ammoRules { get; set; }
+        public required WeaponRules weaponRules { get; set; }
+        public required ExplicitLoyaltyDelta explicitLoyaltyDelta { get; set; }
+        public required ExplicitLoyaltyOverride explicitLoyaltyOverride { get; set; }
 
-        // -------- AMMO --------
-
-        public class AmmoRules
+        public record AmmoRules
         {
-            public bool Enable { get; set; }
-            public bool LogChanges { get; set; }
-            public double GlobalDelta { get; set; }
-            public double DefaultBaseLoyaltyByPen { get; set; }
+            public bool enable { get; set; }
+            public bool logChanges { get; set; }
+            public double globalDelta { get; set; }
+            public double defaultBaseLoyaltyByPen { get; set; }
 
-            public List<AmmoPenRule> AmmoBaseLoyaltyByPen { get; set; }
-            public List<CaliberRule> CaliberRules { get; set; }
-            public List<DamageRule> DamageRules { get; set; }
+            public required List<AmmoPenRule> ammoBaseLoyaltyByPen { get; set; }
+            public required List<CaliberRule> caliberRules { get; set; }
+            public required List<DamageRule> damageRules { get; set; }
 
-            public List<string> IgnoreCalibers { get; set; }
-            public AmmoCraftSettings CraftSettings { get; set; }
+            public required List<string> ignoreCalibers { get; set; }
+            public required AmmoCraftSettings craftSettings { get; set; }
 
-            public class AmmoPenRule
+            public record AmmoPenRule
             {
-                public int[] PenInterval { get; set; }
-                public double BaseLoyalty { get; set; }
+                public required int[] penInterval { get; set; }
+                public double baseLoyalty { get; set; }
             }
 
-            public class CaliberRule
+            public record CaliberRule
             {
-                public string Caliber { get; set; }
-                public double LoyaltyDelta { get; set; }
+                public required string caliber { get; set; }
+                public double loyaltyDelta { get; set; }
             }
 
-            public class DamageRule
+            public record DamageRule
             {
-                public int[] DamageInterval { get; set; }
-                public double LoyaltyDelta { get; set; }
+                public required int[] damageInterval { get; set; }
+                public double loyaltyDelta { get; set; }
             }
 
-            public class AmmoCraftSettings
+            public record AmmoCraftSettings
             {
-                public bool Enable { get; set; }
-                public List<LoyaltyRange> LoyaltyToLevelRanges { get; set; }
+                public bool enable { get; set; }
+                public required List<LoyaltyRange> loyaltyToLevelRanges { get; set; }
 
-                public class LoyaltyRange
+                public record LoyaltyRange
                 {
-                    public double[] Range { get; set; }
-                    public int Level { get; set; }
+                    public required double[] range { get; set; }
+                    public int level { get; set; }
                 }
             }
         }
 
-        // -------- WEAPONS --------
-
-        public class WeaponRules
+        public record WeaponRules
         {
-            public bool Enable { get; set; }
-            public bool LogChanges { get; set; }
-            public double GlobalDelta { get; set; }
-            public bool AttachmentsFollowDefaultBuild { get; set; }
-            public double AdvancedAttachmentsDelta { get; set; }
+            public bool enable { get; set; }
+            public bool logChanges { get; set; }
+            public double globalDelta { get; set; }
+            public bool attachmentsFollowDefaultBuild { get; set; }
+            public double advancedAttachmentsDelta { get; set; }
 
-            public double DefaultBaseLoyalty { get; set; }
-            public List<WeaponCaliberBase> WeaponBaseLoyaltyByCaliber { get; set; }
+            public double defaultBaseLoyalty { get; set; }
+            public required List<WeaponCaliberBase> weaponBaseLoyaltyByCaliber { get; set; }
 
-            public List<FireModeRule> FireModeRules { get; set; }
-            public List<FireRateRule> FireRateRules { get; set; }
+            public required List<FireModeRule> fireModeRules { get; set; }
+            public required List<FireRateRule> fireRateRules { get; set; }
 
-            public UpshiftRules UpshiftRules { get; set; }
+            public required UpshiftRules upshiftRules { get; set; }
 
-            public class WeaponCaliberBase
+            public record WeaponCaliberBase
             {
-                public string Caliber { get; set; }
-                public double BaseLoyalty { get; set; }
+                public required string caliber { get; set; }
+                public double baseLoyalty { get; set; }
             }
 
-            public class FireModeRule
+            public record FireModeRule
             {
-                public string Mode { get; set; }
-                public double Delta { get; set; }
+                public required string mode { get; set; }
+                public double delta { get; set; }
             }
 
-            public class FireRateRule
+            public record FireRateRule
             {
-                public int[] RateInterval { get; set; }
-                public double Delta { get; set; }
+                public required int[] rateInterval { get; set; }
+                public double delta { get; set; }
             }
 
-            public class UpshiftRules
+            public record UpshiftRules
             {
-                public bool Enable { get; set; }
-                public int ShiftAmount { get; set; }
-                public bool ShiftDownInstead { get; set; }
+                public bool enable { get; set; }
+                public int shiftAmount { get; set; }
+                public bool shiftDownInstead { get; set; }
 
-                public bool DevideNicheByFiremode { get; set; }
-                public bool DevideNicheByCaliber { get; set; }
-                public bool DevideNicheByBarterType { get; set; }
-                public bool DevideNicheByQuestLock { get; set; }
+                public bool devideNicheByFiremode { get; set; }
+                public bool devideNicheByCaliber { get; set; }
+                public bool devideNicheByBarterType { get; set; }
+                public bool devideNicheByQuestLock { get; set; }
 
-                public Dictionary<string, int> PowerLevels { get; set; }
+                public required Dictionary<string, int> powerLevels { get; set; }
             }
         }
 
-        // -------- EXPLICIT --------
-
-        public class ExplicitLoyaltyDelta
+        public record ExplicitLoyaltyDelta
         {
-            public Dictionary<string, double> Trades { get; set; }
-            public Dictionary<string, double> Items { get; set; }
+            public required Dictionary<string, double> trades { get; set; }
+            public required Dictionary<string, double> items { get; set; }
         }
 
-        public class ExplicitLoyaltyOverride
+        public record ExplicitLoyaltyOverride
         {
-            public Dictionary<string, int> Trades { get; set; }
-            public Dictionary<string, int> Items { get; set; }
+            public required Dictionary<string, int> trades { get; set; }
+            public required Dictionary<string, int> items { get; set; }
         }
     }
 
-    // =====================================
-    // DEV
-    // =====================================
+    // ===================== DEV =====================
 
-    public class Dev
+    public record Dev
     {
-        public bool MuteProgressOnServerLoad { get; set; }
-        public bool ShowFullError { get; set; }
+        public bool muteProgressOnServerLoad { get; set; }
+        public bool showFullError { get; set; }
     }
 }
