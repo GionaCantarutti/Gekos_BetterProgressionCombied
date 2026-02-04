@@ -116,6 +116,7 @@ public class PostDBLoader(
 )
     : IOnLoad // Implement the `IOnLoad` interface so that this mod can do something
 {
+
     public Task OnLoad()
     {
         if (!context.IsInitialized)
@@ -126,8 +127,108 @@ public class PostDBLoader(
         
         logger.Success($"Test: {context.config.algorithmicalRebalancing.ammoRules.ammoBaseLoyaltyByPen[0].baseLoyalty}");
 
+        ApplyPostDBChanges(context, logger);
+
+        logger.Success("Geko's Better Progression finished loading!");
+
         return Task.CompletedTask;
 
+    }
+
+    private void ApplyPostDBChanges(Context context, ISptLogger<PostDBLoader> logger)
+    {
+        var cfg = context.config;
+        var log = cfg.dev.muteProgressOnServerLoad
+            ? null
+            : logger;
+
+        log?.Info("Running algorithmical rebalancing...");
+        // SafelyRunIf(cfg.algorithmicalRebalancing.enable, () => AlgorithmicallyRebalance(context), "Failed to run algorithmical rebalancing!");
+        log?.Success("Done!");
+
+        log?.Info("Changing stack sizes...");
+        // SafelyRunIf(true, () => ChangeStackSizes(context), "Failed to apply changes to stack sizes!");
+        log?.Success("Done!");
+
+        log?.Info("Applying secure container changes...");
+        // SafelyRunIf(cfg.secureContainerProgression.enable, () => ApplySecureContainerChanges(context), "Failed to apply secure container changes!");
+        log?.Success("Done!");
+
+        log?.Info("Applying stash progression changes...");
+        // SafelyRunIf(cfg.stashProgression.enable, () => ChangeStashProgression(context), "Failed to apply stash progression changes!");
+        log?.Success("Done!");
+
+        log?.Info("Disabling flea market...");
+        // SafelyRunIf(cfg.fleaMarketChanges.disableFleaMarket, () => DisableFleaMarket(context), "Failed to disable flea market!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to hideout build costs...");
+        // SafelyRunIf(cfg.hideoutBuildsChanges.enable, () => ChangeHideoutBuildCosts(context), "Failed to apply changes to hideout build costs!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to skills...");
+        // SafelyRunIf(cfg.skillChanges.enable, () => ChangeSkills(context), "Failed to apply changes to skills!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to craft times and output counts...");
+        // SafelyRunIf(true, () => ChangeCrafts(context), "Failed to apply changes to craft times and output counts!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to item prices...");
+        // SafelyRunIf(true, () => ChangePrices(context), "Failed to apply changes to item prices!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to SICC container...");
+        // SafelyRunIf(cfg.SICCBuffs.enable, () => BuffSICCCase(context), "Failed to apply changes to SICC container!");
+        log?.Success("Done!");
+
+        log?.Info("Removing FiR requirements...");
+        // SafelyRunIf(cfg.misc.removeFirFromQuests, () => RemoveFirFromQuests(context), "Failed to remove FiR requirements from quests!");
+        // SafelyRunIf(cfg.misc.removeFirFromQuests, () => RemoveFirFromRepeatables(context), "Failed to remove FiR requirements from repeatable quests!");
+        // SafelyRunIf(cfg.misc.removeFirFromHideout, () => RemoveFirFromHideout(context), "Failed to remove FiR requirements from hideout builds!");
+        // SafelyRunIf(cfg.misc.removeFirFromFlea, () => RemoveFirFromFlea(context), "Failed to remove FiR requirements from flea market listings!");
+        log?.Success("Done!");
+
+        log?.Info("Adding custom trades...");
+        // SafelyRunIf(cfg.misc.addCustomTrades, () => AddCustomTrades(context), "Failed to add custom trades!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to bitcoin farming...");
+        // SafelyRunIf(cfg.bitcoinChanges.enable, () => ChangeBitcoinFarming(context), "Failed to apply changes to bitcoin farming!");
+        log?.Success("Done!");
+
+        log?.Info("Setting initial trader standing...");
+        // SafelyRunIf(cfg.bitcoinChanges.enable, () => SetStartingReputation(context), "Failed to set initial trader standing!");
+        log?.Success("Done!");
+
+        log?.Info("Applying changes to Ref item purchasing...");
+        // SafelyRunIf(cfg.refChanges.enable, () => ChangeRefPurchasingOptions(context), "Failed to apply changes to Ref item purchasing!");
+        log?.Success("Done!");
+
+        log?.Info("Adding additional quest rewards...");
+        // SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AddAdditionalQuestRewards(context), "Failed to add additional quest rewards!");
+        log?.Success("Done!");
+    }
+
+    private void SafelyRunIf(bool condition, Action action, string message)
+    {
+        try
+        {
+            if (condition)
+            {
+                action();
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(message);
+
+            if (context.config.dev.showFullError)
+            {
+                logger.Error($"Error Details: {ex.Message}");
+                logger.Error($"Stack Trace:\n{ex.StackTrace}");
+            }
+        }
     }
 
 }
