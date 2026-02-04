@@ -6,6 +6,8 @@ using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Helpers;
 using System.Reflection;
 using SPTarkov.Server.Core.Services;
+using SPTarkov.Server.Core.Servers;
+using SPTarkov.Server.Core.Utils;
 
 namespace gekosbetterprogression;
 
@@ -81,12 +83,24 @@ public record ModMetadata : AbstractModMetadata
 // We want to load after PreSptModLoader is complete, so we set our type priority to that, plus 1.
 [Injectable(TypePriority = OnLoadOrder.PreSptModLoader + 1)]
 public class PreSPTLoader(
-    ISptLogger<PreSPTLoader> logger) // We inject a logger for use inside our class, it must have the class inside the diamond <> brackets
+        ISptLogger<PreSPTLoader> logger,
+        ItemHelper itemHelper,
+        PresetHelper presetHelper,
+        ConfigServer configServer,
+        HashUtil hashUtil,
+        ModHelper modHelper,
+        Context context
+    ) // We inject a logger for use inside our class, it must have the class inside the diamond <> brackets
     : IOnLoad // Implement the IOnLoad interface so that this mod can do something on server load
 {
     public Task OnLoad()
     {
 
+        var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
+
+        var config = modHelper.GetJsonDataFromFile<GekoConfig>(pathToMod, "config.json5");
+
+        context.PreInitialize(itemHelper, presetHelper, configServer, hashUtil, config);
 
         return Task.CompletedTask;
     }
@@ -95,17 +109,22 @@ public class PreSPTLoader(
 // We want to load after PostDBModLoader is complete, so we set our type priority to that, plus 1.
 [Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 1)]
 public class PostDBLoader(
-    ISptLogger<PostDBLoader> logger, // We are injecting a logger similar to example 1, but notice the class inside <> is different
-    DatabaseService databaseService,
-    ModHelper modHelper)
+    Context context,
+    ISptLogger<PostDBLoader> logger,
+        DatabaseService databaseService,
+        DatabaseServer databaseServer
+)
     : IOnLoad // Implement the `IOnLoad` interface so that this mod can do something
 {
     public Task OnLoad()
     {
-
-        var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
-
-        var config = modHelper.GetJsonDataFromFile<Config>(pathToMod, "config.json5");
+        if (!context.IsInitialized)
+        {
+            throw new Exception("Context was not initialized!");
+        }
+        context.PostInitialize(databaseService, databaseServer, databaseService.GetTables());
+        
+        logger.Success($"Test: {context.config.algorithmicalRebalancing.ammoRules.ammoBaseLoyaltyByPen[0].baseLoyalty}");
 
         return Task.CompletedTask;
 

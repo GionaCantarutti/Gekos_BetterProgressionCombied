@@ -1,6 +1,6 @@
 namespace gekosbetterprogression;
 
-public record Config
+public record GekoConfig
 {
 
     public required SecureContainerProgression secureContainerProgression { get; set; }
