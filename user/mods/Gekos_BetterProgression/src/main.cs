@@ -213,7 +213,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Adding additional quest rewards...");
-        // SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AddAdditionalQuestRewards(context), "Failed to add additional quest rewards!");
+        SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AdditionalQuestRewardChanges.Apply(context), "Failed to add additional quest rewards!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to container sizes...");

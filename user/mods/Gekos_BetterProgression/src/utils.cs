@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
+using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Hideout;
 using SPTarkov.Server.Core.Models.Eft.Trade;
 using SPTarkov.Server.Core.Models.Enums;
-using SPTarkov.Server.Core.Helpers;
-using SPTarkov.Server.Core.Models.Common;
+using SPTarkov.Server.Core.Models.Spt.Server;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using static GekosBetterProgression.AdvancedConfig;
 //using gekosbetterprogression.AlgoRebalancing.Types;
 
 namespace GekosBetterProgression;
@@ -250,6 +252,26 @@ public static class Utils
     // QUEST / HIDEOUT
     // ---------------------------------------------
 
+    public static void ApplyAdditionalQuestRewards(Context context, AdditionalQuestRewards additionalQuestRewards)
+    {
+        DatabaseTables tables = context.tables;
+        var startedRewards = additionalQuestRewards.started;
+        var successRewards = additionalQuestRewards.success;
+        context.logger.Info("Adding quest rewards");
+
+        foreach (KeyValuePair<string, Reward> questIDToReward in startedRewards)
+        {
+            tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("Started", out List<Reward>? rewardList);
+            rewardList?.Add(questIDToReward.Value);
+        }
+
+        foreach (KeyValuePair<string, Reward> questIDToReward in successRewards)
+        {
+            tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("Success", out List<Reward>? rewardList);
+            rewardList?.Add(questIDToReward.Value);
+        }
+    }
+
     public static void LockBehindQuest(
         Context context,
         string traderId,
@@ -261,9 +283,9 @@ public static class Utils
     {
         var trader = context.tables.Traders[traderId];
 
-        trader.QuestAssort["success"][trade] = lockQuest;
+        trader.QuestAssort["Success"][trade] = lockQuest;
 
-        var rewards = context.tables.Templates.Quests[lockQuest].Rewards?["success"];
+        var rewards = context.tables.Templates.Quests[lockQuest].Rewards?["Success"];
 
         rewards?.Add(new Reward
         {
@@ -403,9 +425,9 @@ public static class Utils
     {
         try
         {
-            var locks = trader.QuestAssort["success"].Keys
-                .Concat(trader.QuestAssort["started"].Keys)
-                .Concat(trader.QuestAssort["fail"].Keys);
+            var locks = trader.QuestAssort["Success"].Keys
+                .Concat(trader.QuestAssort["Started"].Keys)
+                .Concat(trader.QuestAssort["Fail"].Keys);
 
             return locks.Contains(trade.Id);
         }
