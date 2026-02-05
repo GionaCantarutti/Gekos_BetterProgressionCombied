@@ -8,6 +8,7 @@ using System.Reflection;
 using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Utils;
+using GekosBetterProgression.Changes;
 
 namespace GekosBetterProgression;
 
@@ -129,10 +130,8 @@ public class PostDBLoader(
         var logWrapper = new LoggerWrapper<PostDBLoader>(logger);
 
         context.PostInitialize(databaseService, databaseServer, databaseService.GetTables(), logWrapper);
-        
-        logger.Success($"Test: {context.config.algorithmicalRebalancing.ammoRules.ammoBaseLoyaltyByPen[0].baseLoyalty}");
 
-        ApplyPostDBChanges(context, logger);
+        ApplyPostDBChanges(context);
 
         logger.Success("Geko's Better Progression finished loading!");
 
@@ -140,12 +139,12 @@ public class PostDBLoader(
 
     }
 
-    private void ApplyPostDBChanges(Context context, ISptLogger<PostDBLoader> logger)
+    private void ApplyPostDBChanges(Context context)
     {
         var cfg = context.config;
         var log = cfg.dev.muteProgressOnServerLoad
             ? null
-            : logger;
+            : context.logger;
 
         log?.Info("Running algorithmical rebalancing...");
         // SafelyRunIf(cfg.algorithmicalRebalancing.enable, () => AlgorithmicallyRebalance(context), "Failed to run algorithmical rebalancing!");
@@ -168,7 +167,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to hideout build costs...");
-        // SafelyRunIf(cfg.hideoutBuildsChanges.enable, () => ChangeHideoutBuildCosts(context), "Failed to apply changes to hideout build costs!");
+        SafelyRunIf(cfg.hideoutBuildsChanges.enable, () => BuildChanges.Apply(context), "Failed to apply changes to hideout build costs!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to skills...");
@@ -199,11 +198,11 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to bitcoin farming...");
-        // SafelyRunIf(cfg.bitcoinChanges.enable, () => ChangeBitcoinFarming(context), "Failed to apply changes to bitcoin farming!");
+        SafelyRunIf(cfg.bitcoinChanges.enable, () => BitcoinChanges.Apply(context), "Failed to apply changes to bitcoin farming!");
         log?.Success("Done!");
 
         log?.Info("Setting initial trader standing...");
-        // SafelyRunIf(cfg.bitcoinChanges.enable, () => SetStartingReputation(context), "Failed to set initial trader standing!");
+        // SafelyRunIf(cfg.overrideInitialStanding.enable, () => SetStartingReputation(context), "Failed to set initial trader standing!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to Ref item purchasing...");

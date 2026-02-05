@@ -7,6 +7,7 @@ using SPTarkov.Server.Core.Models.Eft.Hideout;
 using SPTarkov.Server.Core.Models.Eft.Trade;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Server.Core.Models.Common;
 //using gekosbetterprogression.AlgoRebalancing.Types;
 
 namespace GekosBetterProgression;
@@ -66,6 +67,11 @@ public static class Utils
         }
 
         return found;
+    }
+
+    public static bool IsCurrency(MongoId template)
+    {
+        return Currencies.Contains(template);
     }
 
     public static List<string> GetDefaultAttachments(string weaponId, Context context)

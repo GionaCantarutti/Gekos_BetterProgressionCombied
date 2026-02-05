@@ -10,11 +10,11 @@ using SPTarkov.Server.Core.Models.Eft.Hideout;
 using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 
-namespace GekosBetterProgression;
+namespace GekosBetterProgression.Changes;
 
 public class BitcoinChanges
 {
-    public static void ApplyBitcoinChanges(Context context)
+    public static void Apply(Context context)
     {
         if (context.config.bitcoinChanges.overrideValue)
         {
