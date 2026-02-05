@@ -22,6 +22,9 @@
         <None Update="config.json5">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="advancedConfig.json5">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

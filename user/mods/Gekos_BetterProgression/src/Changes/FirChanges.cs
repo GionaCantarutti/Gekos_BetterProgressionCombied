@@ -102,7 +102,7 @@ public class FirChanges()
 
     public static void RemoveFirFromRepeatables(Context context)
     {
-        var questConfig = context.sptConfig.GetConfigByString<QuestConfig>("Quest");
+        var questConfig = context.sptConfig.GetConfig<QuestConfig>();
 
         if (questConfig?.RepeatableQuests == null)
         {
