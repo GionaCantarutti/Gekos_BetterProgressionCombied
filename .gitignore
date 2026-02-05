@@ -1,8 +1,8 @@
 # ================================
 # Build output
 # ================================
-user/mods/Gekos_BetterProgression/src/bin/
-user/mods/Gekos_BetterProgression/src/obj/
+**/bin/
+**/obj/
 
 # ================================
 # User-specific / IDE
