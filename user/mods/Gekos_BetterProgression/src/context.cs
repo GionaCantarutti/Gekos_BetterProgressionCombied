@@ -21,7 +21,7 @@ public class Context
     public ConfigServer sptConfig;
     public HashUtil hashUtil;
     public GekoConfig config;
-
+    public ILoggerWrapper logger;
 
 
     public bool IsInitialized => config != null;
@@ -31,7 +31,8 @@ public class Context
         PresetHelper _presetHelper,
         ConfigServer _sptConfig,
         HashUtil _hashUtil,
-        GekoConfig _config
+        GekoConfig _config,
+        ILoggerWrapper _logger
     )
     {
         this.itemHelper = _itemHelper;
@@ -39,17 +40,20 @@ public class Context
         this.sptConfig = _sptConfig;
         this.hashUtil = _hashUtil;
         this.config = _config;
+        this.logger = _logger;
     }
 
     public void PostInitialize(
         DatabaseService _databaseService,
         DatabaseServer _databaseServer,
-        DatabaseTables _tables
+        DatabaseTables _tables,
+        ILoggerWrapper _logger
     )
     {
         this.databaseService = _databaseService;
         this.databaseServer = _databaseServer;
         this.tables = _tables;
+        this.logger = _logger;
     }
 
 }

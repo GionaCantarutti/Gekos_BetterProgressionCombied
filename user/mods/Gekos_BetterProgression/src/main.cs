@@ -42,7 +42,7 @@ public record ModMetadata : AbstractModMetadata
     /// <summary>
     /// A list of people who helped you create the mod
     /// </summary>
-    public override List<string>? Contributors { get; init; }
+    public override List<string>? Contributors { get; init; } = ["marbL-"];
 
     /// <summary>
     ///  The version of the mod, follows SEMVER rules (https://semver.org/)
@@ -100,7 +100,9 @@ public class PreSPTLoader(
 
         var config = modHelper.GetJsonDataFromFile<GekoConfig>(pathToMod, "config.json5");
 
-        context.PreInitialize(itemHelper, presetHelper, configServer, hashUtil, config);
+        var logWrapper = new LoggerWrapper<PreSPTLoader>(logger);
+
+        context.PreInitialize(itemHelper, presetHelper, configServer, hashUtil, config, logWrapper);
 
         return Task.CompletedTask;
     }
@@ -123,7 +125,10 @@ public class PostDBLoader(
         {
             throw new Exception("Context was not initialized!");
         }
-        context.PostInitialize(databaseService, databaseServer, databaseService.GetTables());
+
+        var logWrapper = new LoggerWrapper<PostDBLoader>(logger);
+
+        context.PostInitialize(databaseService, databaseServer, databaseService.GetTables(), logWrapper);
         
         logger.Success($"Test: {context.config.algorithmicalRebalancing.ammoRules.ammoBaseLoyaltyByPen[0].baseLoyalty}");
 
