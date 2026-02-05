@@ -155,7 +155,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying secure container changes...");
-        // SafelyRunIf(cfg.secureContainerProgression.enable, () => ApplySecureContainerChanges(context), "Failed to apply secure container changes!");
+        SafelyRunIf(cfg.secureContainerProgression.enable, () => ContainerChanges.Apply(context), "Failed to apply secure container changes!");
         log?.Success("Done!");
 
         log?.Info("Applying stash progression changes...");
