@@ -162,7 +162,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying stash progression changes...");
-        // SafelyRunIf(cfg.stashProgression.enable, () => ChangeStashProgression(context), "Failed to apply stash progression changes!");
+        SafelyRunIf(cfg.stashProgression.enable, () => StashChanges.Apply(context), "Failed to apply stash progression changes!");
         log?.Success("Done!");
 
         log?.Info("Disabling flea market...");
