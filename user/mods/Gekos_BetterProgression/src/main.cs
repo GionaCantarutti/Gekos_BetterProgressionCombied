@@ -174,7 +174,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to skills...");
-        // SafelyRunIf(cfg.skillChanges.enable, () => ChangeSkills(context), "Failed to apply changes to skills!");
+        SafelyRunIf(cfg.skillChanges.enable, () => SkillChanges.Apply(context), "Failed to apply changes to skills!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to craft times and output counts...");
