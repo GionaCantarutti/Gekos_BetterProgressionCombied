@@ -115,9 +115,9 @@ public static class Utils
     {
         if (!context.tables.Templates.Items.TryGetValue(item.Template, out var template))
         {
-            //context.logger.Warning(
-            //    $"Trader item {item._id} with table ID {item._tpl} couldn't be found in the tables!"
-            //);
+            context.logger.Warning(
+                $"Trader item {item.Id} with table ID {item.Template} couldn't be found in the tables!"
+            );
         }
         else
         {
@@ -258,7 +258,6 @@ public static class Utils
         DatabaseTables tables = context.tables;
         var startedRewards = additionalQuestRewards.started;
         var successRewards = additionalQuestRewards.success;
-        //context.logger.Info("Adding quest rewards");
 
         foreach (KeyValuePair<string, Reward> questIDToReward in startedRewards)
         {
@@ -450,14 +449,14 @@ public static class Utils
         }
         catch (Exception ex)
         {
-            //context.logger.Warning(
-            //    $"Failed to fetch quest locks for {trader.base.name} ({trader.base._id})"
-            //);
+            context.logger.Warning(
+                $"Failed to fetch quest locks for {trader.Base.Name} ({trader.Base.Id})"
+            );
 
-            //if (context.config.dev.showFullError)
-            //{
-            //    context.logger.Error(ex.ToString());
-            //}
+            if (context.config.dev.showFullError)
+            {
+                context.logger.Error(ex.ToString());
+            }
 
             return false;
         }
