@@ -22,6 +22,7 @@ public class Context
     public HashUtil hashUtil;
     public GekoConfig config;
     public ILoggerWrapper logger;
+    public LocaleService localeService;
 
 
     public bool IsInitialized => config != null;
@@ -47,13 +48,15 @@ public class Context
         DatabaseService _databaseService,
         DatabaseServer _databaseServer,
         DatabaseTables _tables,
-        ILoggerWrapper _logger
+        ILoggerWrapper _logger,
+        LocaleService _localeService
     )
     {
         this.databaseService = _databaseService;
         this.databaseServer = _databaseServer;
         this.tables = _tables;
         this.logger = _logger;
+        this.localeService = _localeService;
     }
 
 }

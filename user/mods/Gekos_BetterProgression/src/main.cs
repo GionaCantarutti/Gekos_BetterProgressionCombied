@@ -9,6 +9,7 @@ using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Utils;
 using GekosBetterProgression.Changes;
+using gekos_server.Changes;
 
 namespace GekosBetterProgression;
 
@@ -115,7 +116,8 @@ public class PostDBLoader(
     Context context,
     ISptLogger<PostDBLoader> logger,
         DatabaseService databaseService,
-        DatabaseServer databaseServer
+        DatabaseServer databaseServer,
+        LocaleService localeService
 )
     : IOnLoad // Implement the `IOnLoad` interface so that this mod can do something
 {
@@ -129,7 +131,7 @@ public class PostDBLoader(
 
         var logWrapper = new LoggerWrapper<PostDBLoader>(logger);
 
-        context.PostInitialize(databaseService, databaseServer, databaseService.GetTables(), logWrapper);
+        context.PostInitialize(databaseService, databaseServer, databaseService.GetTables(), logWrapper, localeService);
 
         ApplyPostDBChanges(context);
 
@@ -187,10 +189,10 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Removing FiR requirements...");
-        // SafelyRunIf(cfg.misc.removeFirFromQuests, () => RemoveFirFromQuests(context), "Failed to remove FiR requirements from quests!");
-        // SafelyRunIf(cfg.misc.removeFirFromQuests, () => RemoveFirFromRepeatables(context), "Failed to remove FiR requirements from repeatable quests!");
-        // SafelyRunIf(cfg.misc.removeFirFromHideout, () => RemoveFirFromHideout(context), "Failed to remove FiR requirements from hideout builds!");
-        // SafelyRunIf(cfg.misc.removeFirFromFlea, () => RemoveFirFromFlea(context), "Failed to remove FiR requirements from flea market listings!");
+        SafelyRunIf(cfg.misc.removeFirFromQuests, () => FirChanges.RemoveFirFromQuests(context), "Failed to remove FiR requirements from quests!");
+        SafelyRunIf(cfg.misc.removeFirFromQuests, () => FirChanges.RemoveFirFromRepeatables(context), "Failed to remove FiR requirements from repeatable quests!");
+        SafelyRunIf(cfg.misc.removeFirFromHideout, () => FirChanges.RemoveFirFromHideout(context), "Failed to remove FiR requirements from hideout builds!");
+        SafelyRunIf(cfg.misc.removeFirFromFlea, () => FirChanges.RemoveFirFromFlea(context), "Failed to remove FiR requirements from flea market listings!");
         log?.Success("Done!");
 
         log?.Info("Adding custom trades...");
