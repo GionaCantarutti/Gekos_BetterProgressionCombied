@@ -9,7 +9,7 @@ using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Utils;
 
-namespace gekosbetterprogression;
+namespace GekosBetterProgression;
 
 /// <summary>
 /// This is the replacement for the former package.json data. This is required for all mods.

@@ -7,7 +7,7 @@ using SPTarkov.Server.Core.Utils;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace gekosbetterprogression;
+namespace GekosBetterProgression;
 
 [Injectable]
 public class Context

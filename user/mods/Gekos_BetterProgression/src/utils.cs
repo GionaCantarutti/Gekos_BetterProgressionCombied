@@ -9,7 +9,7 @@ using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Helpers;
 //using gekosbetterprogression.AlgoRebalancing.Types;
 
-namespace gekosbetterprogression;
+namespace GekosBetterProgression;
 
 public static class Utils
 {

@@ -1,4 +1,4 @@
-namespace gekosbetterprogression;
+namespace GekosBetterProgression;
 
 public record GekoConfig
 {

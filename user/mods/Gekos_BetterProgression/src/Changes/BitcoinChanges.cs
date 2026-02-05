@@ -10,7 +10,7 @@ using SPTarkov.Server.Core.Models.Eft.Hideout;
 using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 
-namespace gekosbetterprogression;
+namespace GekosBetterProgression;
 
 public class BitcoinChanges
 {

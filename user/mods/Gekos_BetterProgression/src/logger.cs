@@ -1,7 +1,7 @@
 using Microsoft.Extensions.ObjectPool;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace gekosbetterprogression;
+namespace GekosBetterProgression;
 
 public interface ILoggerWrapper
 {
