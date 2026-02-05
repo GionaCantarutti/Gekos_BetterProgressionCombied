@@ -1,4 +1,4 @@
-﻿using SPTarkov.DI.Annotations;
+using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Services;
 using System;
@@ -13,7 +13,7 @@ internal class ContainerChanges()
 {
     public static void Apply(Context context)
     {
-        foreach (KeyValuePair<string, int[]> item in context.config.misc.containerSizeChanges)
+        foreach (KeyValuePair<string, int[]> item in context.config.misc.containerSizeChanges.changes)
         {
             if (!context.tables.Templates.Items.ContainsKey(item.Key))
             {

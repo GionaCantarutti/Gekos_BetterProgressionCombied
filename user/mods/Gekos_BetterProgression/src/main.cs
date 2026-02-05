@@ -101,10 +101,11 @@ public class PreSPTLoader(
         var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
 
         var config = modHelper.GetJsonDataFromFile<GekoConfig>(pathToMod, "config.json5");
+        var advancedConfig = modHelper.GetJsonDataFromFile<AdvancedConfig>(pathToMod, "advancedConfig.json5");
 
         var logWrapper = new LoggerWrapper<PreSPTLoader>(logger);
 
-        context.PreInitialize(itemHelper, presetHelper, configServer, hashUtil, config, logWrapper);
+        context.PreInitialize(itemHelper, presetHelper, configServer, hashUtil, config, advancedConfig, logWrapper);
 
         return Task.CompletedTask;
     }
@@ -157,7 +158,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying secure container changes...");
-        SafelyRunIf(cfg.secureContainerProgression.enable, () => ContainerChanges.Apply(context), "Failed to apply secure container changes!");
+        SafelyRunIf(cfg.secureContainerProgression.enable, () => SecureContainerChanges.Apply(context), "Failed to apply secure container changes!");
         log?.Success("Done!");
 
         log?.Info("Applying stash progression changes...");
@@ -214,8 +215,13 @@ public class PostDBLoader(
         log?.Info("Adding additional quest rewards...");
         // SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AddAdditionalQuestRewards(context), "Failed to add additional quest rewards!");
         log?.Success("Done!");
+
+        log?.Info("Applying changes to container sizes...");
+        SafelyRunIf(cfg.misc.containerSizeChanges.enable, () => ContainerChanges.Apply(context), "Failed to change sizes of containers!");
+        log?.Success("Done!");
     }
 
+    //ToDo: incorporate success logging into this, depending on success return value from called function
     private void SafelyRunIf(bool condition, Action action, string message)
     {
         try

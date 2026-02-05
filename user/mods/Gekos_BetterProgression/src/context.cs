@@ -21,6 +21,7 @@ public class Context
     public ConfigServer sptConfig;
     public HashUtil hashUtil;
     public GekoConfig config;
+    public AdvancedConfig advancedConfig;
     public ILoggerWrapper logger;
     public LocaleService localeService;
 
@@ -33,6 +34,7 @@ public class Context
         ConfigServer _sptConfig,
         HashUtil _hashUtil,
         GekoConfig _config,
+        AdvancedConfig _advancedConfig,
         ILoggerWrapper _logger
     )
     {
@@ -41,6 +43,7 @@ public class Context
         this.sptConfig = _sptConfig;
         this.hashUtil = _hashUtil;
         this.config = _config;
+        this.advancedConfig = _advancedConfig;
         this.logger = _logger;
     }
 

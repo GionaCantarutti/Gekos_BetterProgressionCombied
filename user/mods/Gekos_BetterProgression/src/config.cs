@@ -154,8 +154,15 @@ public record GekoConfig
         public bool addCustomTrades { get; set; }
 
         public required Dictionary<string, int> stackSizeOverride { get; set; }
-        public required Dictionary<string, int[]> containerSizeChanges { get; set; }
+        public required ContainerSizeChanges containerSizeChanges { get; set; }
         public required Dictionary<string, int> priceChanges { get; set; }
+
+        public record ContainerSizeChanges
+        {
+            public bool enable { get; set; }
+
+            public required Dictionary<string, int[]> changes { get; set; }
+        }
     }
 
     // ===================== ALGORITHMIC REBALANCING =====================
