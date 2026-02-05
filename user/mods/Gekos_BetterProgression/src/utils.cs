@@ -5,6 +5,7 @@ using SPTarkov.Server.Core.Models.Eft.Hideout;
 using SPTarkov.Server.Core.Models.Eft.Trade;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Spt.Server;
+using SPTarkov.Server.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -261,15 +262,27 @@ public static class Utils
 
         foreach (KeyValuePair<string, Reward> questIDToReward in startedRewards)
         {
+            // this is not a typo, this one has a capitalized S
             tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("Started", out List<Reward>? rewardList);
             rewardList?.Add(questIDToReward.Value);
         }
 
         foreach (KeyValuePair<string, Reward> questIDToReward in successRewards)
         {
+            // this is not a typo, this one has a capitalized S
             tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("Success", out List<Reward>? rewardList);
             rewardList?.Add(questIDToReward.Value);
         }
+    }
+
+    public static void LockBehindQuest(
+        Context context,
+        string traderId,
+        string trade,
+        string itemId,
+        QuestLock questLock)
+    {
+        LockBehindQuest(context, traderId, trade, questLock.quest, itemId, questLock.rewardId, questLock.targetId);
     }
 
     public static void LockBehindQuest(
@@ -283,7 +296,7 @@ public static class Utils
     {
         var trader = context.tables.Traders[traderId];
 
-        trader.QuestAssort["Success"][trade] = lockQuest;
+        trader.QuestAssort["success"][trade] = lockQuest;
 
         var rewards = context.tables.Templates.Quests[lockQuest].Rewards?["Success"];
 
@@ -325,19 +338,23 @@ public static class Utils
     // LOCALES
     // ---------------------------------------------
 
+    public static void AddToLocale(Context context, string id, CustomLocale customLocale)
+    {
+        AddToLocale(context, id, customLocale.Name, customLocale.ShortName, customLocale.Description);
+    }
+
     public static void AddToLocale(
-        Dictionary<string, Dictionary<string, string>> locales,
+        Context context,
         string id,
         string name,
         string shortname,
         string description)
     {
-        foreach (var locale in locales.Values)
-        {
-            locale[$"{id} Name"] = name;
-            locale[$"{id} ShortName"] = shortname;
-            locale[$"{id} Description"] = description;
-        }
+        Dictionary<string, string> locale = context.localeService.GetLocaleDb();
+
+        locale[$"{id} Name"] = name;
+        locale[$"{id} ShortName"] = shortname;
+        locale[$"{id} Description"] = description;
     }
 
     // ---------------------------------------------
@@ -425,9 +442,9 @@ public static class Utils
     {
         try
         {
-            var locks = trader.QuestAssort["Success"].Keys
-                .Concat(trader.QuestAssort["Started"].Keys)
-                .Concat(trader.QuestAssort["Fail"].Keys);
+            var locks = trader.QuestAssort["success"].Keys
+                .Concat(trader.QuestAssort["started"].Keys)
+                .Concat(trader.QuestAssort["fail"].Keys);
 
             return locks.Contains(trade.Id);
         }

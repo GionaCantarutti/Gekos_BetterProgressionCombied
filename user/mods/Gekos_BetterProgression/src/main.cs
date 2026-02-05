@@ -196,8 +196,12 @@ public class PostDBLoader(
         SafelyRunIf(cfg.misc.removeFirFromFlea, () => FirChanges.RemoveFirFromFlea(context), "Failed to remove FiR requirements from flea market listings!");
         log?.Success("Done!");
 
+        log?.Info("Adding custom items...");
+        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalItemsChanges.Apply(context), "Failed to add custom items!");
+        log?.Success("Done!");
+
         log?.Info("Adding custom trades...");
-        // SafelyRunIf(cfg.misc.addCustomTrades, () => AddCustomTrades(context), "Failed to add custom trades!");
+        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalTradesChanges.Apply(context), "Failed to add custom trades!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to bitcoin farming...");
