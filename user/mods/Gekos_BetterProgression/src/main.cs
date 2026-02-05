@@ -185,7 +185,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to SICC container...");
-        // SafelyRunIf(cfg.SICCBuffs.enable, () => BuffSICCCase(context), "Failed to apply changes to SICC container!");
+        SafelyRunIf(cfg.siccBuffs.enable, () => SICCCaseChanges.Apply(context), "Failed to apply changes to SICC container!");
         log?.Success("Done!");
 
         log?.Info("Removing FiR requirements...");
