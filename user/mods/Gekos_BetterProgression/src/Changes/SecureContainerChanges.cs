@@ -1,19 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using SPTarkov.Server.Core.Models.Eft.Common.Tables;
-using SPTarkov.Server.Core.DI;
-using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Services;
-using SPTarkov.Server.Core.Helpers;
-using SPTarkov.Server.Core.Models.Spt.Server;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Utils;
-using System.Linq;
-using System.ComponentModel;
-using SPTarkov.Server.Core.Models.Common;
+﻿using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 
 namespace GekosBetterProgression.Changes;
 

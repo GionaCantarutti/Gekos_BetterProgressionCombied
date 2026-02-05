@@ -1,12 +1,3 @@
-using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.DI;
-using SPTarkov.Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace GekosBetterProgression.Changes;
 
 internal class ContainerChanges()

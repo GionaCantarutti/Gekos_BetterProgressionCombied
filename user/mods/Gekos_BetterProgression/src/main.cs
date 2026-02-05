@@ -1,6 +1,5 @@
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
-using SPTarkov.Server.Core.Models.Logging;
 using SPTarkov.Server.Core.Models.Spt.Mod;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Helpers;
@@ -9,7 +8,6 @@ using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Utils;
 using GekosBetterProgression.Changes;
-using gekos_server.Changes;
 
 namespace GekosBetterProgression;
 

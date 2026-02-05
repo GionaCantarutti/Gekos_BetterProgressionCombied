@@ -1,4 +1,3 @@
-using Microsoft.Extensions.ObjectPool;
 using SPTarkov.Server.Core.Models.Utils;
 
 namespace GekosBetterProgression;

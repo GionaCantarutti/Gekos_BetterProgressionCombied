@@ -1,15 +1,8 @@
-using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Hideout;
-using SPTarkov.Server.Core.Models.Eft.Trade;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Spt.Server;
-using SPTarkov.Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using static GekosBetterProgression.AdvancedConfig;
 //using gekosbetterprogression.AlgoRebalancing.Types;
 

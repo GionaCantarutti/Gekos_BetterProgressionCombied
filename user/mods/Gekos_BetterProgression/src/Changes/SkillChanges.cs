@@ -1,14 +1,4 @@
-﻿using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.DI;
-using SPTarkov.Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SPTarkov.Server.Core.Models.Eft;
-
-namespace GekosBetterProgression.Changes;
+﻿namespace GekosBetterProgression.Changes;
 
 public class SkillChanges()
 {
