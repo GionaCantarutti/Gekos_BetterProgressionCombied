@@ -1,13 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
+using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Hideout;
 using SPTarkov.Server.Core.Models.Eft.Trade;
 using SPTarkov.Server.Core.Models.Enums;
-using SPTarkov.Server.Core.Helpers;
-using SPTarkov.Server.Core.Models.Common;
+using SPTarkov.Server.Core.Models.Spt.Server;
+using SPTarkov.Server.Core.Services;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using static GekosBetterProgression.AdvancedConfig;
 //using gekosbetterprogression.AlgoRebalancing.Types;
 
 namespace GekosBetterProgression;
@@ -250,6 +253,38 @@ public static class Utils
     // QUEST / HIDEOUT
     // ---------------------------------------------
 
+    public static void ApplyAdditionalQuestRewards(Context context, AdditionalQuestRewards additionalQuestRewards)
+    {
+        DatabaseTables tables = context.tables;
+        var startedRewards = additionalQuestRewards.started;
+        var successRewards = additionalQuestRewards.success;
+        context.logger.Info("Adding quest rewards");
+
+        foreach (KeyValuePair<string, Reward> questIDToReward in startedRewards)
+        {
+            // this is not a typo, this one has a capitalized S
+            tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("Started", out List<Reward>? rewardList);
+            rewardList?.Add(questIDToReward.Value);
+        }
+
+        foreach (KeyValuePair<string, Reward> questIDToReward in successRewards)
+        {
+            // this is not a typo, this one has a capitalized S
+            tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("Success", out List<Reward>? rewardList);
+            rewardList?.Add(questIDToReward.Value);
+        }
+    }
+
+    public static void LockBehindQuest(
+        Context context,
+        string traderId,
+        string trade,
+        string itemId,
+        QuestLock questLock)
+    {
+        LockBehindQuest(context, traderId, trade, questLock.quest, itemId, questLock.rewardId, questLock.targetId);
+    }
+
     public static void LockBehindQuest(
         Context context,
         string traderId,
@@ -263,7 +298,7 @@ public static class Utils
 
         trader.QuestAssort["success"][trade] = lockQuest;
 
-        var rewards = context.tables.Templates.Quests[lockQuest].Rewards?["success"];
+        var rewards = context.tables.Templates.Quests[lockQuest].Rewards?["Success"];
 
         rewards?.Add(new Reward
         {
@@ -303,19 +338,23 @@ public static class Utils
     // LOCALES
     // ---------------------------------------------
 
+    public static void AddToLocale(Context context, string id, CustomLocale customLocale)
+    {
+        AddToLocale(context, id, customLocale.Name, customLocale.ShortName, customLocale.Description);
+    }
+
     public static void AddToLocale(
-        Dictionary<string, Dictionary<string, string>> locales,
+        Context context,
         string id,
         string name,
         string shortname,
         string description)
     {
-        foreach (var locale in locales.Values)
-        {
-            locale[$"{id} Name"] = name;
-            locale[$"{id} ShortName"] = shortname;
-            locale[$"{id} Description"] = description;
-        }
+        Dictionary<string, string> locale = context.localeService.GetLocaleDb();
+
+        locale[$"{id} Name"] = name;
+        locale[$"{id} ShortName"] = shortname;
+        locale[$"{id} Description"] = description;
     }
 
     // ---------------------------------------------

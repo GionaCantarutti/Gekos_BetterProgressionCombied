@@ -162,7 +162,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying stash progression changes...");
-        // SafelyRunIf(cfg.stashProgression.enable, () => ChangeStashProgression(context), "Failed to apply stash progression changes!");
+        SafelyRunIf(cfg.stashProgression.enable, () => StashChanges.Apply(context), "Failed to apply stash progression changes!");
         log?.Success("Done!");
 
         log?.Info("Disabling flea market...");
@@ -182,7 +182,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to item prices...");
-        // SafelyRunIf(true, () => ChangePrices(context), "Failed to apply changes to item prices!");
+        SafelyRunIf(true, () => PriceChanges.Apply(context), "Failed to apply changes to item prices!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to SICC container...");
@@ -196,8 +196,12 @@ public class PostDBLoader(
         SafelyRunIf(cfg.misc.removeFirFromFlea, () => FirChanges.RemoveFirFromFlea(context), "Failed to remove FiR requirements from flea market listings!");
         log?.Success("Done!");
 
+        log?.Info("Adding custom items...");
+        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalItemsChanges.Apply(context), "Failed to add custom items!");
+        log?.Success("Done!");
+
         log?.Info("Adding custom trades...");
-        // SafelyRunIf(cfg.misc.addCustomTrades, () => AddCustomTrades(context), "Failed to add custom trades!");
+        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalTradesChanges.Apply(context), "Failed to add custom trades!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to bitcoin farming...");
@@ -205,7 +209,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Setting initial trader standing...");
-        // SafelyRunIf(cfg.overrideInitialStanding.enable, () => SetStartingReputation(context), "Failed to set initial trader standing!");
+        SafelyRunIf(cfg.overrideInitialStanding.enable, () => TraderStartRepChanges.Apply(context), "Failed to set initial trader standing!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to Ref item purchasing...");
@@ -213,7 +217,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Adding additional quest rewards...");
-        // SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AddAdditionalQuestRewards(context), "Failed to add additional quest rewards!");
+        SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AdditionalQuestRewardChanges.Apply(context), "Failed to add additional quest rewards!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to container sizes...");

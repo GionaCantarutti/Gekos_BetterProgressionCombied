@@ -28,21 +28,7 @@ public class SecureContainerChanges()
 
     public static void ApplyAdditionalQuestRewards(Context context)
     {
-        DatabaseTables tables = context.tables;
-        var startedRewards = context.advancedConfig.advancedSecureContainerChanges.additionalQuestRewards.started;
-        var successRewards = context.advancedConfig.advancedSecureContainerChanges.additionalQuestRewards.success;
-
-        foreach (KeyValuePair<string, Reward> questIDToReward in startedRewards)
-        {
-            tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("started", out List<Reward>? rewardList);
-            rewardList?.Add(questIDToReward.Value);
-        }
-
-        foreach (KeyValuePair<string, Reward> questIDToReward in successRewards)
-        {
-            tables.Templates.Quests[questIDToReward.Key].Rewards.TryGetValue("success", out List<Reward>? rewardList);
-            rewardList?.Add(questIDToReward.Value);
-        }
+        Utils.ApplyAdditionalQuestRewards(context, context.advancedConfig.advancedSecureContainerChanges.additionalQuestRewards);
     }
 
     public static void ApplySizeChanges(Context context)
@@ -112,6 +98,4 @@ public class SecureContainerChanges()
             }
         }
     }
-
-
 }
