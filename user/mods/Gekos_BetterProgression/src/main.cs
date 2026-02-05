@@ -205,7 +205,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Setting initial trader standing...");
-        // SafelyRunIf(cfg.overrideInitialStanding.enable, () => SetStartingReputation(context), "Failed to set initial trader standing!");
+        SafelyRunIf(cfg.overrideInitialStanding.enable, () => TraderStartRepChanges.Apply(context), "Failed to set initial trader standing!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to Ref item purchasing...");
