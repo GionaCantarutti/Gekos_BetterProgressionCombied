@@ -165,7 +165,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Disabling flea market...");
-        // SafelyRunIf(cfg.fleaMarketChanges.disableFleaMarket, () => DisableFleaMarket(context), "Failed to disable flea market!");
+        SafelyRunIf(cfg.fleaMarketChanges.disableFleaMarket, () => FleaChanges.Apply(context), "Failed to disable flea market!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to hideout build costs...");
