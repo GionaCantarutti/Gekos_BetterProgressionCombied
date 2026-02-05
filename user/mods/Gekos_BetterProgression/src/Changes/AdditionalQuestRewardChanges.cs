@@ -1,4 +1,4 @@
-using GekosBetterProgression;
+namespace GekosBetterProgression.Changes;
 
 public class AdditionalQuestRewardChanges
 {

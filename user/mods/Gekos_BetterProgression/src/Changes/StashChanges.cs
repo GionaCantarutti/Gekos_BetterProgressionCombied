@@ -4,7 +4,7 @@ using SPTarkov.Server.Core.Models.Enums.Hideout;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Eft.Hideout;
 
-namespace GekosBetterProgression;
+namespace GekosBetterProgression.Changes;
 
 // NOTE: Most of this is just dumbly translated legacy code, apologies if this sucks!
 public static class StashChanges

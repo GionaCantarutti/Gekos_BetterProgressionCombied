@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 using System.Text.RegularExpressions;
 using SPTarkov.Server.Core.Models.Spt.Config;
 
-namespace gekos_server.Changes;
+namespace GekosBetterProgression.Changes;
 
 public class FirChanges()
 {

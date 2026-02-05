@@ -258,7 +258,7 @@ public static class Utils
         DatabaseTables tables = context.tables;
         var startedRewards = additionalQuestRewards.started;
         var successRewards = additionalQuestRewards.success;
-        context.logger.Info("Adding quest rewards");
+        //context.logger.Info("Adding quest rewards");
 
         foreach (KeyValuePair<string, Reward> questIDToReward in startedRewards)
         {

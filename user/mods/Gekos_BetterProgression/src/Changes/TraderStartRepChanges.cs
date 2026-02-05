@@ -1,6 +1,6 @@
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 
-namespace GekosBetterProgression;
+namespace GekosBetterProgression.Changes;
 
 public static class TraderStartRepChanges
 { 
