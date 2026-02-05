@@ -175,7 +175,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to craft times and output counts...");
-        // SafelyRunIf(true, () => ChangeCrafts(context), "Failed to apply changes to craft times and output counts!");
+        SafelyRunIf(true, () => CraftingChanges.Apply(context), "Failed to apply changes to craft times and output counts!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to item prices...");
