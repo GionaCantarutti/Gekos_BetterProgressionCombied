@@ -182,7 +182,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to item prices...");
-        // SafelyRunIf(true, () => ChangePrices(context), "Failed to apply changes to item prices!");
+        SafelyRunIf(true, () => PriceChanges.Apply(context), "Failed to apply changes to item prices!");
         log?.Success("Done!");
 
         log?.Info("Applying changes to SICC container...");
