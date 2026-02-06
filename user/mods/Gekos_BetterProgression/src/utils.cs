@@ -397,12 +397,12 @@ public static class Utils
 
     public static void SetLoyalty(
         string itemId,
-        int loyalty,
+        float loyaltyScore,
         Trader trader,
         bool capToMax)
     {
         trader.Assort.LoyalLevelItems[itemId] =
-            LoyaltyFromScore(loyalty, capToMax);
+            LoyaltyFromScore(loyaltyScore, capToMax);
     }
 
     // ---------------------------------------------
