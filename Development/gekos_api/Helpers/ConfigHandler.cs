@@ -12,21 +12,19 @@ namespace gekos_api.Helpers
         public static SkillsConfig GetSkillsConfig()
         {
             var req = SPT.Common.Http.RequestHandler.GetJson("/server-config-router/skillsconfig");
-            ConfigResponse<SkillsConfig> config = JsonConvert.DeserializeObject<ConfigResponse<SkillsConfig>>(req);
-            return config.Response;
+            SkillsConfig config = JsonConvert.DeserializeObject<SkillsConfig>(req);
+            return config;
         }
 
         public static PointsConfig GetPointsConfig()
         {
             var req = SPT.Common.Http.RequestHandler.GetJson("/server-config-router/skillpoints");
-            ConfigResponse<PointsConfig> config = JsonConvert.DeserializeObject<ConfigResponse<PointsConfig>>(req);
-            return config.Response;
+            PointsConfig config = JsonConvert.DeserializeObject<PointsConfig>(req);
+            return config;
         }
     }
 
-    class ConfigResponse<T> { public T Response { get; set; } }
-
-    class SkillsConfig
+    public class SkillsConfig
     {
 
         [JsonProperty("GlobalXPMultiplier")]
@@ -40,7 +38,7 @@ namespace gekos_api.Helpers
 
     }
 
-    class PointsConfig
+    public class PointsConfig
     {
         [JsonProperty("enable")]
         public bool enable { get; set; }

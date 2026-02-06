@@ -11,6 +11,15 @@ using System.Threading.Tasks;
 
 namespace gekos_api.Patches
 {
+    public static class SkillBuffMultiConfig
+    {
+        public static SkillsConfig config;
+
+        static SkillBuffMultiConfig()
+        {
+            config = ConfigHandler.GetSkillsConfig();
+        }
+    }
 
     //Base class to minimize duplication. Cannot do the patch directly because of Harmony limitations
     public abstract class SkillBuffMultiBase<T> : ModulePatch where T : class
@@ -34,7 +43,7 @@ namespace gekos_api.Patches
             try
             {
                 // Try to get the field using Harmony's AccessTools
-                var fieldInfo = AccessTools.Field(typeof(T), "skillBuffClass");
+                var fieldInfo = AccessTools.Field(typeof(T), "SkillBuffClass");
                 if (fieldInfo == null)
                 {
                     Plugin.LogSource.LogWarning($"Could not find field 'skillBuffClass' in type {typeof(T).Name}.");
@@ -63,37 +72,37 @@ namespace gekos_api.Patches
     }
 
     // Actual classes
-    public class SkillBuffMulti1303 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1303>
+    public class SkillBuffMulti1 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1425>
     {
         [PatchPostfix]
-        public static void Postfix(ref SkillManager.SkillBuffClass.Class1303 __instance)
+        public static void Postfix(ref SkillManager.SkillBuffClass.Class1425 __instance)
         {
             DoPostfix(ref __instance);
         }
     }
 
-    public class SkillBuffMulti1304 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1304>
+    public class SkillBuffMulti2 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1426>
     {
         [PatchPostfix]
-        public static void Postfix(ref SkillManager.SkillBuffClass.Class1304 __instance)
+        public static void Postfix(ref SkillManager.SkillBuffClass.Class1426 __instance)
         {
             DoPostfix(ref __instance);
         }
     }
 
-    public class SkillBuffMulti1305 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1305>
+    public class SkillBuffMulti3 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1427>
     {
         [PatchPostfix]
-        public static void Postfix(ref SkillManager.SkillBuffClass.Class1305 __instance)
+        public static void Postfix(ref SkillManager.SkillBuffClass.Class1427 __instance)
         {
             DoPostfix(ref __instance);
         }
     }
 
-    public class SkillBuffMulti1306 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1306>
+    public class SkillBuffMulti4 : SkillBuffMultiBase<SkillManager.SkillBuffClass.Class1428>
     {
         [PatchPostfix]
-        public static void Postfix(ref SkillManager.SkillBuffClass.Class1306 __instance)
+        public static void Postfix(ref SkillManager.SkillBuffClass.Class1428 __instance)
         {
             DoPostfix(ref __instance);
         }
