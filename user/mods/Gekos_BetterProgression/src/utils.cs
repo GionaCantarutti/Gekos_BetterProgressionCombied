@@ -192,6 +192,8 @@ public static class Utils
                     {
                         //ToDo: If loyalty mapping was not found directly it could be an attachment for an item for sale, check parent recursively.
                         //      For now we just consider the item as not for sale and continue.
+                        //      Careful to also then change the whole infrastructure to account for the fact that this function might find the attachments on the very
+                        //      gun we're dissecting to tell if it has any advanced attachments
                         continue;
                     }
                 }
