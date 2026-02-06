@@ -10,6 +10,7 @@ using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Eft.Profile;
 using SPTarkov.Reflection.Patching;
+using SPTarkov.Server.Core.Constants;
 
 namespace GekosBetterProgression.Changes;
 
@@ -21,8 +22,6 @@ public static class RefChanges
     {
         ChangeRefPurchasingOptions(context);
 
-        // I know this is unbearably gross, but I've fought against DI and
-        // long enough and have stopped caring
         GainRefRepOnKillPatch.context = context;
         new GainRefRepOnKillPatch().Enable();
         new AddSupportForGPTradersPatch().Enable();
@@ -77,7 +76,7 @@ public class GainRefRepOnKillPatch() : AbstractPatch
     [PatchPostfix]
     static void Postfix(MongoId sessionId, EndLocalRaidRequestData request)
     {
-        string[] validKilledSides = new string[] { "pmcbear", "pmcusec" };
+        string[] validKilledSides = new string[] { Sides.PmcUsec, Sides.PmcBear };
         IEnumerable<Victim> pmcKills = request.Results.Profile.Stats.Eft.Victims.Where((victim) => validKilledSides.Contains(victim.Role));
 
         SptProfile fullProfile = context.profileHelper.GetFullProfile(sessionId);
