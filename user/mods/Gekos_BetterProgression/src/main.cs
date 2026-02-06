@@ -8,6 +8,7 @@ using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Utils;
 using GekosBetterProgression.Changes;
+using GekosBetterProgression.AlgoRebalance;
 
 namespace GekosBetterProgression;
 
@@ -148,7 +149,7 @@ public class PostDBLoader(
             : context.logger;
 
         log?.Info("Running algorithmical rebalancing...");
-        // SafelyRunIf(cfg.algorithmicalRebalancing.enable, () => AlgorithmicallyRebalance(context), "Failed to run algorithmical rebalancing!");
+        SafelyRunIf(cfg.algorithmicalRebalancing.enable, () => AlgoRebalance.Core.AlgorithmicallyRebalance(context), "Failed to run algorithmical rebalancing!");
         log?.Success("Done!");
 
         log?.Info("Changing stack sizes...");

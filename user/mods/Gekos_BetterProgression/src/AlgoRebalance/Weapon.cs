@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using GekosBetterProgression;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 
 namespace GekosBetterProgression.AlgoRebalance;
@@ -59,7 +55,7 @@ public static class Weapon
 
                 foreach (var partTrade in partTrades)
                 {
-                    changesById.TryGetValue(partTrade.trade.Id, out var oldPartChange);
+                    changesById.TryGetValue(partTrade.trade.Id.ToString(), out var oldPartChange);
                     if (oldPartChange != null)
                     {
                         var oldLevel = Utils.LoyaltyFromScore(oldPartChange.score, context.config.algorithmicalRebalancing.clampToMaxLevel);

@@ -1,148 +1,185 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using GekosBetterProgression;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
-using SPTarkov.Server.Core.Models.Enums;
 
 namespace GekosBetterProgression.AlgoRebalance;
 
 public static class Core
 {
+    //Main entrypoint
     public static void AlgorithmicallyRebalance(Context context)
     {
-        var config = context.config.algorithmicalRebalancing;
-
-        var itemHelper = context.itemHelper;
         var traders = context.tables.Traders.Values;
 
         var changedItems = new Dictionary<int, List<ChangedItem>>();
 
         foreach (var trader in traders)
         {
-            var loyaltyLevels = trader?.Assort?.LoyalLevelItems;
-            if (loyaltyLevels == null) continue;
+            ProcessTrader(trader, context, changedItems);
+        }
 
-            var itemsForSale = trader?.Assort?.Items;
-            if (itemsForSale == null) continue;
+        PostProcessChangedItems(changedItems, context);
 
-            if (config.excludeTraders.Contains(trader!.Base.Id)) continue;
+        ApplyChanges(changedItems, context);
 
-            foreach (var item in itemsForSale)
+        ApplyOverrides(context);
+
+        if (context.config.algorithmicalRebalancing.ammoRules.craftSettings.enable) Ammo.RebalanceAmmoCrafts(context);
+    }
+
+    private static void ProcessTrader(Trader trader, Context context, Dictionary<int, List<ChangedItem>> changedItems)
+    {
+        var cfg = context.config.algorithmicalRebalancing;
+
+        if (trader is null || trader.Base is null) return;
+        var loyaltyLevels = trader.Assort?.LoyalLevelItems;
+        if (loyaltyLevels is null) return;
+
+        var itemsForSale = trader.Assort?.Items;
+        if (itemsForSale is null) return;
+
+        if (cfg.excludeTraders.Contains(trader.Base.Id)) return;
+
+        foreach (var item in itemsForSale)
+        {
+            if (cfg.explicitLoyaltyOverride.trades.ContainsKey(item.Id)) continue;
+            if (cfg.explicitLoyaltyOverride.items.ContainsKey(item.Template)) continue;
+
+            var changed = CreateChangedItemForItem(item, trader, itemsForSale, context);
+            if (changed is null) continue;
+
+            // Final modifications
+            if (Utils.IsQuestLocked(changed.trade, changed.trader, context))
             {
-                if (config.explicitLoyaltyOverride.trades.ContainsKey(item.Id)) continue;
-                if (config.explicitLoyaltyOverride.items.ContainsKey(item.Template)) continue;
+                changed.score += (float)cfg.questLockDelta;
+                if (cfg.logBartersAndLocks) context.logger.Info(context.tables.Templates.Items[changed.trade.Template].Name + " is a quest-locked item\t(Trade ID: " + changed.trade.Id + ")");
+            }
 
-                ChangedItem thisItem = null;
+            if (Utils.IsBarterTrade(changed.trade, changed.trader))
+            {
+                changed.score += (float)cfg.barterDelta;
+                if (cfg.logBartersAndLocks) context.logger.Info(context.tables.Templates.Items[changed.trade.Template].Name + " is a bartered item\t(Trade ID: " + changed.trade.Id + ")");
+            }
 
-                // AMMO
-                if (config.ammoRules.enable)
+            if (cfg.deltaByTrader.ContainsKey(trader.Base.Id)) changed.score += (float)cfg.deltaByTrader[trader.Base.Id];
+
+            if (cfg.explicitLoyaltyDelta.trades.TryGetValue(changed.trade.Id, out var tradeD)) changed.score += (float)tradeD;
+            if (cfg.explicitLoyaltyDelta.items.TryGetValue(changed.trade.Template, out var itemD)) changed.score += (float)itemD;
+
+            var level = Utils.LoyaltyFromScore(changed.score, cfg.clampToMaxLevel);
+            if (!changedItems.ContainsKey(level)) changedItems[level] = new List<ChangedItem>();
+            changedItems[level].Add(changed);
+        }
+    }
+
+    private static ChangedItem? CreateChangedItemForItem(Item item, Trader trader, IEnumerable<Item> itemsForSale, Context context)
+    {
+        var cfg = context.config.algorithmicalRebalancing;
+        var itemHelper = context.itemHelper;
+
+        ChangedItem? thisItem = null;
+
+        // AMMO
+        if (cfg.ammoRules.enable)
+        {
+            bool ammoOrBox = false;
+            string? ammo = null;
+            float loyaltyScore = 0f;
+
+            if (itemHelper.IsOfBaseclass(item.Template, BaseClasses.AMMO))
+            {
+                loyaltyScore = Ammo.CalculateAmmoLoyalty(item, context);
+                ammo = item.Template;
+                ammoOrBox = true;
+            }
+            else if (itemHelper.IsOfBaseclass(item.Template, BaseClasses.AMMO_BOX))
+            {
+                try
                 {
-                    bool ammoOrBox = false;
-                    string ammo = null;
-                    float loyaltyScore = 0f;
-
-                    if (itemHelper.IsOfBaseclass(item.Template, BaseClasses.AMMO))
-                    {
-                        loyaltyScore = Ammo.CalculateAmmoLoyalty(item, context);
-                        ammo = item.Template;
-                        ammoOrBox = true;
-                    }
-                    else if (itemHelper.IsOfBaseclass(item.Template, BaseClasses.AMMO_BOX))
-                    {
-                        try
-                        {
-                            dynamic tpl = context.tables.Templates.Items[item.Template];
-                            // Attempt to follow legacy structure: StackSlots[0]._props.filters[0].Filter[0]
-                            ammo = (string)tpl.Properties.StackSlots[0].Props.filters[0].Filter[0];
-                            loyaltyScore = Ammo.ScoreAmmo(context.tables.Templates.Items[ammo], context);
-                            ammoOrBox = true;
-                        }
-                        catch
-                        {
-                            ammoOrBox = false;
-                        }
-                    }
-
-                    if (ammoOrBox && !config.ammoRules.ignoreCalibers.Contains(context.tables.Templates.Items[ammo].Properties.Caliber))
-                    {
-                        thisItem = new ChangedItem(item, loyaltyScore, trader, config.ammoRules.logChanges, false);
-                    }
+                    dynamic tpl = context.tables.Templates.Items[item.Template];
+                    ammo = (string)tpl.Properties.StackSlots[0].Props.filters[0].Filter[0];
+                    loyaltyScore = Ammo.ScoreAmmo(context.tables.Templates.Items[ammo], context);
+                    ammoOrBox = true;
                 }
-
-                // WEAPONS
-                if (config.weaponRules.enable
-                    && itemHelper.IsOfBaseclass(item.Template, BaseClasses.WEAPON)
-                    && !itemHelper.IsOfBaseclass(item.Template, BaseClasses.SPECIAL_WEAPON))
+                catch
                 {
-                    var loyaltyScore = Weapon.CalculateWeaponLoyalty(item, itemsForSale, context);
-                    thisItem = new ChangedItem(item, loyaltyScore, trader, config.weaponRules.logChanges, true);
+                    ammoOrBox = false;
                 }
+            }
 
-                if (thisItem != null)
+            if (ammoOrBox && ammo != null)
+            {
+                if (context.tables.Templates.Items.TryGetValue(ammo, out var tpl) && tpl.Properties != null)
                 {
-                    if (Utils.IsQuestLocked(thisItem.trade, thisItem.trader, context))
+                    if (tpl.Properties.Caliber != null && !cfg.ammoRules.ignoreCalibers.Contains(tpl.Properties.Caliber))
                     {
-                        thisItem.score += (float)config.questLockDelta;
-                        if (config.logBartersAndLocks) context.logger.Info(context.tables.Templates.Items[thisItem.trade.Template].Name + " is a quest-locked item\t(Trade ID: " + thisItem.trade.Id + ")");
+                        thisItem = new ChangedItem(item, loyaltyScore, trader, cfg.ammoRules.logChanges, false);
                     }
-                    if (Utils.IsBarterTrade(thisItem.trade, thisItem.trader))
-                    {
-                        thisItem.score += (float)config.barterDelta;
-                        if (config.logBartersAndLocks) context.logger.Info(context.tables.Templates.Items[thisItem.trade.Template].Name + " is a bartered item\t(Trade ID: " + thisItem.trade.Id + ")");
-                    }
-
-                    if (config.deltaByTrader.ContainsKey(trader.Base.Id)) thisItem.score += (float)config.deltaByTrader[trader.Base.Id];
-
-                    if (config.explicitLoyaltyDelta.trades.TryGetValue(thisItem.trade.Id, out var tradeD)) thisItem.score += (float)tradeD;
-                    if (config.explicitLoyaltyDelta.items.TryGetValue(thisItem.trade.Template, out var itemD)) thisItem.score += (float)itemD;
-
-                    var level = Utils.LoyaltyFromScore(thisItem.score, config.clampToMaxLevel);
-                    if (!changedItems.ContainsKey(level)) changedItems[level] = new List<ChangedItem>();
-                    changedItems[level].Add(thisItem);
                 }
             }
         }
 
-        if (config.weaponRules.upshiftRules.enable) Weapon.WeaponShifting(changedItems, context);
-        if (config.weaponRules.attachmentsFollowDefaultBuild) Weapon.FollowDefaultBuild(changedItems, context);
-        if (config.weaponRules.advancedAttachmentsDelta != 0) Weapon.PenalizeAdvancedAttachments(changedItems, context);
+        // WEAPONS
+        if (cfg.weaponRules.enable
+            && itemHelper.IsOfBaseclass(item.Template, BaseClasses.WEAPON)
+            && !itemHelper.IsOfBaseclass(item.Template, BaseClasses.SPECIAL_WEAPON))
+        {
+            var loyaltyScore = Weapon.CalculateWeaponLoyalty(item, itemsForSale.ToList(), context);
+            thisItem = new ChangedItem(item, loyaltyScore, trader, cfg.weaponRules.logChanges, true);
+        }
 
-        // Apply changes
+        return thisItem;
+    }
+
+    private static void PostProcessChangedItems(Dictionary<int, List<ChangedItem>> changedItems, Context context)
+    {
+        var cfg = context.config.algorithmicalRebalancing;
+
+        if (cfg.weaponRules.upshiftRules.enable) Weapon.WeaponShifting(changedItems, context);
+        if (cfg.weaponRules.attachmentsFollowDefaultBuild) Weapon.FollowDefaultBuild(changedItems, context);
+        if (cfg.weaponRules.advancedAttachmentsDelta != 0) Weapon.PenalizeAdvancedAttachments(changedItems, context);
+    }
+
+    private static void ApplyChanges(Dictionary<int, List<ChangedItem>> changedItems, Context context)
+    {
+        var cfg = context.config.algorithmicalRebalancing;
+
         foreach (var changesInLevel in changedItems.Values)
         {
             if (changesInLevel == null || changesInLevel.Count == 0) continue;
             foreach (var changedItem in changesInLevel)
             {
-                bool doClamp = config.clampToMaxLevel;
-                if (config.forceClampingOfQuestlockedItems && Utils.IsQuestLocked(changedItem.trade, changedItem.trader, context)) doClamp = true;
+                bool doClamp = cfg.clampToMaxLevel;
+                if (cfg.forceClampingOfQuestlockedItems && Utils.IsQuestLocked(changedItem.trade, changedItem.trader, context)) doClamp = true;
                 if (changedItem.logChange) context.logger.Info($"Setting {context.tables.Templates.Items[changedItem.trade.Template].Name} at loyalty level {Utils.LoyaltyFromScore(changedItem.score, doClamp)} ({changedItem.score})");
                 Utils.SetLoyalty(changedItem.trade.Id, changedItem.score, changedItem.trader, doClamp);
             }
         }
+    }
 
-        // Overrides
+    private static void ApplyOverrides(Context context)
+    {
+        var cfg = context.config.algorithmicalRebalancing;
+        var traders = context.tables.Traders.Values;
+
         foreach (var trader in traders)
         {
-            var loyaltyLevels = trader?.Assort?.LoyalLevelItems;
+            if (trader == null || trader.Base == null) continue;
+            var loyaltyLevels = trader.Assort?.LoyalLevelItems;
             if (loyaltyLevels == null) continue;
 
-            var itemsForSale = trader?.Assort?.Items;
+            var itemsForSale = trader.Assort?.Items;
             if (itemsForSale == null) continue;
 
-            if (config.excludeTraders.Contains(trader.Base.Id)) continue;
+            if (cfg.excludeTraders.Contains(trader.Base.Id)) continue;
 
             foreach (var item in itemsForSale)
             {
                 int? overrideVal = null;
-                if (config.explicitLoyaltyOverride.trades.TryGetValue(item.Id, out var t)) overrideVal = t;
-                if (overrideVal == null && config.explicitLoyaltyOverride.items.TryGetValue(item.Template, out var it)) overrideVal = it;
+                if (cfg.explicitLoyaltyOverride.trades.TryGetValue(item.Id, out var t)) overrideVal = t;
+                if (overrideVal == null && cfg.explicitLoyaltyOverride.items.TryGetValue(item.Template, out var it)) overrideVal = it;
                 if (overrideVal == null) continue;
 
-                Utils.SetLoyalty(item.Id, overrideVal.Value, trader, config.clampToMaxLevel);
+                Utils.SetLoyalty(item.Id, overrideVal.Value, trader, cfg.clampToMaxLevel);
             }
         }
-
-        if (config.ammoRules.craftSettings.enable) Ammo.RebalanceAmmoCrafts(context);
     }
 }

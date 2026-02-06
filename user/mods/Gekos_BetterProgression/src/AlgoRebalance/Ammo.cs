@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using GekosBetterProgression;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Hideout;
-using SPTarkov.Server.Core.Models.Enums;
 
 namespace GekosBetterProgression.AlgoRebalance;
 

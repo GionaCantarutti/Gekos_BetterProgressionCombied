@@ -92,7 +92,12 @@ public static class Utils
         List<Item> attachments = new();
 
         var children = assort
-            .Where(x => x.ParentId == item.Id && x.Template != item.Template)
+            .Where(x =>
+            {
+                var pid = x.ParentId.ToString();
+                var iid = item.Id.ToString();
+                return !string.IsNullOrEmpty(pid) && pid == iid && x.Template != item.Template;
+            })
             .ToList();
 
         attachments.AddRange(children);
@@ -139,7 +144,7 @@ public static class Utils
         {
             foreach (var item in items)
             {
-                byId[item.trade.Id] = item;
+                byId[item.trade.Id.ToString()] = item;
             }
         }
 
@@ -174,10 +179,22 @@ public static class Utils
 
             foreach (var trade in trader.Assort.Items)
             {
-                int loyalty =
-                    tierOverrides.ContainsKey(trade.Id)
-                        ? LoyaltyFromScore(tierOverrides[trade.Id].score, context.config.algorithmicalRebalancing.clampToMaxLevel)
-                        : trader.Assort.LoyalLevelItems[trade.Id];
+                int loyalty;
+                var tradeKey = trade.Id.ToString();
+
+                if (tierOverrides.ContainsKey(tradeKey))
+                {
+                    loyalty = LoyaltyFromScore(tierOverrides[tradeKey].score, context.config.algorithmicalRebalancing.clampToMaxLevel);
+                }
+                else
+                {
+                    if (!trader.Assort.LoyalLevelItems.TryGetValue(tradeKey, out loyalty))
+                    {
+                        //ToDo: If loyalty mapping was not found directly it could be an attachment for an item for sale, check parent recursively.
+                        //      For now we just consider the item as not for sale and continue.
+                        continue;
+                    }
+                }
 
                 if (LoyaltyFromScore(
                         loyalty,
