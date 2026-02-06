@@ -1,3 +1,4 @@
+using GekosBetterProgression.AlgoRebalance;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Hideout;
@@ -128,7 +129,7 @@ public static class Utils
     // INDEXING
     // ---------------------------------------------
 
-    /*
+    
     public static Dictionary<string, ChangedItem> IndexById(
         Dictionary<int, List<ChangedItem>> byTier)
     {
@@ -138,19 +139,19 @@ public static class Utils
         {
             foreach (var item in items)
             {
-                byId[item.trade._id] = item;
+                byId[item.trade.Id] = item;
             }
         }
 
         return byId;
     }
-    */
+    
 
     // ---------------------------------------------
     // PURCHASABILITY
     // ---------------------------------------------
 
-    /*
+    
     public static bool CanBePurchased(
         string itemId,
         bool excludeBarters,
@@ -166,17 +167,17 @@ public static class Utils
             return true;
         }
 
-        foreach (var trader in context.tables.traders.Values)
+        foreach (var trader in context.tables.Traders.Values)
         {
-            if (trader.assort == null)
+            if (trader.Assort == null)
                 continue;
 
-            foreach (var trade in trader.assort.items)
+            foreach (var trade in trader.Assort.Items)
             {
                 int loyalty =
-                    tierOverrides.ContainsKey(trade._id)
-                        ? tierOverrides[trade._id].score
-                        : trader.assort.loyal_level_items[trade._id];
+                    tierOverrides.ContainsKey(trade.Id)
+                        ? LoyaltyFromScore(tierOverrides[trade.Id].score, context.config.algorithmicalRebalancing.clampToMaxLevel)
+                        : trader.Assort.LoyalLevelItems[trade.Id];
 
                 if (LoyaltyFromScore(
                         loyalty,
@@ -187,16 +188,16 @@ public static class Utils
                 }
 
                 bool match =
-                    trade._tpl == itemId &&
-                    trader.assort.barter_scheme.ContainsKey(trade._id)
-                    || ContainsAttachment(trade, trader.assort.items, itemId, context);
+                    trade.Template == itemId &&
+                    trader.Assort.BarterScheme.ContainsKey(trade.Id)
+                    || ContainsAttachment(trade, trader.Assort.Items, itemId, context);
 
                 if (!match)
                     continue;
 
                 if (excludeBarters && IsBarterTrade(trade, trader)) continue;
                 if (excludeQuestlocks && IsQuestLocked(trade, trader, context)) continue;
-                if (skip.Contains(trade._id)) continue;
+                if (skip.Contains(trade.Id)) continue;
 
                 Purchasability[itemId] = Purchasability.ContainsKey(itemId)
                     ? Math.Min(Purchasability[itemId], loyalty)
@@ -210,8 +211,8 @@ public static class Utils
     }
 
     public static bool CanAllAttachmentsBePurchased(
-        IItem item,
-        List<IItem> assort,
+        Item item,
+        List<Item> assort,
         bool excludeBarters,
         bool excludeQuestlocks,
         int tierCutoff,
@@ -223,14 +224,14 @@ public static class Utils
 
         foreach (var att in attachments)
         {
-            if (skip.Contains(att._tpl)) continue;
+            if (skip.Contains(att.Template)) continue;
 
             if (!CanBePurchased(
-                    att._tpl,
+                    att.Template,
                     excludeBarters,
                     excludeQuestlocks,
                     tierCutoff,
-                    new() { item._id },
+                    new() { item.Id },
                     tierOverrides,
                     context))
             {
@@ -240,7 +241,7 @@ public static class Utils
 
         return true;
     }
-    */
+    
 
     // ---------------------------------------------
     // QUEST / HIDEOUT
@@ -388,7 +389,7 @@ public static class Utils
     // LOYALTY
     // ---------------------------------------------
 
-    public static int LoyaltyFromScore(int score, bool capToMax)
+    public static int LoyaltyFromScore(float score, bool capToMax)
     {
         int max = capToMax ? 4 : 999;
         return Math.Max(1, Math.Min(max, (int)Math.Floor((double)score)));
