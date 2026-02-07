@@ -26,7 +26,7 @@ namespace gekos_api.Patches
         }
 
         [PatchPostfix]
-        private static void Postfix(ref SkillClass __instance, ref float __result, ref float ___float_2)
+        private static void Postfix(ref SkillClass __instance, ref float __result, ref float input)
         {
             bool skillSpecific = skillsConfig.SkillMultipliers.TryGetValue(__instance.Id.ToString(), out float multiplier);
 
@@ -35,7 +35,7 @@ namespace gekos_api.Patches
             multiplier *= skillsConfig.GlobalMultiplier;
 
             __result *= multiplier;
-            ___float_2 = __result;
+            input = __result;
         }
     }
 }

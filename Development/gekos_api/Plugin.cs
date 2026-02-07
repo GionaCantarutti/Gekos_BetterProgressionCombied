@@ -38,10 +38,10 @@ namespace gekos_api
             new SkillsMultipliers().Enable();
 
             //Apply skill buff multipliers
-            new SkillBuffMulti1303().Enable();
-            new SkillBuffMulti1304().Enable();
-            new SkillBuffMulti1305().Enable();
-            new SkillBuffMulti1306().Enable();
+            new SkillBuffMulti1().Enable();
+            new SkillBuffMulti2().Enable();
+            new SkillBuffMulti3().Enable();
+            new SkillBuffMulti4().Enable();
 
             if (ConfigHandler.GetPointsConfig().enable) //Do not enable patches if module is disabled
             {
