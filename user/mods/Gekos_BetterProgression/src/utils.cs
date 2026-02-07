@@ -336,10 +336,7 @@ public static class Utils
     {
         foreach (var req in craft.Requirements)
         {
-            if (req.RequiredLevel != null)
-            {
-                req.RequiredLevel = level;
-            }
+            req.RequiredLevel = level;
         }
     }
 
