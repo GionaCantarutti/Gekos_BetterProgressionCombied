@@ -31,12 +31,12 @@ public static class StashChanges
             foreach (var side in new TemplateSide[] { profile.Value.Bear, profile.Value.Usec })
             {
                 BotHideoutArea? hideoutArea = side.Character.Hideout.Areas.Find((area) => area.Type == HideoutAreas.Stash);
-                hideoutArea.Level = 1;
+                hideoutArea.Level = context.config.stashProgression.startingStashLevel;
 
                 List<Item> startingStashItems = side.Character.Inventory.Items.FindAll((i) => STARTING_STASHES.Contains(i.Template));
                 foreach (var item in startingStashItems)
                 {
-                    item.Template = ItemTpl.STASH_STANDARD_STASH_10X30;
+                    item.Template = STARTING_STASHES.ElementAt(context.config.stashProgression.startingStashLevel - 1);
                 }
 
                 side.Character.Bonuses = side.Character.Bonuses.FindAll((bonus) => bonus.Type != BonusType.StashSize);
