@@ -16,6 +16,7 @@ public class Context
     public DatabaseTables tables;
     public ItemHelper itemHelper;
     public PresetHelper presetHelper;
+    public ProfileHelper profileHelper;
     public ConfigServer sptConfig;
     public HashUtil hashUtil;
     public GekoConfig config;
@@ -29,6 +30,7 @@ public class Context
     public void PreInitialize(
         ItemHelper _itemHelper,
         PresetHelper _presetHelper,
+        ProfileHelper _profileHelper,
         ConfigServer _sptConfig,
         HashUtil _hashUtil,
         GekoConfig _config,
@@ -38,6 +40,7 @@ public class Context
     {
         this.itemHelper = _itemHelper;
         this.presetHelper = _presetHelper;
+        this.profileHelper = _profileHelper;
         this.sptConfig = _sptConfig;
         this.hashUtil = _hashUtil;
         this.config = _config;

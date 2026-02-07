@@ -26,13 +26,15 @@ public static class Utils
     // DOGTAGS
     // ---------------------------------------------
 
-    public static List<string> GetDogtagsList(Context context)
+    public static HashSet<MongoId> GetDogtagsList(Context context)
     {
-        List<string> list = new();
+        HashSet<MongoId> list = new();
 
         foreach (var kvp in context.tables.Templates.Items)
         {
-            if (kvp.Value.Properties?.DogTagQualities != null)
+            // for some reason apollo and malboro cigs have dogtagqualities set, but false
+            // nullables are good for programming yes yes
+            if (kvp.Value.Properties?.DogTagQualities != null && kvp.Value.Properties.DogTagQualities == true)
             {
                 list.Add(kvp.Key);
             }

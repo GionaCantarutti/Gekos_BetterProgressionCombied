@@ -87,6 +87,7 @@ public class PreSPTLoader(
         ISptLogger<PreSPTLoader> logger,
         ItemHelper itemHelper,
         PresetHelper presetHelper,
+        ProfileHelper profileHelper,
         ConfigServer configServer,
         HashUtil hashUtil,
         ModHelper modHelper,
@@ -104,7 +105,7 @@ public class PreSPTLoader(
 
         var logWrapper = new LoggerWrapper<PreSPTLoader>(logger);
 
-        context.PreInitialize(itemHelper, presetHelper, configServer, hashUtil, config, advancedConfig, logWrapper);
+        context.PreInitialize(itemHelper, presetHelper, profileHelper, configServer, hashUtil, config, advancedConfig, logWrapper);
 
         return Task.CompletedTask;
     }
@@ -212,7 +213,7 @@ public class PostDBLoader(
         log?.Success("Done!");
 
         log?.Info("Applying changes to Ref item purchasing...");
-        // SafelyRunIf(cfg.refChanges.enable, () => ChangeRefPurchasingOptions(context), "Failed to apply changes to Ref item purchasing!");
+        SafelyRunIf(cfg.refChanges.enable, () => RefChanges.Apply(context), "Failed to apply changes to Ref item purchasing!");
         log?.Success("Done!");
 
         log?.Info("Adding additional quest rewards...");
@@ -245,5 +246,4 @@ public class PostDBLoader(
             }
         }
     }
-
 }

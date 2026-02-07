@@ -1,3 +1,5 @@
+using SPTarkov.DI.Annotations;
+
 namespace GekosBetterProgression;
 
 public record GekoConfig
