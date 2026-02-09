@@ -101,7 +101,7 @@
             //Multiply the buff effect of specific skill buffs
             "skillBuffMultipliers": {
                 "StrengthBuffLiftWeightInc": 2.5,
-                "MagDrillsLoadSpeed": 3,
+                "MagDrillsLoadSpeed": 2,
                 "MagDrillsUnloadSpeed": 3,
                 "MagDrillsInventoryCheckSpeed": 2,
                 "CharismaDailyQuestsRerollDiscount": 10,
