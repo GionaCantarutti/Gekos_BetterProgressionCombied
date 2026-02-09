@@ -615,7 +615,6 @@
             //Add this delta if the weapon contains any attachments that cannot be purchased at the trader level the weapon would otherwise be placed at
             //Won't affect attachments that are part of the default build of the weapon
             //If attachmentsFollowDefaultBuild is set to false i reccomend setting this to 0
-            //If this is different than 0 the mod will take a few seconds longer to load when starting the server (still no performance impact when playing, no worries)
             "advancedAttachmentsDelta": 1,
 
             //Base loyalty score of each weapon is decided by its caliber. If the caliber of the weapon is not listed below then the default value will be picked

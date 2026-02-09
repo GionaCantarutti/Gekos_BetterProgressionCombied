@@ -22,6 +22,8 @@ public static class Utils
 
     private static readonly Dictionary<string, int> Purchasability = new();
 
+    private static readonly Dictionary<string, List<Item>> CachedAttachments = new();
+
     // ---------------------------------------------
     // DOGTAGS
     // ---------------------------------------------
@@ -91,6 +93,12 @@ public static class Utils
 
     public static List<Item> UnrollAttachments(Item item, List<Item> assort)
     {
+
+        if (CachedAttachments.TryGetValue(item.Id.ToString(), out var cached))
+        {
+            return cached;
+        }
+
         List<Item> attachments = new();
 
         var children = assort
@@ -109,6 +117,7 @@ public static class Utils
             attachments.AddRange(UnrollAttachments(att, assort));
         }
 
+        CachedAttachments[item.Id.ToString()] = attachments;
         return attachments;
     }
 
