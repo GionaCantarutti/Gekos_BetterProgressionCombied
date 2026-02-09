@@ -1,0 +1,187 @@
+{
+  "advancedSecureContainerChanges": {
+    "additionalQuestRewards": {
+      "started": {
+        // Network Provider - Part 1 gives Gamma container (as initial equipment)
+        "625d6ff5ddc94657c21a1625": {
+          "availableInGameEditions": [],
+          "findInRaid": false,
+          "id": "67c7102265c41f16d88520dc",
+          "index": 0,
+          "items": [
+            {
+              "_id": "67c7101e8891bcc8c33b3ba5",
+              "_tpl": "5857a8bc2459772bad15db29", // Gamma container
+              "upd": {
+                "stackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "67c7101e8891bcc8c33b3ba5",
+          "type": "Item",
+          "unknown": false,
+          "value": 1
+        }
+      },
+      "success": {
+        // Delivery from the Past gives Alpha container
+        "59674eb386f774539f14813a": {
+          "availableInGameEditions": [],
+          "findInRaid": false,
+          "id": "67c70fbb4a41e8e5d609745a",
+          "index": 0,
+          "items": [
+            {
+              "_id": "67c70fb55bfaa2c4455f7dff",
+              "_tpl": "544a11ac4bdc2d470e8b456a", // Alpha container
+              "upd": {
+                "stackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "67c70fb55bfaa2c4455f7dff",
+          "type": "Item",
+          "unknown": false,
+          "value": 1
+        },
+
+        // Setup gives Beta container
+        "5c1234c286f77406fa13baeb": {
+          "availableInGameEditions": [],
+          "findInRaid": false,
+          "id": "67c7064b2261718aee538635",
+          "index": 0,
+          "items": [
+            {
+              "_id": "67c70634853d4fee9264efe1",
+              "_tpl": "5857a8b324597729ab0a0e7d", // Beta container
+              "upd": {
+                "stackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "67c70634853d4fee9264efe1",
+          "type": "Item",
+          "unknown": false,
+          "value": 1
+        }
+      }
+    }
+  },
+  "additionalQuestRewards": {
+    "started": {
+
+    },
+    "success": {
+      //Stirrup rewards an Ammunition Case
+      "596b455186f77457cb50eccb": {
+        "availableInGameEditions": [],
+        "findInRaid": false,
+        "id": "67dfe1d6c86d01e21c962c36",
+        "index": 0,
+        "items": [
+          {
+            "_id": "67dfe1d2e5b3ffda5e44b529",
+            "_tpl": "5aafbde786f774389d0cbc0f", //Ammo case
+            "upd": {
+              "StackObjectsCount": 1
+            }
+          }
+        ],
+        "target": "67dfe1d2e5b3ffda5e44b529",
+        "type": "Item",
+        "unknown": false,
+        "value": 1
+      }
+    }
+  },
+  //Add custom trades
+  "customTrades": {
+    //Prapor
+    "54cb50c76803fa8b248b4571": {
+      "items": [
+        {
+          "_id": "67d43f2a227bcdfcdd58ecf3",
+          "_tpl": "617fd91e5539a84ec44ce155", //RGN impact nade
+          "parentId": "hideout",
+          "slotId": "hideout",
+          "upd": {
+            "UnlimitedCount": true,
+            "StackObjectsCount": 9999999,
+            "BuyRestrictionMax": 3,
+            "BuyRestrictionCurrent": 0
+          }
+        }
+      ],
+      "barterScheme": {
+        "67d43f2a227bcdfcdd58ecf3": [ //RGN impact nade
+          [
+            {
+              "count": 25000,
+              "_tpl": "5449016a4bdc2d6f028b456f"
+            }
+          ]
+        ]
+      },
+      "loyalLevelItems": {
+        "67d43f2a227bcdfcdd58ecf3": 4 //RGN impact nade
+
+      },
+      "questLocks": {
+        "67d43f2a227bcdfcdd58ecf3": { //RGN impact nade
+          "quest": "639670029113f06a7c3b2377", //Following the Bread Crumbs (Lightkeeper)
+          "rewardId": "67d44502588ce6c75823d67c",
+          "targetId": "67d4451e5d4569a3b28ae368"
+        }
+      }
+    },
+
+    //Ref
+    "6617beeaa9cfa777ca915b7c": {
+      "items": [
+        {
+          "_id": "67dfe267d9d392d28b7e63d4",
+          "_tpl": "66bc98a01a47be227a5e956e", //Streamer Item Case
+          "parentId": "hideout",
+          "slotId": "hideout",
+          "upd": {
+            "UnlimitedCount": true,
+            "StackObjectsCount": 9999999,
+            "BuyRestrictionMax": 3,
+            "BuyRestrictionCurrent": 0
+          }
+        }
+      ],
+      "barterScheme": {
+        "67dfe267d9d392d28b7e63d4": [ //Streamer Item Case
+          [
+            {
+              "count": 50,
+              "_tpl": "5d235b4d86f7742e017bc88a"
+            }
+          ]
+        ]
+      },
+      "loyalLevelItems": {
+        "67dfe267d9d392d28b7e63d4": 1 //Streamer Item Case
+      },
+      "questLocks": {
+
+      }
+    }
+  },
+  // New buffs then referenced by custom items
+  // Note: Removed SUP injector as it turns out that wasn't intended to be included
+  "customBuffs": {
+
+  },
+
+  //New item templates to be added
+  "customItems": {
+   
+  },
+
+  "customLocales": {
+
+  }
+}
