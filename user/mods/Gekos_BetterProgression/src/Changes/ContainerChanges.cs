@@ -2,7 +2,7 @@ namespace GekosBetterProgression.Changes;
 
 internal class ContainerChanges()
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         foreach (KeyValuePair<string, int[]> item in context.config.misc.containerSizeChanges.changes)
         {
@@ -24,5 +24,7 @@ internal class ContainerChanges()
                 containerProps.CellsV = sizeV;
             }
         }
+
+        return true;
     }
 }

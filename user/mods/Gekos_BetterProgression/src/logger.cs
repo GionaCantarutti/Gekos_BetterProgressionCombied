@@ -22,7 +22,7 @@ public class LoggerWrapper<T> : ILoggerWrapper
 
         var metadata = new ModMetadata();
 
-        prefix = $"[{metadata.Name}-{metadata.Version}]";
+        prefix = $"[{metadata.Name}-{metadata.Version}] ";
     }
 
     public void Success(string message)

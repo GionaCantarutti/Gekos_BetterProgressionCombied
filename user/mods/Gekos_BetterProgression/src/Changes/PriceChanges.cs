@@ -4,7 +4,7 @@ namespace GekosBetterProgression.Changes;
 
 public static class PriceChanges
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         foreach (var priceChange in context.config.misc.priceChanges)
         {
@@ -38,5 +38,7 @@ public static class PriceChanges
                 }
             }
         }
+
+        return true;
     }
 }

@@ -41,14 +41,14 @@ internal class CraftingChanges()
         ItemTpl.DRINK_BOTTLE_OF_WATER_06L
     ];
 
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         List<HideoutProduction>? crafts = context.tables.Hideout.Production.Recipes?.FindAll((production) => { return !craftsToNotModify.Contains(production.EndProduct); });
 
         if (crafts is null)
         {
             context.logger.Error("Failed to fetch hideout crafts");
-            return;
+            return false;
         }
 
         float craftProductMultiplier = (float)context.config.misc.craftProductMultiplier;
@@ -59,6 +59,8 @@ internal class CraftingChanges()
             craft.Count *= Convert.ToInt32(craftProductMultiplier);
             craft.ProductionTime *= craftTimeMultiplier;
         }
+
+        return true;
         
     }
 }

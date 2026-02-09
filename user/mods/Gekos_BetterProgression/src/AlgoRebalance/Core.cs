@@ -5,7 +5,7 @@ namespace GekosBetterProgression.AlgoRebalance;
 public static class Core
 {
     //Main entrypoint
-    public static void AlgorithmicallyRebalance(Context context)
+    public static bool AlgorithmicallyRebalance(Context context)
     {
         var traders = context.tables.Traders.Values;
 
@@ -23,6 +23,8 @@ public static class Core
         ApplyOverrides(context);
 
         if (context.config.algorithmicalRebalancing.ammoRules.craftSettings.enable) Ammo.RebalanceAmmoCrafts(context);
+
+        return true;
     }
 
     private static void ProcessTrader(Trader trader, Context context, Dictionary<int, List<ChangedItem>> changedItems)

@@ -8,7 +8,7 @@ namespace GekosBetterProgression.Changes;
 public class FirChanges()
 {
 
-    public static void RemoveFirFromQuests(Context context)
+    public static bool RemoveFirFromQuests(Context context)
     {
 
         Regex foundInRaidRegex = new Regex("Find.*in raid", RegexOptions.IgnoreCase);
@@ -59,14 +59,17 @@ public class FirChanges()
                 }
             }
         }
+
+        return true;
     }
 
-    public static void RemoveFirFromFlea(Context context)
+    public static bool RemoveFirFromFlea(Context context)
     {
         context.tables.Globals.Configuration.RagFair.IsOnlyFoundInRaidAllowed = false;
+        return true;
     }
 
-    public static void RemoveFirFromHideout(Context context)
+    public static bool RemoveFirFromHideout(Context context)
     {
         List<HideoutArea> hideoutAreas = context.tables.Hideout.Areas;
 
@@ -88,16 +91,18 @@ public class FirChanges()
                 }
             }
         }
+
+        return true;
     }
 
-    public static void RemoveFirFromRepeatables(Context context)
+    public static bool RemoveFirFromRepeatables(Context context)
     {
         var questConfig = context.sptConfig.GetConfig<QuestConfig>();
 
         if (questConfig?.RepeatableQuests == null)
         {
             context.logger.Warning("Repeatable quest config not found, skipping FiR removal");
-            return;
+            return false;
         }
 
         foreach (var repeatable in questConfig.RepeatableQuests)
@@ -107,5 +112,7 @@ public class FirChanges()
                 completion.RequiredItemsAreFiR = false;
             }
         }
+
+        return true;
     }
 }

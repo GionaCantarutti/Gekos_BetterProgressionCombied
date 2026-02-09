@@ -149,95 +149,110 @@ public class PostDBLoader(
             ? null
             : context.logger;
 
-        log?.Info("Running algorithmical rebalancing...");
-        SafelyRunIf(cfg.algorithmicalRebalancing.enable, () => AlgoRebalance.Core.AlgorithmicallyRebalance(context), "Failed to run algorithmical rebalancing!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.algorithmicalRebalancing.enable, () => AlgoRebalance.Core.AlgorithmicallyRebalance(context), log,
+            "Running algorithmical rebalancing...",
+            "Failed to run algorithmical rebalancing!");
 
-        log?.Info("Changing stack sizes...");
-        // SafelyRunIf(true, () => ChangeStackSizes(context), "Failed to apply changes to stack sizes!");
-        log?.Success("Done!");
+        // SafelyRunIf(true, () => ChangeStackSizes(context), log,
+        //     "Changing stack sizes...",
+        //     "Failed to apply changes to stack sizes!");
 
-        log?.Info("Applying secure container changes...");
-        SafelyRunIf(cfg.secureContainerProgression.enable, () => SecureContainerChanges.Apply(context), "Failed to apply secure container changes!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.secureContainerProgression.enable, () => SecureContainerChanges.Apply(context), log,
+            "Applying secure container changes...",
+            "Failed to apply secure container changes!");
 
-        log?.Info("Applying stash progression changes...");
-        SafelyRunIf(cfg.stashProgression.enable, () => StashChanges.Apply(context), "Failed to apply stash progression changes!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.stashProgression.enable, () => StashChanges.Apply(context), log,
+            "Applying stash progression changes...",
+            "Failed to apply stash progression changes!");
 
-        log?.Info("Disabling flea market...");
-        SafelyRunIf(cfg.fleaMarketChanges.disableFleaMarket, () => FleaChanges.Apply(context), "Failed to disable flea market!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.fleaMarketChanges.disableFleaMarket, () => FleaChanges.Apply(context), log,
+            "Disabling flea market...",
+            "Failed to disable flea market!");
 
-        log?.Info("Applying changes to hideout build costs...");
-        SafelyRunIf(cfg.hideoutBuildsChanges.enable, () => BuildChanges.Apply(context), "Failed to apply changes to hideout build costs!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.hideoutBuildsChanges.enable, () => BuildChanges.Apply(context), log,
+            "Applying changes to hideout build costs...",
+            "Failed to apply changes to hideout build costs!");
 
-        log?.Info("Applying changes to skills...");
-        SafelyRunIf(cfg.skillChanges.enable, () => SkillChanges.Apply(context), "Failed to apply changes to skills!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.skillChanges.enable, () => SkillChanges.Apply(context), log,
+            "Applying changes to skills...",
+            "Failed to apply changes to skills!");
 
-        log?.Info("Applying changes to craft times and output counts...");
-        SafelyRunIf(true, () => CraftingChanges.Apply(context), "Failed to apply changes to craft times and output counts!");
-        log?.Success("Done!");
+        SafelyRunIf(true, () => CraftingChanges.Apply(context), log,
+            "Applying changes to craft times and output counts...",
+            "Failed to apply changes to craft times and output counts!");
 
-        log?.Info("Applying changes to item prices...");
-        SafelyRunIf(true, () => PriceChanges.Apply(context), "Failed to apply changes to item prices!");
-        log?.Success("Done!");
+        SafelyRunIf(true, () => PriceChanges.Apply(context), log,
+            "Applying changes to item prices...",
+            "Failed to apply changes to item prices!");
 
-        log?.Info("Applying changes to SICC container...");
-        SafelyRunIf(cfg.siccBuffs.enable, () => SICCCaseChanges.Apply(context), "Failed to apply changes to SICC container!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.siccBuffs.enable, () => SICCCaseChanges.Apply(context), log,
+            "Applying changes to SICC container...",
+            "Failed to apply changes to SICC container!");
 
-        log?.Info("Removing FiR requirements...");
-        SafelyRunIf(cfg.misc.removeFirFromQuests, () => FirChanges.RemoveFirFromQuests(context), "Failed to remove FiR requirements from quests!");
-        SafelyRunIf(cfg.misc.removeFirFromQuests, () => FirChanges.RemoveFirFromRepeatables(context), "Failed to remove FiR requirements from repeatable quests!");
-        SafelyRunIf(cfg.misc.removeFirFromHideout, () => FirChanges.RemoveFirFromHideout(context), "Failed to remove FiR requirements from hideout builds!");
-        SafelyRunIf(cfg.misc.removeFirFromFlea, () => FirChanges.RemoveFirFromFlea(context), "Failed to remove FiR requirements from flea market listings!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.misc.removeFirFromQuests, () => FirChanges.RemoveFirFromQuests(context), log,
+            "Removing FiR requirements from quests...",
+            "Failed to remove FiR requirements from quests!");
+            
+        SafelyRunIf(cfg.misc.removeFirFromQuests, () => FirChanges.RemoveFirFromRepeatables(context), log,
+            "Removing FiR requirements from repeatable quests...",
+            "Failed to remove FiR requirements from repeatable quests!");
 
-        log?.Info("Adding custom items...");
-        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalItemsChanges.Apply(context), "Failed to add custom items!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.misc.removeFirFromHideout, () => FirChanges.RemoveFirFromHideout(context), log,
+            "Removing FiR requirements from hideout builds...",
+            "Failed to remove FiR requirements from hideout builds!");
 
-        log?.Info("Adding custom trades...");
-        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalTradesChanges.Apply(context), "Failed to add custom trades!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.misc.removeFirFromFlea, () => FirChanges.RemoveFirFromFlea(context), log,
+            "Removing FiR requirements from flea market listings...",
+            "Failed to remove FiR requirements from flea market listings!");
 
-        log?.Info("Applying changes to bitcoin farming...");
-        SafelyRunIf(cfg.bitcoinChanges.enable, () => BitcoinChanges.Apply(context), "Failed to apply changes to bitcoin farming!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalItemsChanges.Apply(context), log,
+            "Adding custom items...",
+            "Failed to add custom items!");
 
-        log?.Info("Setting initial trader standing...");
-        SafelyRunIf(cfg.overrideInitialStanding.enable, () => TraderStartRepChanges.Apply(context), "Failed to set initial trader standing!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.misc.addCustomTrades, () => AdditionalTradesChanges.Apply(context), log,
+            "Adding custom trades...",
+            "Failed to add custom trades!");
 
-        log?.Info("Applying changes to Ref item purchasing...");
-        SafelyRunIf(cfg.refChanges.enable, () => RefChanges.Apply(context), "Failed to apply changes to Ref item purchasing!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.bitcoinChanges.enable, () => BitcoinChanges.Apply(context), log,
+            "Applying changes to bitcoin farming...",
+            "Failed to apply changes to bitcoin farming!");
 
-        log?.Info("Adding additional quest rewards...");
-        SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AdditionalQuestRewardChanges.Apply(context), "Failed to add additional quest rewards!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.overrideInitialStanding.enable, () => TraderStartRepChanges.Apply(context), log,
+            "Setting initial trader standing...",
+            "Failed to set initial trader standing!");
 
-        log?.Info("Applying changes to container sizes...");
-        SafelyRunIf(cfg.misc.containerSizeChanges.enable, () => ContainerChanges.Apply(context), "Failed to change sizes of containers!");
-        log?.Success("Done!");
+        SafelyRunIf(cfg.refChanges.enable, () => RefChanges.Apply(context), log,
+            "Applying changes to Ref item purchasing...",
+            "Failed to apply changes to Ref item purchasing!");
+
+        SafelyRunIf(cfg.misc.enableExtraQuestRewards, () => AdditionalQuestRewardChanges.Apply(context), log,
+            "Adding additional quest rewards...",
+            "Failed to add additional quest rewards!");
+
+        SafelyRunIf(cfg.misc.containerSizeChanges.enable, () => ContainerChanges.Apply(context), log,
+            "Applying changes to container sizes...",
+            "Failed to change sizes of containers!");
     }
 
     //ToDo: incorporate success logging into this, depending on success return value from called function
-    private void SafelyRunIf(bool condition, Action action, string message)
+    private void SafelyRunIf(bool condition, Func<bool> action, ILoggerWrapper? log, string progressMessage, string failMessage)
     {
         try
         {
+            log?.Info(progressMessage);
+
             if (condition)
             {
-                action();
+                if (action())
+                {
+                    //log?.Success("Done!");
+                }
             }
+            
         }
         catch (Exception ex)
         {
-            logger.Error(message);
+            logger.Error(failMessage);
 
             if (context.config.dev.showFullError)
             {

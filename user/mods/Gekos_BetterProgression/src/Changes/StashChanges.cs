@@ -24,7 +24,7 @@ public static class StashChanges
         Type = BonusType.StashSize
     };
 
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         foreach (var profile in context.tables.Templates.Profiles)
         {
@@ -75,5 +75,7 @@ public static class StashChanges
                 loyaltyReq.LoyaltyLevel += context.config.stashProgression.stashUpgradeLoyaltyDelta;
             }
         }
+
+        return true;
     }
 }

@@ -2,7 +2,7 @@
 
 public class SkillChanges()
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         var skillConfig = context.config.skillChanges;
 
@@ -12,5 +12,6 @@ public class SkillChanges()
         eftConfig.SkillPointsBeforeFatigue = skillConfig.skillPointsBeforeFatigue;
         eftConfig.SkillMinEffectiveness = skillConfig.skillMinEffectiveness;
         
+        return true;
     }
 }

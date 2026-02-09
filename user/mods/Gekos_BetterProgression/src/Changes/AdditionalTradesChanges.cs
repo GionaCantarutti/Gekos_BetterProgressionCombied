@@ -4,7 +4,7 @@ namespace GekosBetterProgression.Changes;
 
 public static class AdditionalTradesChanges 
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         foreach (var customTrade in context.advancedConfig.customTrades)
         {
@@ -30,5 +30,7 @@ public static class AdditionalTradesChanges
                 Utils.LockBehindQuest(context, traderId, tradeId, trade.items.First().Template, questLock.Value);
             }
         }
+        
+        return true;
     }
 }

@@ -3,7 +3,7 @@
 public class BuildChanges
 {
 
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         GekoConfig.HideoutBuildsChanges config = context.config.hideoutBuildsChanges;
 
@@ -38,6 +38,8 @@ public class BuildChanges
                 }
             }
         }
+
+        return true;
     }
 
 }

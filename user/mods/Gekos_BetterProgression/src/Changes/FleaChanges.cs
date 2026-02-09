@@ -5,7 +5,7 @@ namespace GekosBetterProgression.Changes;
 
 public class FleaChanges()
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         Dictionary<MongoId, TemplateItem> allItems = context.tables.Templates.Items;
 
@@ -26,6 +26,8 @@ public class FleaChanges()
             item.Value.Properties.CanRequireOnRagfair = allowed && item.Value.Properties.CanRequireOnRagfair.Equals(true);
             item.Value.Properties.CanSellOnRagfair = allowed;
         }
+
+        return true;
 
     }
 }

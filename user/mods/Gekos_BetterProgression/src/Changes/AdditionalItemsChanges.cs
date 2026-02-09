@@ -6,7 +6,7 @@ namespace GekosBetterProgression.Changes;
 
 public static class AdditionalItemsChanges 
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         Dictionary<string, IEnumerable<Buff>> buffDatabase = context.tables.Globals.Configuration.Health.Effects.Stimulator.Buffs;
         Dictionary<MongoId, TemplateItem> itemDatabase = context.tables.Templates.Items;
@@ -26,7 +26,6 @@ public static class AdditionalItemsChanges
             Utils.AddToLocale(context, item.Key, item.Value);
         }
 
-        // rest of the legacy code then adds the items, using code identical to customTrades.ts
-        // assuming that's a mistake and only one of the code paths run
+        return true;
     }
 }

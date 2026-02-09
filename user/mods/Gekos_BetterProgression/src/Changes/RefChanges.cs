@@ -18,13 +18,15 @@ public static class RefChanges
 {
     public static readonly string REF_TRADER_ID = "6617beeaa9cfa777ca915b7c";
 
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         ChangeRefPurchasingOptions(context);
 
         GainRefRepOnKillPatch.context = context;
         new GainRefRepOnKillPatch().Enable();
         new AddSupportForGPTradersPatch().Enable();
+        
+        return true;
     }
 
     private static void ChangeRefPurchasingOptions(Context context)

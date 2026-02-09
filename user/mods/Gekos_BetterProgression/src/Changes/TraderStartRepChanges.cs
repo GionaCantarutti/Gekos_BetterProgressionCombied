@@ -4,7 +4,7 @@ namespace GekosBetterProgression.Changes;
 
 public static class TraderStartRepChanges
 { 
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         double initialStanding = context.config.overrideInitialStanding.defaultOverride;
 
@@ -25,5 +25,7 @@ public static class TraderStartRepChanges
                 }
             }
         }
+
+        return true;
     }
 }

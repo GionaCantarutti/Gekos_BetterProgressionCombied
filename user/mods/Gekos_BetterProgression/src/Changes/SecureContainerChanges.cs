@@ -4,11 +4,13 @@ namespace GekosBetterProgression.Changes;
 
 public class SecureContainerChanges()
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         ApplySizeChanges(context);
         ApplyAdditionalQuestRewards(context);
         ApplyStarterContainer(context);
+
+        return true;
     }
 
     public static void ApplyAdditionalQuestRewards(Context context)

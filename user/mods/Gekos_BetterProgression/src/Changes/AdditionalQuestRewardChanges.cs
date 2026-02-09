@@ -2,8 +2,10 @@ namespace GekosBetterProgression.Changes;
 
 public class AdditionalQuestRewardChanges
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         Utils.ApplyAdditionalQuestRewards(context, context.advancedConfig.additionalQuestRewards);
+        
+        return true;
     }
 }

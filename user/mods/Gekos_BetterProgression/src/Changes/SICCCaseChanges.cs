@@ -4,7 +4,7 @@ namespace GekosBetterProgression.Changes;
 
 public class SICCCaseChanges()
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         HashSet<MongoId> newFilter = new();
 
@@ -14,7 +14,7 @@ public class SICCCaseChanges()
         if (SICCFilter is null)
         {
             context.logger.Error("Failed to fetch SICC container filter!");
-            return;
+            return false;
         }
 
         if (context.config.siccBuffs.canHoldWhatDocsCan)
@@ -35,5 +35,7 @@ public class SICCCaseChanges()
         }
 
         context.tables.Templates.Items[ItemTpl.CONTAINER_SICC].Properties!.Grids!.First().Properties!.Filters!.First().Filter = newFilter;
+
+        return true;
     }
 }

@@ -5,7 +5,7 @@ namespace GekosBetterProgression.Changes;
 
 public class BitcoinChanges
 {
-    public static void Apply(Context context)
+    public static bool Apply(Context context)
     {
         if (context.config.bitcoinChanges.overrideValue)
         {
@@ -13,7 +13,7 @@ public class BitcoinChanges
             if (item is null)
             {
                 context.logger.Error("Could not find base bitcoin to edit");
-                return;
+                return false;
             }
             item.Price = context.config.bitcoinChanges.value;
         }
@@ -22,7 +22,7 @@ public class BitcoinChanges
         if (btcProduction is null)
         {
             context.logger.Error("Could not find Bitcoin craft");
-            return;
+            return false;
         }
 
         foreach (HideoutProduction prod in btcProduction)
@@ -45,6 +45,6 @@ public class BitcoinChanges
             }
         }
 
-        return;
+        return true;
     }
 }
