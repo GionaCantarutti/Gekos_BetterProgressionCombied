@@ -5,7 +5,7 @@ using SPTarkov.Server.Core.Models.Spt.Config;
 
 namespace GekosBetterProgression.Changes;
 
-public class FirChanges()
+public class FirChanges
 {
 
     public static bool RemoveFirFromQuests(Context context)
@@ -51,7 +51,11 @@ public class FirChanges()
 
             foreach (var key in locale.Keys.ToList())
             {
-                string text = locale[key];
+                string? text = locale[key];
+                if (string.IsNullOrEmpty(text))
+                {
+                    continue;
+                }
 
                 if (foundInRaidRegex.IsMatch(text))
                 {
