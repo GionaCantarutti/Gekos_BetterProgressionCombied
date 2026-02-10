@@ -23,6 +23,7 @@ public static class Utils
     private static readonly Dictionary<string, int> Purchasability = new();
 
     private static readonly Dictionary<string, List<Item>> CachedAttachments = new();
+    private static readonly HashSet<string> MissingTemplateWarned = new();
 
     // ---------------------------------------------
     // DOGTAGS
@@ -125,9 +126,15 @@ public static class Utils
     {
         if (!context.tables.Templates.Items.TryGetValue(item.Template, out var template))
         {
-            context.logger.Warning(
-                $"Trader item {item.Id} with table ID {item.Template} couldn't be found in the tables!"
-            );
+            // Warn only once per missing template to avoid flooding logs when other mods reference
+            // non-existent items repeatedly.
+            if (!MissingTemplateWarned.Contains(item.Template))
+            {
+                MissingTemplateWarned.Add(item.Template);
+                context.logger.Warning(
+                    $"Trader item {item.Id} with table ID {item.Template} couldn't be found in the tables!"
+                );
+            }
         }
         else
         {
@@ -192,6 +199,17 @@ public static class Utils
             {
                 int loyalty;
                 var tradeKey = trade.Id.ToString();
+
+                // Skip trades which reference table templates that don't exist.
+                if (string.IsNullOrEmpty(trade.Template) || !context.tables.Templates.Items.ContainsKey(trade.Template))
+                {
+                    if (!MissingTemplateWarned.Contains(trade.Template))
+                    {
+                        MissingTemplateWarned.Add(trade.Template);
+                        context.logger.Warning($"Trader item {trade.Id} with table ID {trade.Template} couldn't be found in the tables!");
+                    }
+                    continue;
+                }
 
                 if (tierOverrides.ContainsKey(tradeKey))
                 {
