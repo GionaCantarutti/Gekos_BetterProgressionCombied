@@ -206,7 +206,7 @@ public static class Utils
                     if (!MissingTemplateWarned.Contains(trade.Template))
                     {
                         MissingTemplateWarned.Add(trade.Template);
-                        context.logger.Warning($"Trader item {trade.Id} with table ID {trade.Template} couldn't be found in the tables!");
+                        context.logger.Warning($"Trader item {trade.Id} from trader {trader.Base.Name} ({trader.Base.Id}) with table ID {trade.Template} couldn't be found in the tables!");
                     }
                     continue;
                 }
